@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Jamar Carty — BTS SIO, option SLAM</title>
-<meta name="description" content="Portfolio de Jamar Carty, étudiant en BTS SIO option SLAM à l'ICOF Lyon : stages, projets web et compétences informatiques.">
+<title>Jamar Carty — Développeur Full Stack</title>
+<meta name="description" content="Jamar Carty, étudiant en BTS SIO SLAM à l’AFIP, recherche une alternance en développement Full Stack au rythme de deux semaines en entreprise et deux semaines en formation.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -15,7 +15,11 @@
 <nav>
   <div class="container">
     <div class="logo"><img class="logo-mark" src="logo-jc.svg" alt=""><span><span class="neon-name">Jamar</span> <span class="neon-name">Carty</span></span></div>
-    <div class="nav-links">
+    <button class="nav-menu-toggle" type="button" aria-expanded="false" aria-controls="siteNavLinks">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16"/><path d="M4 12h16"/><path d="M4 17h16"/></svg>
+      <span class="menu-toggle-label">Menu</span>
+    </button>
+    <div class="nav-links" id="siteNavLinks">
       <a class="nav-linkedin" href="https://www.linkedin.com/in/jamar-carty" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn de Jamar Carty" title="LinkedIn">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.35V9h3.414v1.561h.049c.476-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 1 1 0-4.124 2.062 2.062 0 0 1 0 4.124zM7.119 20.452H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.225 0z"/></svg>
         <span>LinkedIn</span>
@@ -25,11 +29,12 @@
         <span>GitHub</span>
       </a>
       <a href="#profil" data-t="profil">Profil</a>
-      <a href="#formation" data-t="formation" class="hide-m">Formation</a>
+      <a href="#formation" data-t="formation">Formation</a>
       <a href="#projets" data-t="projets">Projets</a>
-      <a href="articles.html" class="hide-m">Articles</a>
-      <a href="#competences" data-t="competences" class="hide-m">Compétences</a>
-      <a href="#veille" data-t="veille" class="hide-m">Veille</a>
+      <a href="articles.html">Articles</a>
+      <a href="#competences" data-t="competences">Compétences</a>
+      <a href="#atouts" data-t="atouts">Atouts</a>
+      <a href="#veille" data-t="veille">Veille</a>
       <a href="#contact" data-t="contact">Contact</a>
     </div>
   </div>
@@ -38,13 +43,12 @@
 <section class="hero">
   <div class="container hero-grid">
     <div>
-      <div class="badge"><span class="d"></span> Étudiant en BTS SIO — ICOF Lyon</div>
-      <h1><span class="neon-name">Jamar</span> <span class="neon-name">Carty</span><br><span class="sw">BTS SIO — option SLAM</span></h1>
-      <p class="hero-sub">Je conçois des applications web et mobiles. Après mon BTS, je souhaite poursuivre mes études en data science et en développement mobile.</p>
+      <div class="badge"><span class="d"></span> Recherche alternance · rythme 2 semaines / 2 semaines</div>
+      <h1><span class="neon-name">Jamar</span> <span class="neon-name">Carty</span><br><span class="sw">Développeur Full Stack</span></h1>
+      <p class="hero-sub">Étudiant en BTS SIO SLAM à l’AFIP, je recherche une alternance en développement informatique. Rythme : deux semaines en entreprise et deux semaines en formation.</p>
       <div class="hero-cta">
         <a href="#projets" class="btn-primary">Voir mes projets →</a>
-        <a href="#contact" class="btn-outline">Me contacter</a>
-        <a href="https://4d540f49-3025-4bac-87d5-74f740d12e4d.filesusr.com/ugd/f4edf3_d9b2c029e689402f83219220dfb48478.pdf" class="btn-outline" target="_blank" rel="noopener">Télécharger mon CV ↗</a>
+        <a href="#contact" class="btn-outline">Parler d’alternance</a>
       </div>
     </div>
     <div class="hero-art" id="heroScene" role="img" aria-label="Ordinateur portable 3D affichant du code">
@@ -62,9 +66,9 @@
       <div><h2>Profil</h2><p>Qui je suis, en quelques lignes</p></div>
     </div>
     <div class="profile-grid">
-      <blockquote>« Le véritable progrès technologique ne réside pas dans la création d'outils plus puissants, mais dans notre capacité à comprendre et à maîtriser les conséquences humaines de ces outils. »</blockquote>
-      <p>Je m'appelle Jamar Carty et je prépare un <strong>BTS Services Informatiques aux Organisations</strong>, option <strong>SLAM</strong>, à l'ICOF à Lyon. Ma formation et mes stages m'ont permis de travailler sur des applications web et mobiles, des API et des outils de gestion.</p>
-      <p>Passionné par les nouvelles technologies, je souhaite poursuivre mes études pour devenir <strong>data scientist et développeur d'applications mobiles</strong>.</p>
+      <blockquote>« Développeur Full Stack, je conçois des applications web et mobiles, des API REST et des expériences 3D interactives. »</blockquote>
+      <p>Actuellement en BTS Services Informatiques aux Organisations, option SLAM, à l’AFIP pour 2026–2027, j’ai auparavant suivi cette formation à l’ICOF de 2023 à 2026.</p>
+      <p>Je recherche une alternance en développement informatique au rythme de <strong>deux semaines en entreprise et deux semaines en formation</strong>. Mes expériences couvrent Laravel, React Native, les API REST, WordPress et la modélisation 3D.</p>
     </div>
   </div>
 </section>
@@ -75,44 +79,35 @@
       <div class="section-icon" style="background:var(--coral-soft);">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ff6b5b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9l10-5 10 5-10 5-10-5z"/><path d="M6 11v5c0 1.5 3 3 6 3s6-1.5 6-3v-5"/></svg>
       </div>
-      <div><h2>Formation</h2><p>ICOF Lyon et parcours scolaire</p></div>
+      <div><h2>Formation</h2><p>BTS SIO SLAM · AFIP, 2026–2027</p></div>
     </div>
 
     <div class="branch-grid">
       <div class="branch-card current">
-        <div class="branch-top"><h4>SLAM</h4><span class="pill-current">Option actuelle</span></div>
-        <ul><li>Développement web et mobile</li><li>Programmation, bases de données, cybersécurité</li><li>Analyse des besoins, spécifications, tests</li></ul>
+        <div class="branch-top"><h4>BTS SIO · option SLAM</h4><span class="pill-current">En cours</span></div>
+        <p class="branch-summary">AFIP · 2026–2027</p>
       </div>
       <div class="branch-card">
-        <div class="branch-top"><h4>SISR</h4></div>
-        <ul><li>Infrastructure et réseau</li><li>Administration systèmes</li><li>Réaction aux incidents de sécurité</li></ul>
+        <div class="branch-top"><h4>BTS SIO · option SLAM</h4></div>
+        <p class="branch-summary">ICOF · 2023–2026</p>
       </div>
     </div>
 
     <div class="timeline">
       <div class="t-row">
-        <div class="t-node">
-          <div class="t-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4f46e5" stroke-width="2.4" stroke-linecap="round"><path d="M5 12l5 5 10-10"/></svg></div>
-          <div class="t-line"></div>
-        </div>
+        <div class="t-node"><div class="t-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#716c80" stroke-width="2.4" stroke-linecap="round"><circle cx="12" cy="12" r="1"/></svg></div><div class="t-line"></div></div>
         <div class="t-content">
-          <div class="t-yr">2023 – 2026</div>
-          <div class="t-title">BTS Services Informatiques aux Organisations</div>
-          <div class="t-org">Option SLAM — ICOF, Lyon</div>
-        </div>
-      </div>
-      <div class="t-row">
-        <div class="t-node"><div class="t-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#716c80" stroke-width="2.4" stroke-linecap="round"><circle cx="12" cy="12" r="1"/></svg></div></div>
-        <div class="t-content">
-          <div class="t-yr">2021 – 2022</div>
-          <div class="t-title">Lycée Hyrome</div>
+          <div class="t-yr">2019 – 2020</div>
+          <div class="t-title">BTS Système Numérique · option Réseaux</div>
+          <div class="t-org">Lycée Hyrome</div>
         </div>
       </div>
       <div class="t-row">
         <div class="t-node"><div class="t-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#716c80" stroke-width="2.4" stroke-linecap="round"><circle cx="12" cy="12" r="1"/></svg></div></div>
         <div class="t-content">
           <div class="t-yr">2017 – 2019</div>
-          <div class="t-title">Lycée Robert Weinum</div>
+          <div class="t-title">Baccalauréat STI2D</div>
+          <div class="t-org">Lycée Robert Weinum</div>
         </div>
       </div>
     </div>
@@ -125,26 +120,42 @@
       <div class="section-icon" style="background:var(--amber-soft);">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#f5a623" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 012-2h4a2 2 0 012 2v2"/></svg>
       </div>
-      <div><h2>Expérience</h2><p>Stages et missions en entreprise</p></div>
+      <div><h2>Expérience</h2><p>Développement web, applications et 3D</p></div>
     </div>
 
     <div class="timeline">
       <div class="t-row">
         <div class="t-node"><div class="t-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4f46e5" stroke-width="2.4" stroke-linecap="round"><rect x="4" y="4" width="16" height="16" rx="3"/></svg></div><div class="t-line"></div></div>
         <div class="t-content">
-          <div class="t-yr">13 mai – 21 juin 2024</div>
-          <div class="t-title">Stage de première année</div>
-          <div class="t-org">ICOF — Lyon</div>
-          <div class="t-desc">Stage de six semaines autour de projets de développement. Découverte de React Native et des frameworks Laravel 11 et 12.</div>
+          <div class="t-yr">10 novembre – 19 décembre 2025</div>
+          <div class="t-title">Stage · Développement d’applications et web</div>
+          <div class="t-org">COF</div>
+          <ul class="experience-points"><li>Conception d’une application 3D de chargeur avec Kadviser et Geometry, incluant modélisation et interactions.</li><li>Développement de fonctionnalités dynamiques pour le site Kadviser.</li><li>Tests et corrections pour fiabiliser l’application.</li></ul>
         </div>
       </div>
       <div class="t-row">
         <div class="t-node"><div class="t-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4f46e5" stroke-width="2.4" stroke-linecap="round"><rect x="4" y="4" width="16" height="16" rx="3"/></svg></div></div>
         <div class="t-content">
-          <div class="t-yr">10 novembre – 19 décembre 2025</div>
-          <div class="t-title">Stage de deuxième année</div>
-          <div class="t-org">ICOF — Lyon</div>
-          <div class="t-desc">Réalisation d'une application avec K-Advisor et travail de modélisation 3D.</div>
+          <div class="t-yr">12 mai – 20 juin 2025</div>
+          <div class="t-title">Stage · Développement web et API REST</div>
+          <ul class="experience-points"><li>Développement d’un outil de gestion des conventions avec Laravel 12.</li><li>Création d’une API REST reliée à la base Océane pour une application React Native.</li><li>Code modulaire en POO, travail collaboratif avec Git/GitHub et revues de code.</li></ul>
+        </div>
+      </div>
+      <div class="t-row">
+        <div class="t-node"><div class="t-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4f46e5" stroke-width="2.4" stroke-linecap="round"><rect x="4" y="4" width="16" height="16" rx="3"/></svg></div><div class="t-line"></div></div>
+        <div class="t-content">
+          <div class="t-yr">2024</div>
+          <div class="t-title">Stage · Programmation web</div>
+          <div class="t-org">AAB Fabrication · Saint-Martin</div>
+          <ul class="experience-points"><li>Développement d’un site web dynamique pour soutenir la vente en ligne et la visibilité de l’entreprise.</li><li>Intégration front-end en HTML, CSS et JavaScript et mise en place des fonctionnalités principales.</li></ul>
+        </div>
+      </div>
+      <div class="t-row">
+        <div class="t-node"><div class="t-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#716c80" stroke-width="2.4" stroke-linecap="round"><circle cx="12" cy="12" r="1"/></svg></div></div>
+        <div class="t-content">
+          <div class="t-yr">2023</div>
+          <div class="t-title">Développement de sites web · Indépendant</div>
+          <ul class="experience-points"><li>Conception et gestion d’un site e-commerce WordPress pour un photographe : portfolio, rendez-vous et vente en ligne.</li></ul>
         </div>
       </div>
     </div>
@@ -213,10 +224,28 @@
     </div>
 
     <div class="skills-groups">
-      <div class="skill-group"><h3>Développement web</h3><div class="project-tags"><span>PHP</span><span>Laravel 11 / 12</span><span>HTML / CSS</span></div></div>
-      <div class="skill-group"><h3>Applications</h3><div class="project-tags"><span>React Native</span><span>C#</span><span>API</span></div></div>
-      <div class="skill-group"><h3>Outils</h3><div class="project-tags"><span>Visual Studio Code</span><span>VirtualBox</span><span>GLPI</span><span>Inoreader</span></div></div>
-      <div class="skill-group"><h3>Domaines</h3><div class="project-tags"><span>Bases de données</span><span>Cybersécurité</span><span>Support informatique</span><span>Gestion de projet</span></div></div>
+      <div class="skill-group"><h3>Langages et programmation</h3><div class="project-tags"><span>POO</span><span>C#</span><span>C++</span><span>Java</span><span>JavaScript</span><span>PHP</span><span>HTML</span><span>CSS</span></div></div>
+      <div class="skill-group"><h3>Frameworks et applications</h3><div class="project-tags"><span>Laravel 12</span><span>Symfony</span><span>React Native</span><span>Node.js</span></div></div>
+      <div class="skill-group"><h3>API et données</h3><div class="project-tags"><span>API REST</span><span>SQL</span><span>Merise</span><span>Postman</span></div></div>
+      <div class="skill-group"><h3>Outils et environnements</h3><div class="project-tags"><span>Git / GitHub</span><span>npm</span><span>Docker</span><span>Visual Studio Code</span><span>Visual Studio</span><span>Windows</span><span>Linux · Ubuntu / Debian</span></div></div>
+      <div class="skill-group"><h3>Cybersécurité</h3><div class="project-tags"><span>OWASP Top 10</span></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="atouts">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-icon" style="background:var(--mint-soft);">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#17a589" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3 2.7 5.5 6.1.9-4.4 4.3 1 6.1-5.4-2.9-5.4 2.9 1-6.1-4.4-4.3 6.1-.9L12 3z"/></svg>
+      </div>
+      <div><h2>Atouts</h2><p>Qualités, langues et certifications</p></div>
+    </div>
+    <div class="skills-groups">
+      <div class="skill-group"><h3>Qualités</h3><div class="project-tags"><span>Esprit d’équipe</span><span>Esprit d’analyse</span><span>Adaptabilité</span><span>Organisation</span></div></div>
+      <div class="skill-group"><h3>Langues</h3><div class="project-tags"><span>Anglais · bilingue</span></div></div>
+      <div class="skill-group"><h3>Certifications</h3><div class="project-tags"><span>MOOC ANSSI</span><span>CNIL · RGPD</span><span>Cyber Awareness</span></div></div>
+      <div class="skill-group"><h3>Centres d’intérêt</h3><div class="project-tags"><span>Boxe anglaise</span><span>Guitare électrique</span></div></div>
     </div>
   </div>
 </section>
@@ -279,6 +308,10 @@
       </div>
       <div class="contact-side">
         <div class="row">
+          <div class="row-icon" style="background:var(--mint-soft);"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#17a589" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.4 19.4 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7l.4 2.8a2 2 0 0 1-.6 1.7L7.6 9.5a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 1.7-.6l2.8.4a2 2 0 0 1 1.6 1.9z"/></svg></div>
+          <div class="row-text"><div class="k">Téléphone</div><a class="v" href="tel:+33767320432">07 67 32 04 32</a></div>
+        </div>
+        <div class="row">
           <div class="row-icon" style="background:var(--indigo-soft);"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#4f46e5" stroke-width="2"><path d="M4 4h16v16H4z"/><path d="M4 6l8 7 8-7"/></svg></div>
           <div class="row-text"><div class="k">Email</div><a class="v" href="mailto:jamarcarty131@gmail.com">jamarcarty131@gmail.com</a></div>
         </div>
@@ -289,6 +322,10 @@
         <div class="row">
           <div class="row-icon" style="background:var(--indigo-soft);"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#4f46e5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12h8M12 8l4 4-4 4"/></svg></div>
           <div class="row-text"><div class="k">GitHub</div><a class="v" href="https://github.com/jamar603" target="_blank" rel="noopener">github.com/jamar603</a></div>
+        </div>
+        <div class="row">
+          <div class="row-icon" style="background:var(--coral-soft);"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#ff6b5b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3h7v7M10 14 21 3"/><path d="M19 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h6"/></svg></div>
+          <div class="row-text"><div class="k">Portfolio</div><a class="v" href="https://jamarcarty131.wixsite.com/portfoliojamarcarty" target="_blank" rel="noopener">Mon portfolio en ligne</a></div>
         </div>
         <div class="row">
           <div class="row-icon" style="background:var(--coral-soft);"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#ff6b5b" stroke-width="2"><path d="M12 21s-7-6-7-11a7 7 0 1114 0c0 5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></div>
@@ -302,11 +339,12 @@
 <footer>
   <div class="container">
     <span>© 2026 Jamar Carty</span>
-    <span>BTS SIO — Option SLAM — ICOF Lyon</span>
+    <span>BTS SIO — Option SLAM — AFIP</span>
   </div>
 </footer>
 
 <script src="script.js"></script>
+<script src="nav.js"></script>
 <script type="module" src="hero-3d.js"></script>
 
 </body>
