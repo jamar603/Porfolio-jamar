@@ -10,3 +10,14 @@ const navObs = new IntersectionObserver((entries) => {
 }, { threshold: 0.4 });
 sections.forEach(s => navObs.observe(s));
 
+const contactForm = document.getElementById('contactForm');
+contactForm?.addEventListener('submit', event => {
+  event.preventDefault();
+  const formData = new FormData(contactForm);
+  const subject = encodeURIComponent(formData.get('subject').trim());
+  const body = encodeURIComponent(
+    `Nom : ${formData.get('name')}\nE-mail : ${formData.get('email')}\n\n${formData.get('message')}`
+  );
+  window.location.href = `mailto:jamarcarty131@gmail.com?subject=${subject}&body=${body}`;
+});
+

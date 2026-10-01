@@ -250,7 +250,26 @@
       <div class="contact-message">
         <h3>Un projet ou une opportunité ?</h3>
         <p>Pour échanger au sujet de mon parcours ou d'une collaboration, écrivez-moi directement.</p>
-        <a class="btn-primary" href="mailto:jamarcarty131@gmail.com">Écrire à Jamar →</a>
+        <form class="contact-form" id="contactForm" action="mailto:jamarcarty131@gmail.com" method="post" enctype="text/plain">
+          <div class="field">
+            <label for="contactName">Nom</label>
+            <input id="contactName" name="name" type="text" autocomplete="name" required>
+          </div>
+          <div class="field">
+            <label for="contactEmail">E-mail</label>
+            <input id="contactEmail" name="email" type="email" autocomplete="email" required>
+          </div>
+          <div class="field field-wide">
+            <label for="contactSubject">Objet</label>
+            <input id="contactSubject" name="subject" type="text" required>
+          </div>
+          <div class="field field-wide">
+            <label for="contactMessage">Message</label>
+            <textarea id="contactMessage" name="message" rows="5" required></textarea>
+          </div>
+          <button class="btn-primary" type="submit">Préparer le message →</button>
+          <p class="contact-form-note">Le message s’ouvrira dans votre application de messagerie.</p>
+        </form>
       </div>
       <div class="contact-side">
         <div class="row">
