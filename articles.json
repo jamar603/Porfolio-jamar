@@ -1,0 +1,192 @@
+[
+  {
+    "id": "portfolio-wordpress",
+    "title": "TP Portfolio avec WordPress",
+    "category": "portfolio",
+    "categoryLabel": "Portfolio & parcours",
+    "date": "6 mars",
+    "summary": "Création d’un portfolio professionnel pour présenter les missions, projets, compétences et expériences du BTS SIO, avec des pages, catégories et étiquettes organisées.",
+    "cover": "https://static.wixstatic.com/media/f4edf3_45471d4e092b44e08b7e8f352cb9357f~mv2.png/v1/fill/w_454,h_341,fp_0.50_0.50,q_95,enc_avif,quality_auto/f4edf3_45471d4e092b44e08b7e8f352cb9357f~mv2.png",
+    "coverAlt": "Aperçu du portfolio WordPress",
+    "tags": ["WordPress", "CMS", "UX"],
+    "sections": [
+      {"heading": "Contexte", "paragraphs": ["Réalisé en atelier professionnel, ce travail avait pour objectif de centraliser les productions du BTS SIO et de présenter le parcours dans le cadre de l’épreuve E4."]},
+      {"heading": "Travail réalisé", "paragraphs": ["La mission portait sur la structure des pages et du menu, l’organisation des articles par catégories et étiquettes, puis la publication des projets, compétences et expériences avec WordPress.", "Le portfolio a été conçu pour évoluer au fil de la formation et accueillir de nouvelles missions."]},
+      {"heading": "Bilan", "paragraphs": ["Ce travail m’a permis de découvrir le fonctionnement d’un CMS et de réfléchir à la manière de présenter clairement un parcours professionnel."]}
+    ]
+  },
+  {
+    "id": "mediateq-csharp",
+    "title": "AP C# Mediateq",
+    "category": "development",
+    "categoryLabel": "Développement",
+    "date": "3 mars",
+    "summary": "Application de gestion de médiathèque : authentification, rôles et CRUD des abonnés, avec mots de passe protégés et requêtes SQL paramétrées.",
+    "cover": "https://static.wixstatic.com/media/f4edf3_75b342c7b97e42ec9781a605c7ef80eb~mv2.jpg/v1/fill/w_454,h_341,fp_0.50_0.50,q_90,enc_avif,quality_auto/f4edf3_75b342c7b97e42ec9781a605c7ef80eb~mv2.jpg",
+    "coverAlt": "Capture du projet C# Mediateq",
+    "tags": ["C#", "Windows Forms", "SQL"],
+    "sections": [
+      {"heading": "Objectif", "paragraphs": ["Le projet vise à protéger l’accès de l’application et à faciliter le suivi administratif des abonnés. L’authentification identifie les employés avant l’accès aux fonctionnalités sensibles."]},
+      {"heading": "Gestion des abonnés", "paragraphs": ["Le module permet la création, la consultation, la modification et la suppression des abonnés. Des règles métier signalent les abonnements arrivant à expiration.", "Les requêtes SQL paramétrées et la gestion des rôles contribuent à protéger les données et à réserver les fonctions sensibles aux personnes autorisées."]},
+      {"heading": "Bilan", "paragraphs": ["Cette mission m’a permis de pratiquer la programmation orientée objet en C#, la gestion de données et la sécurisation d’une application métier."]}
+    ]
+  },
+  {
+    "id": "kadviser-themes",
+    "title": "Kadviser web : thèmes personnalisables",
+    "category": "stage",
+    "categoryLabel": "Mission de stage",
+    "date": "18 décembre 2025",
+    "summary": "Amélioration de l’application web Kadviser avec une sélection de thèmes, un thème personnalisé et la sauvegarde des choix dans le navigateur.",
+    "tags": ["HTML", "CSS", "JavaScript", "localStorage"],
+    "sections": [
+      {"heading": "Contexte", "paragraphs": ["La mission consiste à améliorer une version web de Kadviser et à rapprocher son fonctionnement de l’application existante, avec une interface plus ergonomique et personnalisable."]},
+      {"heading": "Personnalisation de l’interface", "paragraphs": ["Une liste de thèmes permet de modifier les couleurs du fond, du texte, des bordures et des boutons. Un panneau complémentaire permet de choisir des couleurs personnalisées.", "Les variables CSS appliquent les thèmes de façon cohérente. Les choix personnels sont enregistrés dans localStorage et restaurés lors d’une prochaine visite."]},
+      {"heading": "Bilan", "paragraphs": ["Les événements de formulaire appliquent les changements immédiatement. Un observateur prend également en compte les éléments ajoutés dynamiquement, pour maintenir l’apparence choisie."]}
+    ]
+  },
+  {
+    "id": "kadviser-model3d",
+    "title": "Kadviser : modélisation 3D",
+    "category": "stage",
+    "categoryLabel": "Mission de stage",
+    "date": "16 décembre 2025",
+    "summary": "Modélisation d’une tête de chargeur à partir de formes géométriques, puis intégration dans Kadviser et ajout d’une interaction de personnalisation du site.",
+    "tags": ["GDL", "Modélisation 3D", "Kadviser"],
+    "sections": [
+      {"heading": "Contexte", "paragraphs": ["Dans le service Kadviser, cette mission associe modélisation 3D en GDL et amélioration d’un site web existant. L’objectif est de concevoir un modèle de tête de chargeur et de l’intégrer dans l’environnement de visualisation."]},
+      {"heading": "Modélisation", "paragraphs": ["Le modèle est construit avec des formes géométriques simples, puis assemblé à l’aide d’opérations booléennes d’addition et de soustraction. Des translations et rotations servent à ajuster les différentes pièces et leurs détails."]},
+      {"heading": "Bilan", "paragraphs": ["La mission comprend aussi une interaction web qui permet de modifier la couleur de fond de l’écran. Elle m’a fait travailler à la fois la modélisation et l’expérience utilisateur."]}
+    ]
+  },
+  {
+    "id": "ap2-php-sql",
+    "title": "AP2 SLAM — PHP & SQL",
+    "category": "development",
+    "categoryLabel": "Développement",
+    "date": "21 septembre 2025",
+    "summary": "Projet d’équipe pour moderniser le back-office de la compagnie Océane : architecture MVC, rôles, opérations CRUD, requêtes préparées et travail en sprints.",
+    "cover": "https://static.wixstatic.com/media/f4edf3_b805cbddd9284464988106e82c59e2fb~mv2.gif",
+    "coverAlt": "Aperçu du projet PHP et SQL",
+    "tags": ["PHP", "SQL", "MVC", "PDO"],
+    "sections": [
+      {"heading": "Contexte", "paragraphs": ["Le back-office de la compagnie Océane gère des données liées aux bateaux, ports, trajets et affectations. Le projet vise à le restructurer selon une architecture MVC tout en conservant les fonctionnalités existantes."]},
+      {"heading": "Fonctionnalités", "paragraphs": ["Les visiteurs, gestionnaires et administrateurs disposent de droits différents. Le projet met en pratique l’authentification, les opérations CRUD et les contrôles côté client et serveur.", "Les requêtes préparées via PDO renforcent la sécurité des échanges avec la base de données. Le travail est organisé en sprints avec GitHub et comprend de la documentation technique et utilisateur."]},
+      {"heading": "Bilan", "paragraphs": ["Cette activité m’a permis de renforcer mes compétences en MVC, en développement PHP sécurisé et en organisation collective d’un projet."]}
+    ]
+  },
+  {
+    "id": "ap-csharp-slam",
+    "title": "AP C# SLAM",
+    "category": "development",
+    "categoryLabel": "Développement",
+    "date": "21 septembre 2025",
+    "summary": "Application Windows Forms pour gérer bateaux, ports, traversées et billets. Les fonctionnalités sont construites progressivement en sprints.",
+    "tags": ["C#", "POO", "Windows Forms"],
+    "sections": [
+      {"heading": "Contexte", "paragraphs": ["L’application de la Compagnie Océane s’appuie sur une interface Windows Forms organisée en onglets. Les classes métier représentent les bateaux, ports, traversées et billets ; les données sont manipulées en mémoire dans des collections."]},
+      {"heading": "Développement par sprints", "paragraphs": ["Les étapes couvrent l’affichage et la modification des bateaux, la création de ports et de traversées, la billetterie, les contrôles de saisie et les statistiques de vente.", "Chaque fonctionnalité est intégrée à un onglet et construite progressivement au fil des sprints."]},
+      {"heading": "Bilan", "paragraphs": ["Le projet met en pratique la programmation orientée objet et événementielle en C#, ainsi qu’une démarche de développement structurée."]}
+    ]
+  },
+  {
+    "id": "laravel-stage",
+    "title": "Stage 1 · Mission 2 : conventions",
+    "category": "stage",
+    "categoryLabel": "Mission de stage",
+    "date": "23 juin 2025",
+    "summary": "Application web de gestion des conventions de stage, avec des accès adaptés aux étudiants, enseignants et personnels administratifs.",
+    "tags": ["Laravel", "PHP", "Sécurité", "Kanban"],
+    "sections": [
+      {"heading": "Contexte", "paragraphs": ["L’application répond aux besoins d’un établissement qui souhaite créer, modifier, suivre et valider les conventions de stage. Les fonctionnalités sont adaptées aux rôles des étudiants, enseignants et personnels administratifs."]},
+      {"heading": "Développement et sécurité", "paragraphs": ["Les routes et middlewares Laravel protègent les différentes sections. La mise en service comprend l’installation des dépendances, la configuration de l’environnement, les migrations et les tests des droits.", "Les données de formulaires sont validées côté serveur et les requêtes préparées contribuent à prévenir les injections SQL."]},
+      {"heading": "Bilan", "paragraphs": ["Cette mission m’a permis de travailler sur une application web complète, la gestion des rôles et la confidentialité des données."]}
+    ]
+  },
+  {
+    "id": "react-native-stage",
+    "title": "Stage 1 · Mission 1 : application mobile",
+    "category": "stage",
+    "categoryLabel": "Mission de stage",
+    "date": "23 juin 2025",
+    "summary": "Application React Native et Expo connectée à une API REST : consultation de bateaux, navigation vers les détails et ajout d’éléments.",
+    "tags": ["React Native", "Expo", "API REST"],
+    "sections": [
+      {"heading": "Contexte", "paragraphs": ["L’application mobile pédagogique consomme une API externe pour afficher des données liées notamment aux bateaux, ports et utilisateurs."]},
+      {"heading": "Fonctionnalités", "paragraphs": ["React Navigation structure les écrans : liste, détails d’un bateau et formulaire d’ajout. FlatList et des composants natifs servent à afficher les données.", "Le projet gère également les états de chargement et les erreurs réseau. Expo permet de tester l’application sur Expo Go ou sur un émulateur, si l’API est accessible."]},
+      {"heading": "Bilan", "paragraphs": ["Cette mission m’a permis de pratiquer la consommation d’une API REST, la navigation mobile et la structuration de composants réutilisables."]}
+    ]
+  },
+  {
+    "id": "m2l-infrastructure",
+    "title": "AP M2L : réseau et serveur LAMP",
+    "category": "systems",
+    "categoryLabel": "Systèmes & support",
+    "date": "17 mars 2025",
+    "summary": "Configuration d’un routeur virtuel, installation de Debian, Apache, PHP et MariaDB, puis déploiement et migration de l’application MRBS.",
+    "tags": ["Debian", "Réseau", "LAMP", "VirtualBox"],
+    "sections": [
+      {"heading": "Configuration réseau", "paragraphs": ["Le TP commence par un routeur virtuel avec un adaptateur NAT et un réseau interne, la création d’un utilisateur non-root, la configuration d’une adresse IP statique et l’installation d’un service DHCP.", "Des tests de connectivité permettent de vérifier l’accès au réseau et le fonctionnement du routage."]},
+      {"heading": "Installation et migration", "paragraphs": ["Debian accueille une pile LAMP avec Apache, PHP et MariaDB. MRBS est déployé et testé pour la réservation de salles, puis migré avec sa base de données vers une machine sécurisée en DMZ.", "PuTTY, WinSCP et phpMyAdmin interviennent au cours des opérations d’administration."]},
+      {"heading": "Bilan", "paragraphs": ["Ce travail pratique m’a permis de mettre en place une infrastructure réseau et serveur, puis de déployer une application web dans cet environnement."]}
+    ]
+  },
+  {
+    "id": "electronitech-web",
+    "title": "AP Electronitech · HTML & CSS",
+    "category": "development",
+    "categoryLabel": "Développement web",
+    "date": "16 mars 2025",
+    "summary": "Conception d’un site responsive pour un catalogue de produits, avec une navigation simplifiée, des filtres et une présentation adaptée au mobile.",
+    "tags": ["HTML", "CSS", "Responsive"],
+    "sections": [
+      {"heading": "Contexte", "paragraphs": ["Electronitech souhaite moderniser son site et présenter un catalogue détaillé de produits, leurs caractéristiques, marques et promotions."]},
+      {"heading": "Démarche", "paragraphs": ["Le projet commence par l’analyse des besoins et la conception des pages principales : accueil, produits, marques, promotions et contact.", "La plateforme doit être responsive, intégrer des filtres et formulaires, puis être testée sur plusieurs supports. La gestion du contenu, la documentation et la maintenance font partie de la réflexion."]},
+      {"heading": "Bilan", "paragraphs": ["Cette activité met en pratique l’intégration HTML et CSS et la conception d’une expérience de navigation accessible sur ordinateur comme sur mobile."]}
+    ]
+  },
+  {
+    "id": "glpi-tickets",
+    "title": "Gestion des incidents et demandes",
+    "category": "systems",
+    "categoryLabel": "Systèmes & support",
+    "date": "20 avril 2025",
+    "summary": "Utilisation de GLPI pour gérer les tickets, les rôles, le suivi et l’escalade des incidents, et faciliter la collaboration entre techniciens.",
+    "tags": ["GLPI", "Support IT", "Gestion des tickets"],
+    "sections": [
+      {"heading": "Contexte", "paragraphs": ["Dans GLPI, les techniciens peuvent consulter certains tickets attribués à d’autres membres de l’équipe selon les permissions. Cette flexibilité facilite la continuité de service et la réaffectation des demandes."]},
+      {"heading": "Mise en place", "paragraphs": ["Le TP couvre la configuration des utilisateurs et profils, des groupes, des catégories de tickets, des notifications, des SLA et des droits d’accès.", "Des tests fonctionnels vérifient le traitement des demandes et la collaboration entre les rôles de support."]},
+      {"heading": "Bilan", "paragraphs": ["Cette mission m’a permis de comprendre comment GLPI structure le suivi des incidents et contribue à un support informatique traçable et réactif."]}
+    ]
+  },
+  {
+    "id": "glpi-inventory",
+    "title": "Gestion de parc informatique avec GLPI",
+    "category": "systems",
+    "categoryLabel": "Systèmes & support",
+    "date": "27 avril 2025",
+    "summary": "Installation de GLPI sous Linux, inventaire manuel et automatique, organisation des équipements et découverte du suivi administratif du parc.",
+    "tags": ["GLPI", "Linux", "Inventaire"],
+    "sections": [
+      {"heading": "Installation et inventaire", "paragraphs": ["Le travail pratique prépare un environnement Linux et installe GLPI avec les services nécessaires, dont MariaDB. L’inventaire comprend ordinateurs, imprimantes et consommables.", "L’agent GLPI automatise la remontée d’informations sur les équipements Windows et Linux."]},
+      {"heading": "Organisation du parc", "paragraphs": ["Les équipements sont structurés par lieux et entités. Dictionnaires, tags et règles d’importation permettent d’organiser les données et de limiter les doublons.", "Le TP aborde aussi le suivi administratif et financier : coûts, contrats et cycle de vie du matériel."]},
+      {"heading": "Bilan", "paragraphs": ["Cette mission m’a fait découvrir les enjeux techniques et organisationnels de la gestion du patrimoine informatique et des services ITSM."]}
+    ]
+  },
+  {
+    "id": "cv-empreinte",
+    "title": "CV et empreinte numérique",
+    "category": "portfolio",
+    "categoryLabel": "Portfolio & parcours",
+    "date": "8 octobre 2025",
+    "summary": "Travaux pratiques autour de la création d’un CV professionnel avec Canva et de la maîtrise de son image et de ses traces sur LinkedIn.",
+    "cover": "https://static.wixstatic.com/media/f4edf3_d01bc5f7d99a4fefa01f71313531d1a6~mv2.jpg/v1/fill/w_454,h_341,fp_0.50_0.50,q_90,enc_avif,quality_auto/f4edf3_d01bc5f7d99a4fefa01f71313531d1a6~mv2.jpg",
+    "coverAlt": "Illustration du travail sur le CV et l’empreinte numérique",
+    "tags": ["Canva", "CV", "LinkedIn"],
+    "sections": [
+      {"heading": "Construire un CV", "paragraphs": ["La première partie porte sur la structure d’un CV lisible et professionnel, adapté aux attentes du monde du travail. Canva sert à organiser et mettre en forme le document."]},
+      {"heading": "Maîtriser son empreinte numérique", "paragraphs": ["La seconde partie s’intéresse aux traces laissées sur LinkedIn et à l’image professionnelle qu’elles renvoient.", "L’objectif est de présenter clairement son parcours, ses compétences, sa formation et ses expériences."]},
+      {"heading": "Bilan", "paragraphs": ["Ces travaux m’ont amené à réfléchir à la cohérence entre les informations d’un CV et la présence professionnelle en ligne."]}
+    ]
+  }
+]
