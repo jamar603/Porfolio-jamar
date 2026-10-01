@@ -23,15 +23,16 @@ svg[stroke="#716c80"]{ stroke:var(--dim); }
 
 nav{ position:sticky; top:0; z-index:50; background:rgba(8,13,15,0.9); backdrop-filter:blur(12px); border-bottom:1px solid var(--border); }
 nav .container{ display:flex; align-items:center; justify-content:space-between; height:72px; }
-.logo{ font-weight:700; font-size:16px; display:flex; align-items:center; gap:9px; }
-.logo-dot{ width:10px; height:10px; border-radius:3px; background:linear-gradient(135deg,var(--indigo),var(--coral)); }
+.logo{ font-weight:700; font-size:16px; display:flex; align-items:center; gap:10px; white-space:nowrap; }
+.logo-mark{ display:block; width:32px; height:32px; flex-shrink:0; object-fit:contain; }
+.neon-name{ color:var(--indigo); text-shadow:0 0 7px rgba(183,255,53,.55),0 0 18px rgba(92,225,181,.3); }
 .nav-links{ display:flex; align-items:center; gap:28px; font-size:13.5px; color:var(--dim); }
 .nav-links a{ position:relative; padding-bottom:3px; transition:color 180ms var(--ease-out); }
 .nav-links .nav-github,.nav-links .nav-linkedin{ display:inline-flex; align-items:center; gap:7px; white-space:nowrap; }
 .nav-github svg,.nav-linkedin svg{ width:17px; height:17px; fill:currentColor; flex-shrink:0; }
 .nav-links a.active, .nav-links a:hover{ color:var(--ink); }
 .nav-links a.active::after{ content:''; position:absolute; left:0; bottom:-3px; width:100%; height:2px; background:var(--coral); border-radius:2px; }
-@media (max-width:760px){ .nav-links{ gap:12px; } .nav-links .hide-m{ display:none; } .nav-links .nav-github span,.nav-links .nav-linkedin span{ display:none; } }
+@media (max-width:760px){ .nav-links{ gap:12px; } .nav-links .hide-m,.nav-links a[data-t="profil"],.nav-links a[data-t="projets"]{ display:none; } .nav-links .nav-github span,.nav-links .nav-linkedin span{ display:none; } }
 .nav-cta{ background:var(--indigo); color:var(--bg); padding:9px 18px; border-radius:8px; font-weight:700; }
 
 /* ---------- hero ---------- */
