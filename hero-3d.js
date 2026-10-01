@@ -38,6 +38,7 @@ try {
 
   const laptop = new THREE.Group();
   laptop.rotation.set(-0.035, -0.16, 0);
+  laptop.scale.setScalar(1.18);
   scene.add(laptop);
 
   const chassisMaterial = new THREE.MeshStandardMaterial({ color: 0x405256, metalness: 0.72, roughness: 0.3 });
@@ -206,13 +207,18 @@ try {
   window.addEventListener('resize', resize);
 
   let animationFrame = 0;
+  let previousFrameTime = 0;
   const render = time => {
+    const delta = previousFrameTime ? Math.min((time - previousFrameTime) / 1000, 0.05) : 1 / 60;
+    previousFrameTime = time;
+
     if (!reducedMotion.matches) {
       const seconds = time * 0.001;
       const targetX = initialRotation.x + pointer.y * 0.055 + Math.sin(seconds * 0.45) * 0.012;
       const targetY = initialRotation.y + pointer.x * 0.12 + Math.sin(seconds * 0.36) * 0.025;
-      laptop.rotation.x += (targetX - laptop.rotation.x) * 0.035;
-      laptop.rotation.y += (targetY - laptop.rotation.y) * 0.035;
+      const smoothing = 1 - Math.exp(-3.5 * delta);
+      laptop.rotation.x += (targetX - laptop.rotation.x) * smoothing;
+      laptop.rotation.y += (targetY - laptop.rotation.y) * smoothing;
       laptop.position.y = Math.sin(seconds * 0.55) * 0.035;
     }
 
