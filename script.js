@@ -10,16 +10,97 @@ const navObs = new IntersectionObserver((entries) => {
 }, { rootMargin: '-45% 0px -50% 0px' });
 sections.forEach(s => navObs.observe(s));
 
+// contact form: sent to contact.php in the background; without JavaScript the form posts normally
 const contactForm = document.getElementById('contactForm');
-contactForm?.addEventListener('submit', event => {
-  event.preventDefault();
-  const formData = new FormData(contactForm);
-  const subject = encodeURIComponent(formData.get('subject').trim());
-  const body = encodeURIComponent(
-    `Nom : ${formData.get('name')}\nE-mail : ${formData.get('email')}\n\n${formData.get('message')}`
-  );
-  window.location.href = `mailto:jamarcarty131@gmail.com?subject=${subject}&body=${body}`;
-});
+if (contactForm) {
+  const submitButton = contactForm.querySelector('.contact-submit');
+  const submitLabel = contactForm.querySelector('.contact-submit-label');
+  const status = document.getElementById('contactStatus');
+  const defaultLabel = submitLabel.textContent;
+
+  const setStatus = (state, message) => {
+    status.dataset.state = state;
+    status.textContent = message;
+  };
+
+  const setFieldError = (name, message) => {
+    const error = contactForm.querySelector(`[data-error-for="${name}"]`);
+    const input = contactForm.elements[name];
+    if (!error || !input) return;
+    error.textContent = message || '';
+    input.closest('.field')?.classList.toggle('has-error', Boolean(message));
+    if (message) input.setAttribute('aria-invalid', 'true');
+    else input.removeAttribute('aria-invalid');
+  };
+
+  const clientErrors = () => {
+    const errors = {};
+    [...contactForm.querySelectorAll('[data-error-for]')].forEach(({ dataset }) => {
+      const input = contactForm.elements[dataset.errorFor];
+      if (input.validity.valueMissing) errors[input.name] = 'Ce champ est obligatoire.';
+      else if (input.validity.typeMismatch) errors[input.name] = 'Cette adresse e-mail n’est pas valide.';
+    });
+    return errors;
+  };
+
+  // label swap is masked with a short blur so the two texts never read as two objects
+  const setLabel = (text) => {
+    submitLabel.classList.add('is-swapping');
+    setTimeout(() => {
+      submitLabel.textContent = text;
+      submitLabel.classList.remove('is-swapping');
+    }, 120);
+  };
+
+  // clear a field's error as soon as the visitor fixes it
+  contactForm.addEventListener('input', (event) => {
+    if (event.target.name && event.target.closest('.has-error')) setFieldError(event.target.name, '');
+  });
+
+  contactForm.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    contactForm.querySelectorAll('[data-error-for]').forEach(({ dataset }) => setFieldError(dataset.errorFor, ''));
+
+    const errors = clientErrors();
+    if (Object.keys(errors).length) {
+      Object.entries(errors).forEach(([name, message]) => setFieldError(name, message));
+      setStatus('error', 'Certains champs sont à corriger.');
+      contactForm.elements[Object.keys(errors)[0]].focus();
+      return;
+    }
+
+    submitButton.disabled = true;
+    contactForm.setAttribute('aria-busy', 'true');
+    setLabel('Envoi en cours…');
+    setStatus('', '');
+
+    try {
+      const response = await fetch(contactForm.action, {
+        method: 'POST',
+        body: new FormData(contactForm),
+        headers: { Accept: 'application/json' },
+      });
+      const result = await response.json();
+      Object.entries(result.errors || {}).forEach(([name, message]) => setFieldError(name, message));
+      setStatus(result.ok ? 'success' : 'error', result.message);
+      if (result.ok) {
+        contactForm.reset();
+        setLabel('Message envoyé ✓');
+        setTimeout(() => setLabel(defaultLabel), 3200);
+      } else {
+        setLabel(defaultLabel);
+        const firstInvalid = Object.keys(result.errors || {})[0];
+        if (firstInvalid) contactForm.elements[firstInvalid]?.focus();
+      }
+    } catch {
+      setStatus('error', 'Connexion impossible. Réessayez ou écrivez-moi à jamarcarty131@gmail.com.');
+      setLabel(defaultLabel);
+    } finally {
+      submitButton.disabled = false;
+      contactForm.removeAttribute('aria-busy');
+    }
+  });
+}
 
 
 // scroll reveal

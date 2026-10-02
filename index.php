@@ -1,3 +1,14 @@
+<?php
+declare(strict_types=1);
+require __DIR__ . '/php/bootstrap.php';
+
+// result of a contact form post when JavaScript is off (see contact.php)
+$contactFlash = take_flash();
+$contactErrors = $contactFlash['errors'] ?? [];
+$contactOld = $contactFlash['old'] ?? [];
+// time-trap: bots that submit within a few seconds of loading the page are ignored
+$_SESSION['form_started'] = time();
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -493,25 +504,31 @@
       <div class="contact-message">
         <h3>Un projet ou une opportunité ?</h3>
         <p>Pour échanger au sujet de mon parcours ou d'une collaboration, écrivez-moi directement.</p>
-        <form class="contact-form" id="contactForm" action="mailto:jamarcarty131@gmail.com" method="post" enctype="text/plain">
-          <div class="field">
-            <label for="contactName">Nom</label>
-            <input id="contactName" name="name" type="text" autocomplete="name" required>
+        <form class="contact-form" id="contactForm" action="contact.php" method="post" novalidate>
+          <input type="hidden" name="csrf_token" value="<?= e(csrf_token()) ?>">
+          <div class="field-trap" aria-hidden="true">
+            <label for="contactWebsite">Ne pas remplir</label>
+            <input id="contactWebsite" name="website" type="text" tabindex="-1" autocomplete="off">
           </div>
-          <div class="field">
-            <label for="contactEmail">E-mail</label>
-            <input id="contactEmail" name="email" type="email" autocomplete="email" required>
+<?php foreach ([
+    ['name', 'contactName', 'Nom', 'text', 'name', 'field', 80],
+    ['email', 'contactEmail', 'E-mail', 'email', 'email', 'field', 254],
+    ['subject', 'contactSubject', 'Objet', 'text', 'off', 'field field-wide', 120],
+] as [$field, $id, $label, $type, $autocomplete, $class, $max]): ?>
+          <div class="<?= $class ?><?= isset($contactErrors[$field]) ? ' has-error' : '' ?>">
+            <label for="<?= $id ?>"><?= $label ?></label>
+            <input id="<?= $id ?>" name="<?= $field ?>" type="<?= $type ?>" autocomplete="<?= $autocomplete ?>" maxlength="<?= $max ?>" required value="<?= e($contactOld[$field] ?? '') ?>" aria-describedby="<?= $id ?>Error"<?= isset($contactErrors[$field]) ? ' aria-invalid="true"' : '' ?>>
+            <p class="field-error" id="<?= $id ?>Error" data-error-for="<?= $field ?>"><?= e($contactErrors[$field] ?? '') ?></p>
           </div>
-          <div class="field field-wide">
-            <label for="contactSubject">Objet</label>
-            <input id="contactSubject" name="subject" type="text" required>
-          </div>
-          <div class="field field-wide">
+<?php endforeach; ?>
+          <div class="field field-wide<?= isset($contactErrors['message']) ? ' has-error' : '' ?>">
             <label for="contactMessage">Message</label>
-            <textarea id="contactMessage" name="message" rows="5" required></textarea>
+            <textarea id="contactMessage" name="message" rows="5" maxlength="5000" required aria-describedby="contactMessageError"<?= isset($contactErrors['message']) ? ' aria-invalid="true"' : '' ?>><?= e($contactOld['message'] ?? '') ?></textarea>
+            <p class="field-error" id="contactMessageError" data-error-for="message"><?= e($contactErrors['message'] ?? '') ?></p>
           </div>
-          <button class="btn-primary" type="submit">Préparer le message →</button>
-          <p class="contact-form-note">Le message s’ouvrira dans votre application de messagerie.</p>
+          <button class="btn-primary contact-submit" type="submit"><span class="contact-submit-label">Envoyer le message →</span></button>
+          <p class="contact-status" id="contactStatus" role="status" aria-live="polite" data-state="<?= e($contactFlash['status'] ?? '') ?>"><?= e($contactFlash['message'] ?? '') ?></p>
+          <p class="contact-form-note">Votre message m’est envoyé directement par e-mail. Vos données servent uniquement à vous répondre.</p>
         </form>
       </div>
       <div class="contact-side">
@@ -550,7 +567,7 @@
 
 <footer>
   <div class="container">
-    <span>© 2026 Jamar Carty</span>
+    <span>© <?= date('Y') ?> Jamar Carty</span>
     <span>BTS SIO — Option SLAM — AFIP</span>
   </div>
 </footer>

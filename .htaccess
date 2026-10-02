@@ -1,0 +1,6 @@
+DirectoryIndex index.php index.html
+Options -Indexes
+
+<FilesMatch "\.(sqlite|ini|log)$">
+  Require all denied
+</FilesMatch>

@@ -553,3 +553,25 @@ footer .container{ font-size:13.5px; }
 html.has-custom-cursor .article-dialog[open],html.has-custom-cursor .article-dialog[open] *{ cursor:auto !important; }
 html.has-custom-cursor .article-dialog[open] :is(a,button,summary){ cursor:pointer !important; }
 html.has-custom-cursor:has(.article-dialog[open]) :is(.cursor-dot,.cursor-ring){ visibility:hidden; }
+
+/* ---------- contact form (contact.php) ---------- */
+.field-trap{ position:absolute; left:-9999px; width:1px; height:1px; overflow:hidden; }
+.contact-form{ position:relative; }
+/* `.contact-message p` sets dim color + 24px margin on every paragraph: these need more weight */
+.contact-form .field-error{ max-width:none; margin:6px 0 0; color:var(--coral); font-size:13px; font-weight:500; line-height:1.4; }
+.contact-form .field-error:empty{ display:none; }
+.field.has-error input,.field.has-error textarea{ border-color:var(--coral); }
+.field.has-error input:focus,.field.has-error textarea:focus{ box-shadow:0 0 0 3px rgba(255,128,109,.18); }
+.contact-submit:disabled{ cursor:progress; opacity:.75; }
+.contact-submit-label{ display:inline-block; transition:filter 120ms ease,opacity 120ms ease; }
+.contact-submit-label.is-swapping{ filter:blur(2px); opacity:.4; }
+.contact-form .contact-status{ grid-column:1/-1; max-width:none; margin:0; color:var(--ink); padding:12px 14px; border:1px solid var(--border); border-radius:8px; font-size:14.5px; font-weight:500; }
+.contact-form .contact-status:empty{ display:none; }
+.contact-form .contact-status[data-state="success"]{ border-color:rgba(92,225,181,.45); background:var(--mint-soft); color:var(--mint); }
+.contact-form .contact-status[data-state="error"]{ border-color:rgba(255,128,109,.45); background:var(--coral-soft); color:var(--coral); }
+.contact-status:not(:empty){ animation:status-in 220ms var(--ease-out); }
+@keyframes status-in{ from{ opacity:0; transform:translateY(-4px); } }
+@media (max-width:560px){ .contact-form .contact-status{ grid-column:auto; } }
+@media (prefers-reduced-motion:reduce){ .contact-status:not(:empty){ animation:none; } .contact-submit-label{ transition:none; } }
+.contact-form .btn-primary{ font-weight:700; }
+.contact-form .contact-form-note{ max-width:none; color:var(--dim); font-size:13px; }
