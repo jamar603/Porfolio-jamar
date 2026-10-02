@@ -1,11 +1,57 @@
 /* new-message toasts (notify.js), shared by the admin page and the portfolio */
-.notify-stack{ position:fixed; right:20px; bottom:76px; z-index:10000; display:grid; gap:10px; width:min(360px,calc(100vw - 40px)); pointer-events:none; }
-.notify-toast{ display:grid; gap:2px; padding:14px 16px 14px 44px; position:relative; border:1px solid rgba(183,255,53,.4); border-radius:12px; background:rgba(17,25,28,.96); box-shadow:0 18px 40px rgba(0,0,0,.45); color:#edf5f2; font-family:'Inter',sans-serif; font-size:14px; line-height:1.45; text-decoration:none; pointer-events:auto; opacity:0; transform:translateY(16px) scale(.98); transition:opacity 300ms cubic-bezier(0.23,1,0.32,1),transform 300ms cubic-bezier(0.23,1,0.32,1); }
-.notify-toast.is-in{ opacity:1; transform:none; }
-.notify-toast::before{ content:''; position:absolute; top:17px; left:17px; width:12px; height:12px; border-radius:50%; background:#b7ff35; box-shadow:0 0 12px rgba(183,255,53,.7); }
-.notify-toast strong{ font-weight:700; }
-.notify-toast span{ overflow:hidden; color:#b3c2c1; text-overflow:ellipsis; white-space:nowrap; }
-a.notify-toast:active{ transform:scale(.98); }
-@media (hover:hover) and (pointer:fine){ a.notify-toast:hover{ border-color:#b7ff35; } }
-@media (prefers-reduced-motion:reduce){ .notify-toast{ transform:none; transition:opacity 200ms ease; } }
+.notify-stack{
+  --toast-ease:cubic-bezier(0.23,1,0.32,1);
+  position:fixed; right:20px; bottom:var(--notify-bottom,20px); z-index:10000;
+  width:356px; margin:0; padding:0; list-style:none;
+  transition:height 400ms var(--toast-ease);
+}
+.notify-toast{
+  position:absolute; right:0; bottom:0; left:0; overflow:hidden;
+  display:grid; gap:10px; padding:14px 14px 16px;
+  border:1px solid rgba(255,255,255,.08); border-radius:14px;
+  background:linear-gradient(180deg,rgba(255,255,255,.04),transparent 60%),#121b1e;
+  box-shadow:0 1px 0 rgba(255,255,255,.05) inset,0 16px 40px rgba(0,0,0,.5),0 0 0 1px rgba(0,0,0,.4);
+  color:#edf5f2; font-family:'Inter',sans-serif; font-size:14px; line-height:1.4;
+  transform-origin:50% 100%; touch-action:pan-y; user-select:none; cursor:grab;
+  transition:transform 400ms var(--toast-ease),opacity 400ms var(--toast-ease),height 400ms var(--toast-ease),translate 300ms var(--toast-ease);
+}
+.notify-toast[data-swiping]{ cursor:grabbing; transition:transform 400ms var(--toast-ease),opacity 400ms var(--toast-ease),height 400ms var(--toast-ease); }
+.notify-toast[data-leaving]{ transition:transform 200ms ease-out,opacity 200ms ease-out,translate 200ms ease-out; }
+/* fills the gap under each expanded toast so the pointer never "leaves" the stack between them */
+.notify-stack.is-expanded .notify-toast::after{ content:''; position:absolute; left:0; right:0; top:100%; height:14px; }
+
+/* older toasts in the collapsed stack hide their content and show only a sliver */
+.notify-toast > *{ transition:opacity 300ms ease; }
+.notify-stack:not(.is-expanded) .notify-toast[data-front="false"] > *{ opacity:0; }
+
+.notify-body{ display:grid; grid-template-columns:auto minmax(0,1fr) auto; align-items:start; gap:12px; }
+.notify-avatar,.notify-icon{ display:grid; place-items:center; width:38px; height:38px; border-radius:50%; flex-shrink:0; }
+.notify-avatar{ background:linear-gradient(135deg,#b7ff35,#5ce1b5); color:#081113; font-family:'Space Grotesk','Inter',sans-serif; font-size:14px; font-weight:700; letter-spacing:.02em; box-shadow:0 0 0 3px rgba(183,255,53,.14); }
+.notify-icon{ background:#263518; box-shadow:inset 0 0 0 1px rgba(183,255,53,.35); }
+.notify-icon::before{ content:''; width:16px; height:16px; background:#b7ff35; -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E") center/contain no-repeat; mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E") center/contain no-repeat; }
+.notify-text{ min-width:0; }
+.notify-text p{ margin:0; }
+.notify-meta{ display:flex; align-items:center; gap:6px; color:#b7ff35; font-size:11.5px; font-weight:700; letter-spacing:.04em; text-transform:uppercase; }
+.notify-meta::before{ content:''; width:6px; height:6px; border-radius:50%; background:#b7ff35; box-shadow:0 0 8px rgba(183,255,53,.8); }
+.notify-title{ margin-top:2px !important; font-size:15px; font-weight:700; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.notify-desc{ color:#b3c2c1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.notify-close{ display:grid; place-items:center; width:26px; height:26px; margin:-4px -4px 0 0; padding:0; border:0; border-radius:50%; background:transparent; color:#8a9d9c; font:inherit; font-size:18px; line-height:1; cursor:pointer; transition:background-color 150ms ease,color 150ms ease,transform 150ms var(--toast-ease); }
+.notify-close:active{ transform:scale(.9); }
+.notify-action{ display:flex; align-items:center; justify-content:center; min-height:36px; margin-left:50px; border-radius:9px; background:#b7ff35; color:#081113; font-size:13.5px; font-weight:700; text-decoration:none; transition:background-color 150ms ease,transform 150ms var(--toast-ease); }
+.notify-action:active{ transform:scale(.97); }
+.notify-close:focus-visible,.notify-action:focus-visible{ outline:2px solid #b7ff35; outline-offset:2px; }
+
+/* countdown bar: its animation end dismisses the toast; pausing it pauses the toast */
+.notify-progress{ position:absolute; left:0; right:0; bottom:0; height:2px; background:linear-gradient(90deg,#b7ff35,#5ce1b5); transform-origin:left; animation:notify-countdown var(--duration,8000ms) linear forwards; }
+.notify-stack.is-expanded .notify-progress,.notify-stack.is-paused .notify-progress{ animation-play-state:paused; }
+@keyframes notify-countdown{ from{ transform:scaleX(1); } to{ transform:scaleX(0); } }
+
+@media (hover:hover) and (pointer:fine){
+  .notify-close:hover{ background:rgba(255,255,255,.08); color:#edf5f2; }
+  .notify-action:hover{ background:#c8ff63; }
+}
+@media (max-width:600px){ .notify-stack{ right:16px; left:16px; width:auto; } }
+@media (prefers-reduced-motion:reduce){
+  .notify-stack,.notify-toast,.notify-toast[data-leaving]{ transition:opacity 200ms ease; }
+}
 [data-unread-count][hidden]{ display:none !important; }
