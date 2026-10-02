@@ -26,7 +26,11 @@
 
   const setActive = (index) => {
     current = index;
-    cards.forEach((card, i) => card.classList.toggle('is-active', i === index));
+    cards.forEach((card, i) => {
+      card.classList.toggle('is-active', i === index);
+      card.classList.toggle('is-before', i < index);
+      card.classList.toggle('is-after', i > index);
+    });
     dots.forEach((dot, i) => dot.setAttribute('aria-selected', String(i === index)));
   };
 

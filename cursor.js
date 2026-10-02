@@ -22,7 +22,8 @@
   window.addEventListener('pointermove', (event) => {
     pointer.x = event.clientX;
     pointer.y = event.clientY;
-    dot.style.transform = `translate3d(${pointer.x}px, ${pointer.y}px, 0)`;
+    // `translate` (not `transform`) so the CSS `scale` of hover/press states scales in place
+    dot.style.translate = `${pointer.x}px ${pointer.y}px`;
     if (!visible) {
       visible = true;
       trail.x = pointer.x;
@@ -36,7 +37,9 @@
     document.documentElement.classList.toggle('cursor-text', overText);
   }, { passive: true });
 
-  document.addEventListener('pointerleave', () => {
+  // hide when the pointer leaves the window (document never fires pointerleave)
+  document.addEventListener('pointerout', (event) => {
+    if (event.relatedTarget) return;
     visible = false;
     document.documentElement.classList.remove('cursor-visible');
   });
@@ -47,7 +50,7 @@
     // ease the ring toward the pointer so it lags slightly behind
     trail.x += (pointer.x - trail.x) * 0.18;
     trail.y += (pointer.y - trail.y) * 0.18;
-    ring.style.transform = `translate3d(${trail.x}px, ${trail.y}px, 0)`;
+    ring.style.translate = `${trail.x}px ${trail.y}px`;
     requestAnimationFrame(tick);
   };
   requestAnimationFrame(tick);
