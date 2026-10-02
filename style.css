@@ -131,10 +131,14 @@ blockquote{ border-left:3px solid var(--indigo); padding:4px 22px; font-style:it
 .project-link:hover{ color:var(--coral); }
 
 /* ---------- compétences (anneaux) ---------- */
-.skills-groups{ display:grid; grid-template-columns:repeat(2,1fr); gap:28px 40px; }
-.skill-group{ padding:18px 0; border-top:1px solid var(--border); }
-.skill-group h3{ font-size:16px; margin-bottom:14px; }
+.skills-groups{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:32px 40px; }
+.skill-group{ min-width:0; padding:20px 0; border-top:1px solid var(--border); }
+.skill-group h3{ font-size:20px; margin-bottom:16px; }
+.skills-groups .project-tags{ gap:10px; }
+.skills-groups .project-tags span{ padding:8px 13px; color:var(--ink); font-size:15px; }
+#competences .section-head h2,#atouts .section-head h2{ font-size:36px; }
 @media (max-width:560px){ .skills-groups{ grid-template-columns:1fr; gap:10px; } }
+@media (max-width:340px){ #competences .section-head h2,#atouts .section-head h2{ font-size:30px; } }
 
 .veille-grid{ display:grid; grid-template-columns:1fr 1fr; gap:48px; align-items:start; }
 .veille-copy h3{ font-size:20px; margin-bottom:10px; }
