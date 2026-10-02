@@ -139,6 +139,13 @@ blockquote{ border-left:3px solid var(--indigo); padding:4px 22px; font-style:it
 #competences .section-head h2,#atouts .section-head h2{ font-size:36px; }
 @media (max-width:560px){ .skills-groups{ grid-template-columns:1fr; gap:10px; } }
 @media (max-width:340px){ #competences .section-head h2,#atouts .section-head h2{ font-size:30px; } }
+@media (min-width:961px){
+  #competences .section-head h2,#atouts .section-head h2{ font-size:40px; }
+  .skills-groups{ gap:40px 52px; }
+  .skill-group h3{ font-size:22px; }
+  .skills-groups .project-tags{ gap:12px; }
+  .skills-groups .project-tags span{ padding:9px 14px; font-size:17px; }
+}
 
 .veille-grid{ display:grid; grid-template-columns:1fr 1fr; gap:48px; align-items:start; }
 .veille-copy h3{ font-size:20px; margin-bottom:10px; }
