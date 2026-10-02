@@ -38,6 +38,8 @@
     "categoryLabel": "Mission de stage",
     "date": "18 décembre 2025",
     "summary": "Amélioration de l’application web Kadviser avec une sélection de thèmes, un thème personnalisé et la sauvegarde des choix dans le navigateur.",
+    "cover": "https://static.wixstatic.com/media/f4edf3_c29ceea7f2ff4c838e1f3496cbdfd446~mv2.jpg/v1/fill/w_900,h_675,fp_0.50_0.50,q_90,enc_avif,quality_auto/f4edf3_c29ceea7f2ff4c838e1f3496cbdfd446~mv2.jpg",
+    "coverAlt": "Aperçu de la mission Kadviser web",
     "tags": ["HTML", "CSS", "JavaScript", "localStorage"],
     "sections": [
       {"heading": "Contexte", "paragraphs": ["La mission consiste à améliorer une version web de Kadviser et à rapprocher son fonctionnement de l’application existante, avec une interface plus ergonomique et personnalisable."]},
@@ -52,6 +54,8 @@
     "categoryLabel": "Mission de stage",
     "date": "16 décembre 2025",
     "summary": "Modélisation d’une tête de chargeur à partir de formes géométriques, puis intégration dans Kadviser et ajout d’une interaction de personnalisation du site.",
+    "cover": "https://static.wixstatic.com/media/f4edf3_f7ee7f83331d467686509255ad188873~mv2.jpg/v1/fill/w_900,h_675,fp_0.50_0.50,q_90,enc_avif,quality_auto/f4edf3_f7ee7f83331d467686509255ad188873~mv2.jpg",
+    "coverAlt": "Aperçu de la mission Kadviser de modélisation 3D",
     "tags": ["GDL", "Modélisation 3D", "Kadviser"],
     "sections": [
       {"heading": "Contexte", "paragraphs": ["Dans le service Kadviser, cette mission associe modélisation 3D en GDL et amélioration d’un site web existant. L’objectif est de concevoir un modèle de tête de chargeur et de l’intégrer dans l’environnement de visualisation."]},
@@ -82,6 +86,8 @@
     "categoryLabel": "Développement",
     "date": "21 septembre 2025",
     "summary": "Application Windows Forms pour gérer bateaux, ports, traversées et billets. Les fonctionnalités sont construites progressivement en sprints.",
+    "cover": "https://static.wixstatic.com/media/f4edf3_51cf4915576647c38d7f2d7b89296bc8~mv2.jpg/v1/fill/w_900,h_675,fp_0.50_0.50,q_90,enc_avif,quality_auto/f4edf3_51cf4915576647c38d7f2d7b89296bc8~mv2.jpg",
+    "coverAlt": "Aperçu du projet C# SLAM",
     "tags": ["C#", "POO", "Windows Forms"],
     "sections": [
       {"heading": "Contexte", "paragraphs": ["L’application de la Compagnie Océane s’appuie sur une interface Windows Forms organisée en onglets. Les classes métier représentent les bateaux, ports, traversées et billets ; les données sont manipulées en mémoire dans des collections."]},
@@ -96,6 +102,8 @@
     "categoryLabel": "Mission de stage",
     "date": "23 juin 2025",
     "summary": "Application web de gestion des conventions de stage, avec des accès adaptés aux étudiants, enseignants et personnels administratifs.",
+    "cover": "https://static.wixstatic.com/media/f4edf3_9259152ef85b48118e49e02bdb639c8a~mv2.png/v1/fill/w_900,h_675,fp_0.50_0.50,q_90,enc_avif,quality_auto/f4edf3_9259152ef85b48118e49e02bdb639c8a~mv2.png",
+    "coverAlt": "Aperçu de la mission de stage sur les conventions",
     "tags": ["Laravel", "PHP", "Sécurité", "Kanban"],
     "sections": [
       {"heading": "Contexte", "paragraphs": ["L’application répond aux besoins d’un établissement qui souhaite créer, modifier, suivre et valider les conventions de stage. Les fonctionnalités sont adaptées aux rôles des étudiants, enseignants et personnels administratifs."]},
@@ -110,6 +118,8 @@
     "categoryLabel": "Mission de stage",
     "date": "23 juin 2025",
     "summary": "Application React Native et Expo connectée à une API REST : consultation de bateaux, navigation vers les détails et ajout d’éléments.",
+    "cover": "https://static.wixstatic.com/media/f4edf3_943bbb79ce1841ffb790041bbb48b955~mv2.jpg/v1/fill/w_900,h_675,fp_0.50_0.50,q_90,enc_avif,quality_auto/f4edf3_943bbb79ce1841ffb790041bbb48b955~mv2.jpg",
+    "coverAlt": "Aperçu de l’application mobile du stage",
     "tags": ["React Native", "Expo", "API REST"],
     "sections": [
       {"heading": "Contexte", "paragraphs": ["L’application mobile pédagogique consomme une API externe pour afficher des données liées notamment aux bateaux, ports et utilisateurs."]},
@@ -124,6 +134,8 @@
     "categoryLabel": "Systèmes & support",
     "date": "17 mars 2025",
     "summary": "Configuration d’un routeur virtuel, installation de Debian, Apache, PHP et MariaDB, puis déploiement et migration de l’application MRBS.",
+    "cover": "https://static.wixstatic.com/media/f4edf3_90cb1ff4fd1b49779fec3796ce55d3b0~mv2.gif",
+    "coverAlt": "Aperçu du réseau et du serveur LAMP M2L",
     "tags": ["Debian", "Réseau", "LAMP", "VirtualBox"],
     "sections": [
       {"heading": "Configuration réseau", "paragraphs": ["Le TP commence par un routeur virtuel avec un adaptateur NAT et un réseau interne, la création d’un utilisateur non-root, la configuration d’une adresse IP statique et l’installation d’un service DHCP.", "Des tests de connectivité permettent de vérifier l’accès au réseau et le fonctionnement du routage."]},
@@ -138,6 +150,8 @@
     "categoryLabel": "Développement web",
     "date": "16 mars 2025",
     "summary": "Conception d’un site responsive pour un catalogue de produits, avec une navigation simplifiée, des filtres et une présentation adaptée au mobile.",
+    "cover": "https://static.wixstatic.com/media/f4edf3_3472a7edfe684ec3971dac44872d059c~mv2.jpg/v1/fill/w_900,h_675,fp_0.50_0.50,q_90,enc_avif,quality_auto/f4edf3_3472a7edfe684ec3971dac44872d059c~mv2.jpg",
+    "coverAlt": "Aperçu du site Electronitech en HTML et CSS",
     "tags": ["HTML", "CSS", "Responsive"],
     "sections": [
       {"heading": "Contexte", "paragraphs": ["Electronitech souhaite moderniser son site et présenter un catalogue détaillé de produits, leurs caractéristiques, marques et promotions."]},
@@ -152,6 +166,8 @@
     "categoryLabel": "Systèmes & support",
     "date": "20 avril 2025",
     "summary": "Utilisation de GLPI pour gérer les tickets, les rôles, le suivi et l’escalade des incidents, et faciliter la collaboration entre techniciens.",
+    "cover": "https://static.wixstatic.com/media/f4edf3_e656faca8b0b4ac1abdae6053ef899f6~mv2.gif",
+    "coverAlt": "Aperçu de la gestion des tickets dans GLPI",
     "tags": ["GLPI", "Support IT", "Gestion des tickets"],
     "sections": [
       {"heading": "Contexte", "paragraphs": ["Dans GLPI, les techniciens peuvent consulter certains tickets attribués à d’autres membres de l’équipe selon les permissions. Cette flexibilité facilite la continuité de service et la réaffectation des demandes."]},
@@ -166,6 +182,8 @@
     "categoryLabel": "Systèmes & support",
     "date": "27 avril 2025",
     "summary": "Installation de GLPI sous Linux, inventaire manuel et automatique, organisation des équipements et découverte du suivi administratif du parc.",
+    "cover": "https://static.wixstatic.com/media/f4edf3_bbfc93f425d545dfb70b7349aa917dc6~mv2.png/v1/fill/w_900,h_675,fp_0.50_0.50,q_90,enc_avif,quality_auto/f4edf3_bbfc93f425d545dfb70b7349aa917dc6~mv2.png",
+    "coverAlt": "Aperçu de l’inventaire du parc dans GLPI",
     "tags": ["GLPI", "Linux", "Inventaire"],
     "sections": [
       {"heading": "Installation et inventaire", "paragraphs": ["Le travail pratique prépare un environnement Linux et installe GLPI avec les services nécessaires, dont MariaDB. L’inventaire comprend ordinateurs, imprimantes et consommables.", "L’agent GLPI automatise la remontée d’informations sur les équipements Windows et Linux."]},
