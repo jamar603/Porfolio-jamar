@@ -366,3 +366,10 @@ html.cursor-text .cursor-dot,html.cursor-text .cursor-ring{ opacity:0; }
 .cert-dot[aria-selected="true"]{ width:26px; background:var(--indigo); box-shadow:0 0 10px rgba(183,255,53,.5); }
 @keyframes cert-zoom{ from{ transform:scale(1); } to{ transform:scale(1.05); } }
 @media (prefers-reduced-motion:reduce){ .cert-grid{ scroll-behavior:auto; } .cert-card,.cert-card img{ transition:none; animation:none !important; } }
+
+/* bouton CV */
+.btn-cv{ gap:8px; border-color:rgba(183,255,53,.45); color:var(--indigo); }
+.btn-cv svg{ transition:transform 260ms var(--ease-out); }
+@media (hover:hover){ .btn-cv:hover svg{ animation:cv-bounce 700ms var(--ease-out) infinite; } }
+@keyframes cv-bounce{ 0%,100%{ transform:translateY(0); } 50%{ transform:translateY(3px); } }
+@media (prefers-reduced-motion:reduce){ .btn-cv:hover svg{ animation:none; } }
