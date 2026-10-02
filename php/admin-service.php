@@ -65,6 +65,12 @@ function admin_login(PDO $pdo, string $username, string $password): string|true
         return 'Aucun compte administrateur. Lancez : php php/create-admin.php <identifiant> <mot-de-passe>';
     }
 
+    // a weak account created with --local is refused anywhere but on this computer
+    $isLocalRequest = in_array($_SERVER['REMOTE_ADDR'] ?? '', ['127.0.0.1', '::1'], true);
+    if (!empty($credentials['local_only']) && !$isLocalRequest) {
+        return 'Ce compte de test ne fonctionne qu’en local. Créez un vrai mot de passe avec php/create-admin.php.';
+    }
+
     login_attempts_table($pdo);
     $ipHash = visitor_hash();
     if (login_is_locked($pdo, $ipHash)) {
