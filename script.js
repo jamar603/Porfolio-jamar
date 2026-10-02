@@ -21,3 +21,23 @@ contactForm?.addEventListener('submit', event => {
   window.location.href = `mailto:jamarcarty131@gmail.com?subject=${subject}&body=${body}`;
 });
 
+
+// scroll reveal
+const revealTargets = document.querySelectorAll('.section-head, .profile-grid, .branch-card, .t-row, .project-card, .skill-group, .veille-grid, .contact-wrap');
+if ('IntersectionObserver' in window){
+  const revealObs = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting){
+        entry.target.classList.add('is-visible');
+        revealObs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  revealTargets.forEach(el => {
+    const siblings = [...el.parentElement.children].filter(c => c.matches('.branch-card, .project-card, .skill-group, .t-row'));
+    const index = siblings.indexOf(el);
+    if (index > 0) el.style.setProperty('--reveal-delay', `${Math.min(index, 5) * 70}ms`);
+    el.classList.add('reveal');
+    revealObs.observe(el);
+  });
+}
