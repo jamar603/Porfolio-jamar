@@ -8,9 +8,9 @@
   const ctx = canvas.getContext('2d');
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   const auroras = [
-    { color: '183,255,53', radius: 0.42, speed: 0.00006, phase: 0, ox: 0.18, oy: 0.22 },
-    { color: '92,225,181', radius: 0.5, speed: 0.000045, phase: 2.1, ox: 0.78, oy: 0.35 },
-    { color: '255,128,109', radius: 0.32, speed: 0.00007, phase: 4.2, ox: 0.6, oy: 0.82 }
+    { color: '96,165,250', radius: 0.42, speed: 0.00006, phase: 0, ox: 0.18, oy: 0.22 },
+    { color: '165,180,252', radius: 0.5, speed: 0.000045, phase: 2.1, ox: 0.78, oy: 0.35 },
+    { color: '242,139,130', radius: 0.32, speed: 0.00007, phase: 4.2, ox: 0.6, oy: 0.82 }
   ];
   const mouse = { x: -9999, y: -9999, active: false };
   let width = 0;
@@ -34,7 +34,7 @@
       vx: (Math.random() - 0.5) * 0.22,
       vy: (Math.random() - 0.5) * 0.22,
       r: Math.random() * 1.4 + 0.6,
-      hue: Math.random() < 0.7 ? '183,255,53' : '92,225,181'
+      hue: Math.random() < 0.7 ? '96,165,250' : '165,180,252'
     }));
   };
 
@@ -59,8 +59,8 @@
     // cursor spotlight
     if (mouse.active) {
       const spot = ctx.createRadialGradient(mouse.x, mouse.y, 0, mouse.x, mouse.y, 260);
-      spot.addColorStop(0, 'rgba(183,255,53,0.07)');
-      spot.addColorStop(1, 'rgba(183,255,53,0)');
+      spot.addColorStop(0, 'rgba(96,165,250,0.07)');
+      spot.addColorStop(1, 'rgba(96,165,250,0)');
       ctx.fillStyle = spot;
       ctx.fillRect(mouse.x - 260, mouse.y - 260, 520, 520);
     }
@@ -105,7 +105,7 @@
       if (mouse.active) {
         const d = Math.hypot(p.x - mouse.x, p.y - mouse.y);
         if (d < 170) {
-          ctx.strokeStyle = `rgba(183,255,53,${(1 - d / 170) * 0.35})`;
+          ctx.strokeStyle = `rgba(96,165,250,${(1 - d / 170) * 0.35})`;
           ctx.beginPath();
           ctx.moveTo(p.x, p.y);
           ctx.lineTo(mouse.x, mouse.y);

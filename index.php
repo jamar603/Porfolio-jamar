@@ -95,7 +95,7 @@ if (is_admin()) {
   <div class="container">
     <div class="section-head">
       <div class="section-icon" style="background:var(--indigo-soft);">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#4f46e5" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.5-7 8-7s8 3 8 7"/></svg>
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.5-7 8-7s8 3 8 7"/></svg>
       </div>
       <div><h2>Profil</h2><p>Qui je suis, en quelques lignes</p></div>
     </div>
@@ -111,7 +111,7 @@ if (is_admin()) {
   <div class="container">
     <div class="section-head">
       <div class="section-icon" style="background:var(--coral-soft);">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ff6b5b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9l10-5 10 5-10 5-10-5z"/><path d="M6 11v5c0 1.5 3 3 6 3s6-1.5 6-3v-5"/></svg>
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#f28b82" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9l10-5 10 5-10 5-10-5z"/><path d="M6 11v5c0 1.5 3 3 6 3s6-1.5 6-3v-5"/></svg>
       </div>
       <div><h2>Formation</h2><p>BTS SIO SLAM · AFIP, 2026–2027</p></div>
     </div>
@@ -129,7 +129,7 @@ if (is_admin()) {
 
     <div class="timeline">
       <div class="t-row">
-        <div class="t-node"><div class="t-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#716c80" stroke-width="2.4" stroke-linecap="round"><circle cx="12" cy="12" r="1"/></svg></div><div class="t-line"></div></div>
+        <div class="t-node"><div class="t-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2.4" stroke-linecap="round"><circle cx="12" cy="12" r="1"/></svg></div><div class="t-line"></div></div>
         <div class="t-content">
           <div class="t-yr">2019 – 2020</div>
           <div class="t-title">BTS Système Numérique · option Réseaux</div>
@@ -137,7 +137,7 @@ if (is_admin()) {
         </div>
       </div>
       <div class="t-row">
-        <div class="t-node"><div class="t-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#716c80" stroke-width="2.4" stroke-linecap="round"><circle cx="12" cy="12" r="1"/></svg></div></div>
+        <div class="t-node"><div class="t-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2.4" stroke-linecap="round"><circle cx="12" cy="12" r="1"/></svg></div></div>
         <div class="t-content">
           <div class="t-yr">2017 – 2019</div>
           <div class="t-title">Baccalauréat STI2D</div>
@@ -152,14 +152,14 @@ if (is_admin()) {
   <div class="container">
     <div class="section-head">
       <div class="section-icon" style="background:var(--amber-soft);">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#f5a623" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 012-2h4a2 2 0 012 2v2"/></svg>
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#e5b567" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 012-2h4a2 2 0 012 2v2"/></svg>
       </div>
       <div><h2>Expérience</h2><p>Développement web, applications et 3D</p></div>
     </div>
 
     <div class="timeline">
       <div class="t-row">
-        <div class="t-node"><div class="t-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4f46e5" stroke-width="2.4" stroke-linecap="round"><rect x="4" y="4" width="16" height="16" rx="3"/></svg></div><div class="t-line"></div></div>
+        <div class="t-node"><div class="t-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="2.4" stroke-linecap="round"><rect x="4" y="4" width="16" height="16" rx="3"/></svg></div><div class="t-line"></div></div>
         <div class="t-content">
           <div class="t-yr">10 novembre – 19 décembre 2025</div>
           <div class="t-title">Stage · Développement d’applications et web</div>
@@ -168,7 +168,7 @@ if (is_admin()) {
         </div>
       </div>
       <div class="t-row">
-        <div class="t-node"><div class="t-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4f46e5" stroke-width="2.4" stroke-linecap="round"><rect x="4" y="4" width="16" height="16" rx="3"/></svg></div><div class="t-line"></div></div>
+        <div class="t-node"><div class="t-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="2.4" stroke-linecap="round"><rect x="4" y="4" width="16" height="16" rx="3"/></svg></div><div class="t-line"></div></div>
         <div class="t-content">
           <div class="t-yr">12 mai – 20 juin 2025</div>
           <div class="t-title">Stage · Développement web et API REST</div>
@@ -176,7 +176,7 @@ if (is_admin()) {
         </div>
       </div>
       <div class="t-row">
-        <div class="t-node"><div class="t-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4f46e5" stroke-width="2.4" stroke-linecap="round"><rect x="4" y="4" width="16" height="16" rx="3"/></svg></div><div class="t-line"></div></div>
+        <div class="t-node"><div class="t-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="2.4" stroke-linecap="round"><rect x="4" y="4" width="16" height="16" rx="3"/></svg></div><div class="t-line"></div></div>
         <div class="t-content">
           <div class="t-yr">2024</div>
           <div class="t-title">Stage · Programmation web</div>
@@ -185,7 +185,7 @@ if (is_admin()) {
         </div>
       </div>
       <div class="t-row">
-        <div class="t-node"><div class="t-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#716c80" stroke-width="2.4" stroke-linecap="round"><circle cx="12" cy="12" r="1"/></svg></div></div>
+        <div class="t-node"><div class="t-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2.4" stroke-linecap="round"><circle cx="12" cy="12" r="1"/></svg></div></div>
         <div class="t-content">
           <div class="t-yr">2023</div>
           <div class="t-title">Développement de sites web · Indépendant</div>
@@ -200,7 +200,7 @@ if (is_admin()) {
   <div class="container">
     <div class="section-head">
       <div class="section-icon" style="background:var(--mint-soft);">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#17a589" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 18l6-6-6-6M8 6l-6 6 6 6"/></svg>
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#a5b4fc" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 18l6-6-6-6M8 6l-6 6 6 6"/></svg>
       </div>
       <div><h2>Projets</h2><p>Mes réalisations</p></div>
       <div class="cube-scene" aria-hidden="true"><div class="cube"><span></span><span></span><span></span><span></span><span></span><span></span></div></div>
@@ -208,35 +208,35 @@ if (is_admin()) {
 
     <div class="projects-grid">
       <div class="project-card">
-        <div class="project-icon" style="background:var(--indigo-soft);"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4f46e5" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M8 21h8M12 18v3"/></svg></div>
+        <div class="project-icon" style="background:var(--indigo-soft);"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M8 21h8M12 18v3"/></svg></div>
         <div class="project-title">Gestion des conventions de stage</div>
         <div class="project-desc">Application web avec des espaces et des droits adaptés aux étudiants, enseignants et membres du secrétariat.</div>
         <div class="project-tags"><span>Laravel 12</span><span>PHP</span><span>Gestion des accès</span></div>
         <a class="project-link" href="#articles" data-open-article="laravel-stage">Lire la mission →</a>
       </div>
       <div class="project-card">
-        <div class="project-icon" style="background:var(--coral-soft);"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ff6b5b" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 010 18 14 14 0 010-18z"/></svg></div>
+        <div class="project-icon" style="background:var(--coral-soft);"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#f28b82" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 010 18 14 14 0 010-18z"/></svg></div>
         <div class="project-title">Application mobile connectée à une API</div>
         <div class="project-desc">Mission de développement mobile réalisée pendant la formation.</div>
         <div class="project-tags"><span>React Native</span><span>API</span></div>
         <a class="project-link" href="#articles" data-open-article="react-native-stage">Lire la mission →</a>
       </div>
       <div class="project-card">
-        <div class="project-icon" style="background:var(--amber-soft);"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#f5a623" stroke-width="2" stroke-linecap="round"><path d="M4 19V5a2 2 0 012-2h8l6 6v10a2 2 0 01-2 2H6a2 2 0 01-2-2z"/><path d="M14 3v6h6"/></svg></div>
+        <div class="project-icon" style="background:var(--amber-soft);"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#e5b567" stroke-width="2" stroke-linecap="round"><path d="M4 19V5a2 2 0 012-2h8l6 6v10a2 2 0 01-2 2H6a2 2 0 01-2-2z"/><path d="M14 3v6h6"/></svg></div>
         <div class="project-title">Application Mediateq</div>
         <div class="project-desc">Application Windows Forms organisée en onglets pour gérer plusieurs fonctionnalités métier.</div>
         <div class="project-tags"><span>C#</span><span>Windows Forms</span></div>
         <a class="project-link" href="#articles" data-open-article="mediateq-csharp">Lire le projet →</a>
       </div>
       <div class="project-card">
-        <div class="project-icon" style="background:var(--mint-soft);"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#17a589" stroke-width="2" stroke-linecap="round"><path d="M13 2L3 14h7l-1 8 10-12h-7l1-8z"/></svg></div>
+        <div class="project-icon" style="background:var(--mint-soft);"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#a5b4fc" stroke-width="2" stroke-linecap="round"><path d="M13 2L3 14h7l-1 8 10-12h-7l1-8z"/></svg></div>
         <div class="project-title">Gestion de parc informatique</div>
         <div class="project-desc">Travail pratique consacré à la gestion du patrimoine informatique avec GLPI.</div>
         <div class="project-tags"><span>GLPI</span><span>Support IT</span></div>
         <a class="project-link" href="#articles" data-open-article="glpi-inventory">Lire le TP →</a>
       </div>
       <div class="project-card">
-        <div class="project-icon" style="background:var(--mint-soft);"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#17a589" stroke-width="2" stroke-linecap="round"><path d="M12 2l9 5v10l-9 5-9-5V7l9-5z"/><path d="M3 7l9 5 9-5M12 12v10"/></svg></div>
+        <div class="project-icon" style="background:var(--mint-soft);"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#a5b4fc" stroke-width="2" stroke-linecap="round"><path d="M12 2l9 5v10l-9 5-9-5V7l9-5z"/><path d="M3 7l9 5 9-5M12 12v10"/></svg></div>
         <div class="project-title">K-Advisor et modélisation 3D</div>
         <div class="project-desc">Mission de stage de deuxième année autour d'une application et de la modélisation 3D.</div>
         <div class="project-tags"><span>K-Advisor</span><span>Modélisation 3D</span></div>
@@ -253,7 +253,7 @@ if (is_admin()) {
   <div class="container">
     <div class="section-head">
       <div class="section-icon" style="background:var(--coral-soft);">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ff6b5b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5V5a2 2 0 012-2h12a2 2 0 012 2v14.5"/><path d="M4 19.5A1.5 1.5 0 005.5 21H20M8 7h8M8 11h8M8 15h5"/></svg>
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#f28b82" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5V5a2 2 0 012-2h12a2 2 0 012 2v14.5"/><path d="M4 19.5A1.5 1.5 0 005.5 21H20M8 7h8M8 11h8M8 15h5"/></svg>
       </div>
       <div><h2>Articles & travaux pratiques</h2><p>Missions de stage, projets de développement et TP</p></div>
     </div>
@@ -406,7 +406,7 @@ if (is_admin()) {
   <div class="container">
     <div class="section-head">
       <div class="section-icon" style="background:var(--indigo-soft);">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#4f46e5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18M7 15l4-5 3 3 5-7"/></svg>
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18M7 15l4-5 3 3 5-7"/></svg>
       </div>
       <div><h2>Compétences</h2><p>Bloc B1</p></div>
       <div class="cube-scene" aria-hidden="true"><div class="cube"><span></span><span></span><span></span><span></span><span></span><span></span></div></div>
@@ -426,7 +426,7 @@ if (is_admin()) {
   <div class="container">
     <div class="section-head">
       <div class="section-icon" style="background:var(--mint-soft);">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#17a589" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3 2.7 5.5 6.1.9-4.4 4.3 1 6.1-5.4-2.9-5.4 2.9 1-6.1-4.4-4.3 6.1-.9L12 3z"/></svg>
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#a5b4fc" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3 2.7 5.5 6.1.9-4.4 4.3 1 6.1-5.4-2.9-5.4 2.9 1-6.1-4.4-4.3 6.1-.9L12 3z"/></svg>
       </div>
       <div><h2>Atouts</h2><p>Qualités, langues et certifications</p></div>
     </div>
@@ -486,7 +486,7 @@ if (is_admin()) {
   <div class="container">
     <div class="section-head">
       <div class="section-icon" style="background:var(--amber-soft);">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#f5a623" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4M11 7v4l3 2"/></svg>
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#e5b567" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4M11 7v4l3 2"/></svg>
       </div>
       <div><h2>Veille technologique</h2><p>Développement, réseaux et cybersécurité</p></div>
       <div class="cube-scene" aria-hidden="true"><div class="cube"><span></span><span></span><span></span><span></span><span></span><span></span></div></div>
@@ -509,7 +509,7 @@ if (is_admin()) {
   <div class="container">
     <div class="section-head">
       <div class="section-icon" style="background:var(--coral-soft);">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ff6b5b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z"/><path d="M4 6l8 7 8-7"/></svg>
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#f28b82" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z"/><path d="M4 6l8 7 8-7"/></svg>
       </div>
       <div><h2>Contact</h2><p>Discutons de votre besoin</p></div>
     </div>
@@ -547,31 +547,31 @@ if (is_admin()) {
       </div>
       <div class="contact-side">
         <div class="row">
-          <div class="row-icon" style="background:var(--mint-soft);"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#17a589" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.4 19.4 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7l.4 2.8a2 2 0 0 1-.6 1.7L7.6 9.5a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 1.7-.6l2.8.4a2 2 0 0 1 1.6 1.9z"/></svg></div>
+          <div class="row-icon" style="background:var(--mint-soft);"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#a5b4fc" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.4 19.4 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7l.4 2.8a2 2 0 0 1-.6 1.7L7.6 9.5a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 1.7-.6l2.8.4a2 2 0 0 1 1.6 1.9z"/></svg></div>
           <div class="row-text"><div class="k">Téléphone</div><a class="v" href="tel:+33767320432">07 67 32 04 32</a></div>
         </div>
         <div class="row">
-          <div class="row-icon" style="background:var(--indigo-soft);"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#4f46e5" stroke-width="2"><path d="M4 4h16v16H4z"/><path d="M4 6l8 7 8-7"/></svg></div>
+          <div class="row-icon" style="background:var(--indigo-soft);"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="2"><path d="M4 4h16v16H4z"/><path d="M4 6l8 7 8-7"/></svg></div>
           <div class="row-text"><div class="k">Email</div><a class="v" href="mailto:jamarcarty131@gmail.com">jamarcarty131@gmail.com</a></div>
         </div>
         <div class="row">
-          <div class="row-icon" style="background:var(--mint-soft);"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#17a589" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="3"/><circle cx="8" cy="9" r="1.2"/><path d="M8 12v5M12 12v5M12 14c0-1.5 1-2 2-2s2 .5 2 2v3"/></svg></div>
+          <div class="row-icon" style="background:var(--mint-soft);"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#a5b4fc" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="3"/><circle cx="8" cy="9" r="1.2"/><path d="M8 12v5M12 12v5M12 14c0-1.5 1-2 2-2s2 .5 2 2v3"/></svg></div>
           <div class="row-text"><div class="k">LinkedIn</div><a class="v" href="http://www.linkedin.com/in/jamar-carty" target="_blank" rel="noopener">linkedin.com/in/jamar-carty</a></div>
         </div>
         <div class="row">
-          <div class="row-icon" style="background:var(--indigo-soft);"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#4f46e5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12h8M12 8l4 4-4 4"/></svg></div>
+          <div class="row-icon" style="background:var(--indigo-soft);"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12h8M12 8l4 4-4 4"/></svg></div>
           <div class="row-text"><div class="k">GitHub</div><a class="v" href="https://github.com/jamar603" target="_blank" rel="noopener">github.com/jamar603</a></div>
         </div>
         <div class="row">
-          <div class="row-icon" style="background:var(--coral-soft);"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#ff6b5b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3h7v7M10 14 21 3"/><path d="M19 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h6"/></svg></div>
+          <div class="row-icon" style="background:var(--coral-soft);"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#f28b82" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3h7v7M10 14 21 3"/><path d="M19 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h6"/></svg></div>
           <div class="row-text"><div class="k">Portfolio</div><a class="v" href="https://jamarcarty131.wixsite.com/portfoliojamarcarty" target="_blank" rel="noopener">Mon portfolio en ligne</a></div>
         </div>
         <div class="row">
-          <div class="row-icon" style="background:var(--coral-soft);"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#ff6b5b" stroke-width="2"><path d="M12 21s-7-6-7-11a7 7 0 1114 0c0 5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></div>
+          <div class="row-icon" style="background:var(--coral-soft);"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#f28b82" stroke-width="2"><path d="M12 21s-7-6-7-11a7 7 0 1114 0c0 5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></div>
           <div class="row-text"><div class="k">Localisation</div><div class="v">Lyon, France</div></div>
         </div>
         <div class="row">
-          <div class="row-icon" style="background:var(--indigo-soft);"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#4f46e5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M12 12v6M9 15l3 3 3-3"/></svg></div>
+          <div class="row-icon" style="background:var(--indigo-soft);"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M12 12v6M9 15l3 3 3-3"/></svg></div>
           <div class="row-text"><div class="k">CV</div><a class="v" href="cv-jamar-carty.pdf" download="CV-Jamar-Carty.pdf">Télécharger mon CV (PDF)</a></div>
         </div>
       </div>

@@ -43,7 +43,7 @@ const makeTagTexture = (label, color) => {
   canvas.width = 256;
   canvas.height = 128;
   const ctx = canvas.getContext('2d');
-  ctx.fillStyle = 'rgba(17,25,28,0.82)';
+  ctx.fillStyle = 'rgba(17,24,39,0.82)';
   ctx.strokeStyle = color;
   ctx.lineWidth = 4;
   ctx.beginPath();
@@ -79,17 +79,17 @@ try {
   fallback.hidden = true;
 
   /* ---------- lights ---------- */
-  scene.add(new THREE.HemisphereLight(0xb5fff0, 0x071012, 1.6));
+  scene.add(new THREE.HemisphereLight(0xdbeafe, 0x0b1120, 1.6));
   const keyLight = new THREE.DirectionalLight(0xffffff, 3);
   keyLight.position.set(-3, 6, 5);
   scene.add(keyLight);
-  const mintLight = new THREE.PointLight(0x5ce1b5, 18, 12);
+  const mintLight = new THREE.PointLight(0xa5b4fc, 18, 12);
   mintLight.position.set(-4, 2, 1);
   scene.add(mintLight);
-  const limeLight = new THREE.PointLight(0xb7ff35, 12, 10);
+  const limeLight = new THREE.PointLight(0x60a5fa, 12, 10);
   limeLight.position.set(4, 2, -2);
   scene.add(limeLight);
-  const coralLight = new THREE.PointLight(0xff806d, 0, 9);
+  const coralLight = new THREE.PointLight(0xf28b82, 0, 9);
   coralLight.position.set(3, 3.5, 3);
   scene.add(coralLight);
 
@@ -99,11 +99,11 @@ try {
   const laptop = new THREE.Group();
   rig.add(laptop);
 
-  const chassisMaterial = new THREE.MeshStandardMaterial({ color: 0x405256, metalness: 0.75, roughness: 0.28 });
-  const deckMaterial = new THREE.MeshStandardMaterial({ color: 0x52676a, metalness: 0.62, roughness: 0.34 });
-  const keyMaterial = new THREE.MeshStandardMaterial({ color: 0xffffff, emissive: 0x12302e, emissiveIntensity: 0.5, metalness: 0.35, roughness: 0.42 });
-  const spaceMaterial = new THREE.MeshStandardMaterial({ color: 0x829496, emissive: 0x12302e, emissiveIntensity: 0.5, metalness: 0.35, roughness: 0.42 });
-  const accentMaterial = new THREE.MeshStandardMaterial({ color: 0xb7ff35, emissive: 0x7ab21a, emissiveIntensity: 0.9, metalness: 0.3, roughness: 0.28 });
+  const chassisMaterial = new THREE.MeshStandardMaterial({ color: 0x3f4a5c, metalness: 0.75, roughness: 0.28 });
+  const deckMaterial = new THREE.MeshStandardMaterial({ color: 0x475569, metalness: 0.62, roughness: 0.34 });
+  const keyMaterial = new THREE.MeshStandardMaterial({ color: 0xffffff, emissive: 0x172554, emissiveIntensity: 0.5, metalness: 0.35, roughness: 0.42 });
+  const spaceMaterial = new THREE.MeshStandardMaterial({ color: 0x94a3b8, emissive: 0x172554, emissiveIntensity: 0.5, metalness: 0.35, roughness: 0.42 });
+  const accentMaterial = new THREE.MeshStandardMaterial({ color: 0x60a5fa, emissive: 0x1d4ed8, emissiveIntensity: 0.9, metalness: 0.3, roughness: 0.28 });
 
   const base = new THREE.Mesh(new THREE.BoxGeometry(4.6, 0.16, 2.65), chassisMaterial);
   base.position.set(0, 0.06, 0.25);
@@ -116,8 +116,8 @@ try {
   const KEY_COUNT = 56;
   const keyboardKeys = new THREE.InstancedMesh(new THREE.BoxGeometry(0.19, 0.035, 0.14), keyMaterial, KEY_COUNT);
   const keyTransform = new THREE.Object3D();
-  const keyBaseColor = new THREE.Color(0x829496);
-  const keyGlowColor = new THREE.Color(0xb7ff35);
+  const keyBaseColor = new THREE.Color(0x94a3b8);
+  const keyGlowColor = new THREE.Color(0x60a5fa);
   const keyColor = new THREE.Color();
   const keyGlow = new Float32Array(KEY_COUNT);
   for (let row = 0, index = 0; row < 4; row += 1) {
@@ -137,14 +137,14 @@ try {
 
   const trackpadBorder = new THREE.Mesh(
     new THREE.BoxGeometry(1.18, 0.018, 0.64),
-    new THREE.MeshStandardMaterial({ color: 0x5ce1b5, metalness: 0.5, roughness: 0.4 })
+    new THREE.MeshStandardMaterial({ color: 0xa5b4fc, metalness: 0.5, roughness: 0.4 })
   );
   trackpadBorder.position.set(0, 0.17, 1.13);
   laptop.add(trackpadBorder);
 
   const trackpad = new THREE.Mesh(
     new THREE.BoxGeometry(1.12, 0.022, 0.58),
-    new THREE.MeshStandardMaterial({ color: 0x1a282b, metalness: 0.56, roughness: 0.38 })
+    new THREE.MeshStandardMaterial({ color: 0x1e293b, metalness: 0.56, roughness: 0.38 })
   );
   trackpad.position.set(0, 0.185, 1.13);
   laptop.add(trackpad);
@@ -159,7 +159,7 @@ try {
 
   const hinge = new THREE.Mesh(
     new THREE.CylinderGeometry(0.055, 0.055, 4.15, 20),
-    new THREE.MeshStandardMaterial({ color: 0x647879, metalness: 0.84, roughness: 0.25 })
+    new THREE.MeshStandardMaterial({ color: 0x64748b, metalness: 0.84, roughness: 0.25 })
   );
   hinge.rotation.z = Math.PI / 2;
   hinge.position.set(0, 0.2, -1.04);
@@ -188,43 +188,43 @@ try {
   const ctx = screenCanvas.getContext('2d');
 
   const codeLines = [
-    ['const portfolio = {', '#5ce1b5'],
-    ['  name: "Jamar Carty",', '#b7ff35'],
-    ['  studies: "BTS SIO",', '#edf5f2'],
-    ['  option: "SLAM",', '#ff806d'],
-    ['  skills: [', '#5ce1b5'],
-    ['    "PHP", "JavaScript",', '#edf5f2'],
-    ['    "React Native",', '#edf5f2'],
-    ['    "Three.js"', '#ffd166'],
-    ['  ],', '#5ce1b5'],
-    ['  next: "Alternance"', '#b7ff35'],
-    ['};', '#5ce1b5'],
-    ['', '#edf5f2'],
-    ['export default portfolio;', '#ff806d']
+    ['const portfolio = {', '#a5b4fc'],
+    ['  name: "Jamar Carty",', '#60a5fa'],
+    ['  studies: "BTS SIO",', '#e5e7eb'],
+    ['  option: "SLAM",', '#f28b82'],
+    ['  skills: [', '#a5b4fc'],
+    ['    "PHP", "JavaScript",', '#e5e7eb'],
+    ['    "React Native",', '#e5e7eb'],
+    ['    "Three.js"', '#e5b567'],
+    ['  ],', '#a5b4fc'],
+    ['  next: "Alternance"', '#60a5fa'],
+    ['};', '#a5b4fc'],
+    ['', '#e5e7eb'],
+    ['export default portfolio;', '#f28b82']
   ];
   const totalChars = codeLines.reduce((sum, [code]) => sum + code.length + 1, 0);
 
   const drawScreen = (typed, cursorOn, status) => {
-    ctx.fillStyle = '#081113';
+    ctx.fillStyle = '#0b1120';
     ctx.fillRect(0, 0, 1024, 680);
     const glow = ctx.createRadialGradient(700, 200, 0, 700, 200, 620);
-    glow.addColorStop(0, 'rgba(92,225,181,0.08)');
-    glow.addColorStop(1, 'rgba(92,225,181,0)');
+    glow.addColorStop(0, 'rgba(165,180,252,0.08)');
+    glow.addColorStop(1, 'rgba(165,180,252,0)');
     ctx.fillStyle = glow;
     ctx.fillRect(0, 0, 1024, 680);
 
-    ctx.fillStyle = '#142124';
+    ctx.fillStyle = '#1a2333';
     ctx.fillRect(0, 0, 1024, 58);
-    [['#ff806d', 27], ['#ffd166', 53], ['#5ce1b5', 79]].forEach(([color, x]) => {
+    [['#f28b82', 27], ['#e5b567', 53], ['#a5b4fc', 79]].forEach(([color, x]) => {
       ctx.fillStyle = color;
       ctx.beginPath();
       ctx.arc(x, 29, 8, 0, Math.PI * 2);
       ctx.fill();
     });
-    ctx.fillStyle = '#a0b2b1';
+    ctx.fillStyle = '#9ca3af';
     ctx.font = '18px monospace';
     ctx.fillText('jamar-carty.dev  /  portfolio.js', 112, 36);
-    ctx.fillStyle = '#101a1c';
+    ctx.fillStyle = '#131b2c';
     ctx.fillRect(0, 58, 86, 572);
 
     ctx.font = '22px monospace';
@@ -233,7 +233,7 @@ try {
     let cursorY = 112;
     codeLines.forEach(([code, color], index) => {
       const y = 112 + index * 39;
-      ctx.fillStyle = '#607477';
+      ctx.fillStyle = '#64748b';
       ctx.fillText(String(index + 1).padStart(2, '0'), 108, y);
       if (remaining <= 0) return;
       const visible = code.slice(0, remaining);
@@ -248,14 +248,14 @@ try {
       }
     });
     if (cursorOn) {
-      ctx.fillStyle = '#b7ff35';
+      ctx.fillStyle = '#60a5fa';
       ctx.fillRect(cursorX + 2, cursorY - 20, 12, 26);
     }
 
-    ctx.fillStyle = '#0d1719';
+    ctx.fillStyle = '#0f1626';
     ctx.fillRect(0, 630, 1024, 50);
     ctx.font = '18px monospace';
-    ctx.fillStyle = status ? '#5ce1b5' : '#607477';
+    ctx.fillStyle = status ? '#a5b4fc' : '#64748b';
     ctx.fillText(status || '● main   UTF-8   JavaScript', 24, 662);
     screenTexture.needsUpdate = true;
   };
@@ -268,11 +268,11 @@ try {
   screen.position.set(0, 1.43, 0.081);
   screenRig.add(screen);
 
-  const screenLight = new THREE.PointLight(0x5ce1b5, 0, 6);
+  const screenLight = new THREE.PointLight(0xa5b4fc, 0, 6);
   screenLight.position.set(0, 1.4, 1.2);
   screenRig.add(screenLight);
 
-  const cameraDot = new THREE.Mesh(new THREE.SphereGeometry(0.025, 12, 8), new THREE.MeshBasicMaterial({ color: 0x5ce1b5 }));
+  const cameraDot = new THREE.Mesh(new THREE.SphereGeometry(0.025, 12, 8), new THREE.MeshBasicMaterial({ color: 0xa5b4fc }));
   cameraDot.position.set(0, 2.88, 0.081);
   screenRig.add(cameraDot);
 
@@ -280,7 +280,7 @@ try {
   const groundGlow = new THREE.Mesh(
     new THREE.PlaneGeometry(9, 5.2),
     new THREE.MeshBasicMaterial({
-      map: makeGlowTexture('rgba(183,255,53,0.55)', 'rgba(183,255,53,0)'),
+      map: makeGlowTexture('rgba(96,165,250,0.55)', 'rgba(96,165,250,0)'),
       transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, opacity: 0.35
     })
   );
@@ -293,7 +293,7 @@ try {
   const particleGeometry = new THREE.BufferGeometry();
   const positions = new Float32Array(PARTICLE_COUNT * 3);
   const colors = new Float32Array(PARTICLE_COUNT * 3);
-  const palette = [new THREE.Color(0xb7ff35), new THREE.Color(0x5ce1b5), new THREE.Color(0xff806d)];
+  const palette = [new THREE.Color(0x60a5fa), new THREE.Color(0xa5b4fc), new THREE.Color(0xf28b82)];
   for (let i = 0; i < PARTICLE_COUNT; i += 1) {
     const radius = 3.6 + Math.random() * 3.4;
     const angle = Math.random() * Math.PI * 2;
@@ -313,7 +313,7 @@ try {
 
   /* ---------- floating tags & shapes ---------- */
   const floaters = [];
-  [['</>', '#b7ff35'], ['API', '#5ce1b5'], ['PHP', '#ffd166'], ['{ }', '#ff806d'], ['SQL', '#5ce1b5'], ['JS', '#b7ff35']].forEach(([label, color], index, list) => {
+  [['</>', '#60a5fa'], ['API', '#a5b4fc'], ['PHP', '#e5b567'], ['{ }', '#f28b82'], ['SQL', '#a5b4fc'], ['JS', '#60a5fa']].forEach(([label, color], index, list) => {
     const sprite = new THREE.Sprite(new THREE.SpriteMaterial({ map: makeTagTexture(label, color), transparent: true, depthWrite: false, opacity: 0 }));
     sprite.scale.set(1.1, 0.55, 1);
     scene.add(sprite);
@@ -328,7 +328,7 @@ try {
   });
 
   const shapes = [];
-  [[new THREE.OctahedronGeometry(0.32), 0xb7ff35, [-3.3, 3.6, -1.2]], [new THREE.IcosahedronGeometry(0.26), 0x5ce1b5, [3.4, 3.9, -0.6]], [new THREE.TorusGeometry(0.24, 0.07, 12, 32), 0xff806d, [2.9, 0.5, 2.1]]]
+  [[new THREE.OctahedronGeometry(0.32), 0x60a5fa, [-3.3, 3.6, -1.2]], [new THREE.IcosahedronGeometry(0.26), 0xa5b4fc, [3.4, 3.9, -0.6]], [new THREE.TorusGeometry(0.24, 0.07, 12, 32), 0xf28b82, [2.9, 0.5, 2.1]]]
     .forEach(([geometry, color, [x, y, z]], index) => {
       const mesh = new THREE.Mesh(geometry, new THREE.MeshStandardMaterial({ color, emissive: color, emissiveIntensity: 0.55, metalness: 0.4, roughness: 0.3, wireframe: index !== 2 }));
       mesh.position.set(x, y, z);

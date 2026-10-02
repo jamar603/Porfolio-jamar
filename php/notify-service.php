@@ -68,7 +68,7 @@ function notify_discord(array $data, int $id): void
             'title' => '📩 ' . excerpt($data['subject'], 200),
             'url' => admin_url() . '#message-' . $id,
             'description' => excerpt($data['message'], 400),
-            'color' => 0xB7FF35,
+            'color' => 0x60A5FA,
             'fields' => [
                 ['name' => 'De', 'value' => excerpt($data['name'], 100), 'inline' => true],
                 ['name' => 'E-mail', 'value' => excerpt($data['email'], 100), 'inline' => true],
