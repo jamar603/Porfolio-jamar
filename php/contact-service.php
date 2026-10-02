@@ -120,13 +120,13 @@ function send_contact_mail(array $data): bool
         . $data['message'] . "\n";
     $fromName = mb_encode_mimeheader('Portfolio Jamar Carty', 'UTF-8', 'B');
     $replyName = mb_encode_mimeheader($data['name'], 'UTF-8', 'B');
+    $fromEmail = config('from_email') ?: 'no-reply@' . preg_replace('/^www\./', '', strtok(site_host(), ':'));
     $headers = [
-        'From' => $fromName . ' <' . config('from_email') . '>',
+        'From' => $fromName . ' <' . $fromEmail . '>',
         'Reply-To' => $replyName . ' <' . $data['email'] . '>',
         'MIME-Version' => '1.0',
         'Content-Type' => 'text/plain; charset=UTF-8',
         'Content-Transfer-Encoding' => '8bit',
-        'X-Mailer' => 'PHP/' . PHP_VERSION,
     ];
 
     // mail() is unavailable on most local setups: the message stays saved in SQLite either way

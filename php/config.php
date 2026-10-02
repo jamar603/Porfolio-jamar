@@ -6,8 +6,12 @@ return [
     'recipient_email' => 'jamarcarty131@gmail.com',
     'recipient_name' => 'Jamar Carty',
 
+    // domains this site answers to; add the real one in php/secrets.php (see secrets.example.php)
+    'allowed_hosts' => ['localhost', '127.0.0.1'],
+
     // sender used by mail(); most hosts require an address on your own domain
-    'from_email' => 'no-reply@' . preg_replace('/^www\./', '', strtok($_SERVER['HTTP_HOST'] ?? 'localhost', ':')),
+    // empty = no-reply@<first trusted domain>
+    'from_email' => '',
 
     // SQLite backup of every message (folder is created automatically, blocked from the web by .htaccess)
     'database_path' => dirname(__DIR__) . '/data/messages.sqlite',

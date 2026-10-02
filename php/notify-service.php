@@ -10,7 +10,7 @@ function admin_url(): string
 {
     $https = !empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off';
     $base = rtrim(str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME'] ?? '/')), '/');
-    return ($https ? 'https' : 'http') . '://' . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $base . '/admin/';
+    return ($https ? 'https' : 'http') . '://' . site_host() . $base . '/admin/';
 }
 
 function http_post(string $url, string $body, array $headers): bool

@@ -1,6 +1,21 @@
 DirectoryIndex index.php index.html
 Options -Indexes
+ServerSignature Off
 
-<FilesMatch "\.(sqlite|ini|log)$">
+# hidden files and folders (.git, .claude, .gitignore...) do not exist for visitors
+RedirectMatch 404 /\.(?!well-known/)
+
+# databases, logs and project files are never served
+<FilesMatch "\.(sqlite|ini|log|md|sql|bak|code-workspace)$">
   Require all denied
 </FilesMatch>
+
+# security headers for static files (PHP pages send their own from php/bootstrap.php)
+<IfModule mod_headers.c>
+  Header unset X-Powered-By
+  <FilesMatch "\.(html?|js|css|json|svg|pdf|png|jpe?g|gif|webp)$">
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-Frame-Options "SAMEORIGIN"
+    Header set Referrer-Policy "strict-origin-when-cross-origin"
+  </FilesMatch>
+</IfModule>
