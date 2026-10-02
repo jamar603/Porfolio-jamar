@@ -16,4 +16,9 @@ return [
     'rate_limit_max' => 3,          // messages allowed per visitor...
     'rate_limit_window' => 600,     // ...within this many seconds
     'min_fill_seconds' => 3,        // bots submit faster than this
+
+    // phone / Discord notifications: set the real values in php/secrets.php (see secrets.example.php)
+    'ntfy_server' => 'https://ntfy.sh',
+    'ntfy_topic' => '',
+    'discord_webhook' => '',
 ];

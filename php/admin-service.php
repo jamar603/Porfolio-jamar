@@ -128,3 +128,15 @@ function delete_message(PDO $pdo, int $id): void
 {
     $pdo->prepare('DELETE FROM messages WHERE id = :id')->execute([':id' => $id]);
 }
+
+function latest_message_id(PDO $pdo): int
+{
+    return (int) $pdo->query('SELECT COALESCE(MAX(id), 0) FROM messages')->fetchColumn();
+}
+
+function messages_since(PDO $pdo, int $id): array
+{
+    $statement = $pdo->prepare('SELECT id, name, subject FROM messages WHERE id > :id ORDER BY id DESC LIMIT 5');
+    $statement->execute([':id' => $id]);
+    return $statement->fetchAll();
+}

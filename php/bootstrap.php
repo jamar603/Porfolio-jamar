@@ -15,8 +15,14 @@ if (session_status() !== PHP_SESSION_ACTIVE) {
 function config(string $key)
 {
     static $config = null;
-    $config ??= require __DIR__ . '/config.php';
-    return $config[$key];
+    if ($config === null) {
+        $config = require __DIR__ . '/config.php';
+        // private values (webhook URLs, ntfy topic) live in a git-ignored file
+        if (is_file(__DIR__ . '/secrets.php')) {
+            $config = array_replace($config, require __DIR__ . '/secrets.php');
+        }
+    }
+    return $config[$key] ?? null;
 }
 
 function e(?string $value): string

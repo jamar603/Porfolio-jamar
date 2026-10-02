@@ -1,0 +1,11 @@
+/* new-message toasts (notify.js), shared by the admin page and the portfolio */
+.notify-stack{ position:fixed; right:20px; bottom:76px; z-index:10000; display:grid; gap:10px; width:min(360px,calc(100vw - 40px)); pointer-events:none; }
+.notify-toast{ display:grid; gap:2px; padding:14px 16px 14px 44px; position:relative; border:1px solid rgba(183,255,53,.4); border-radius:12px; background:rgba(17,25,28,.96); box-shadow:0 18px 40px rgba(0,0,0,.45); color:#edf5f2; font-family:'Inter',sans-serif; font-size:14px; line-height:1.45; text-decoration:none; pointer-events:auto; opacity:0; transform:translateY(16px) scale(.98); transition:opacity 300ms cubic-bezier(0.23,1,0.32,1),transform 300ms cubic-bezier(0.23,1,0.32,1); }
+.notify-toast.is-in{ opacity:1; transform:none; }
+.notify-toast::before{ content:''; position:absolute; top:17px; left:17px; width:12px; height:12px; border-radius:50%; background:#b7ff35; box-shadow:0 0 12px rgba(183,255,53,.7); }
+.notify-toast strong{ font-weight:700; }
+.notify-toast span{ overflow:hidden; color:#b3c2c1; text-overflow:ellipsis; white-space:nowrap; }
+a.notify-toast:active{ transform:scale(.98); }
+@media (hover:hover) and (pointer:fine){ a.notify-toast:hover{ border-color:#b7ff35; } }
+@media (prefers-reduced-motion:reduce){ .notify-toast{ transform:none; transition:opacity 200ms ease; } }
+[data-unread-count][hidden]{ display:none !important; }

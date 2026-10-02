@@ -98,3 +98,4 @@ code{ font-family:ui-monospace,Consolas,monospace; font-size:13px; }
   .login-card,.message-body{ animation:none !important; }
   .btn:active{ transform:none; }
 }
+[hidden]{ display:none !important; }

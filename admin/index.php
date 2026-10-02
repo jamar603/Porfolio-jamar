@@ -86,8 +86,9 @@ $pageUrl = static fn (string $filter, int $page = 1): string => 'index.php' . ((
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="admin.css">
+<link rel="stylesheet" href="notify.css">
 </head>
-<body>
+<body<?php if ($loggedIn): ?> data-notify-endpoint="api.php" data-admin-url="index.php" data-latest-id="<?= latest_message_id($pdo) ?>" data-notify-icon="../logo-jc.svg"<?php endif; ?>>
 
 <?php if (!$loggedIn): ?>
 <main class="login">
@@ -117,6 +118,7 @@ $pageUrl = static fn (string $filter, int $page = 1): string => 'index.php' . ((
   <div class="wrap topbar-inner">
     <a class="brand" href="index.php"><img src="../logo-jc.svg" alt="" width="28" height="28"> Admin</a>
     <div class="topbar-actions">
+      <button class="btn btn-ghost" type="button" data-notify-permission hidden>🔔 Activer les notifications</button>
       <a class="btn btn-ghost" href="../index.php" target="_blank" rel="noopener">Voir le site ↗</a>
       <form method="post" action="index.php">
         <input type="hidden" name="csrf_token" value="<?= e(csrf_token()) ?>">
@@ -134,7 +136,7 @@ $pageUrl = static fn (string $filter, int $page = 1): string => 'index.php' . ((
     </div>
     <div class="stats">
       <div class="stat"><span class="stat-value"><?= $counts['total'] ?></span><span class="stat-label">au total</span></div>
-      <div class="stat stat-accent"><span class="stat-value"><?= $counts['unread'] ?></span><span class="stat-label">non lu<?= $counts['unread'] > 1 ? 's' : '' ?></span></div>
+      <div class="stat stat-accent"><span class="stat-value" data-unread-count><?= $counts['unread'] ?></span><span class="stat-label">non lu<?= $counts['unread'] > 1 ? 's' : '' ?></span></div>
     </div>
   </div>
 
@@ -144,7 +146,7 @@ $pageUrl = static fn (string $filter, int $page = 1): string => 'index.php' . ((
 
   <nav class="tabs" aria-label="Filtrer les messages">
     <a class="tab<?= $filter === 'all' ? ' is-active' : '' ?>" href="<?= e($pageUrl('all')) ?>"<?= $filter === 'all' ? ' aria-current="page"' : '' ?>>Tous <span><?= $counts['total'] ?></span></a>
-    <a class="tab<?= $filter === 'unread' ? ' is-active' : '' ?>" href="<?= e($pageUrl('unread')) ?>"<?= $filter === 'unread' ? ' aria-current="page"' : '' ?>>Non lus <span><?= $counts['unread'] ?></span></a>
+    <a class="tab<?= $filter === 'unread' ? ' is-active' : '' ?>" href="<?= e($pageUrl('unread')) ?>"<?= $filter === 'unread' ? ' aria-current="page"' : '' ?>>Non lus <span data-unread-count><?= $counts['unread'] ?></span></a>
   </nav>
 
   <?php if (!$messages): ?>
@@ -209,5 +211,6 @@ $pageUrl = static fn (string $filter, int $page = 1): string => 'index.php' . ((
 <?php endif; ?>
 
 <script src="admin.js"></script>
+<?php if ($loggedIn): ?><script src="notify.js"></script><?php endif; ?>
 </body>
 </html>

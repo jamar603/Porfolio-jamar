@@ -12,9 +12,12 @@ $_SESSION['form_started'] = time();
 
 // when the admin is logged in, show a shortcut with the unread count
 $adminUnread = null;
+$adminLatestId = 0;
 if (is_admin()) {
     try {
-        $adminUnread = count_messages(contact_database())['unread'];
+        $adminPdo = contact_database();
+        $adminUnread = count_messages($adminPdo)['unread'];
+        $adminLatestId = latest_message_id($adminPdo);
     } catch (PDOException) {
         $adminUnread = 0;
     }
@@ -584,10 +587,12 @@ if (is_admin()) {
   </div>
 </footer>
 <?php if ($adminUnread !== null): ?>
-<a class="admin-fab" href="admin/">
+<a class="admin-fab" href="admin/" data-notify-endpoint="admin/api.php" data-admin-url="admin/" data-latest-id="<?= $adminLatestId ?>" data-notify-icon="logo-jc.svg">
   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16v16H4z"/><path d="M4 6l8 7 8-7"/></svg>
-  Admin<?php if ($adminUnread > 0): ?> <span class="admin-fab-count"><?= $adminUnread ?> non lu<?= $adminUnread > 1 ? 's' : '' ?></span><?php endif; ?>
+  Admin <span class="admin-fab-count" data-unread-count="label"<?= $adminUnread > 0 ? '' : ' hidden' ?>><?= $adminUnread ?> non lu<?= $adminUnread > 1 ? 's' : '' ?></span>
 </a>
+<link rel="stylesheet" href="admin/notify.css">
+<script src="admin/notify.js" defer></script>
 <?php endif; ?>
 
 <script src="script.js"></script>

@@ -3,3 +3,6 @@ data/
 
 # admin credentials (password hash)
 php/admin-config.php
+
+# private notification settings
+php/secrets.php

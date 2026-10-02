@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 require __DIR__ . '/php/bootstrap.php';
 require __DIR__ . '/php/contact-service.php';
+require __DIR__ . '/php/notify-service.php';
 
 // fetch() asks for JSON; a plain form post (JavaScript disabled) gets a redirect back to the page
 $wantsJson = str_contains($_SERVER['HTTP_ACCEPT'] ?? '', 'application/json');
@@ -59,5 +60,7 @@ if (send_contact_mail($data)) {
 } else {
     error_log("Contact form: mail() failed for message #$id (saved in SQLite).");
 }
+
+notify_new_message($data, $id);
 
 respond($wantsJson, 200, true, 'Merci ! Votre message a bien été envoyé. Je vous réponds rapidement.');
