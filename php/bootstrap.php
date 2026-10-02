@@ -1,6 +1,8 @@
 <?php
 declare(strict_types=1);
 
+date_default_timezone_set('Europe/Paris');
+
 if (session_status() !== PHP_SESSION_ACTIVE) {
     session_set_cookie_params([
         'httponly' => true,
@@ -36,14 +38,14 @@ function csrf_is_valid(?string $token): bool
 }
 
 // one-shot message carried across the redirect after a form post (no-JS fallback)
-function set_flash(array $flash): void
+function set_flash(array $flash, string $key = 'flash'): void
 {
-    $_SESSION['flash'] = $flash;
+    $_SESSION[$key] = $flash;
 }
 
-function take_flash(): array
+function take_flash(string $key = 'flash'): array
 {
-    $flash = $_SESSION['flash'] ?? [];
-    unset($_SESSION['flash']);
+    $flash = $_SESSION[$key] ?? [];
+    unset($_SESSION[$key]);
     return $flash;
 }

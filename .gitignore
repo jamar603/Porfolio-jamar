@@ -1,2 +1,5 @@
 # contact form messages (personal data)
 data/
+
+# admin credentials (password hash)
+php/admin-config.php

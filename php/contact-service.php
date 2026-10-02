@@ -66,8 +66,14 @@ function contact_database(): PDO
         message TEXT NOT NULL,
         ip_hash TEXT NOT NULL,
         mailed INTEGER NOT NULL DEFAULT 0,
+        read_at INTEGER NULL,
         created_at INTEGER NOT NULL
     )');
+    // databases created before the admin page existed lack read_at
+    $columns = array_column($pdo->query('PRAGMA table_info(messages)')->fetchAll(), 'name');
+    if (!in_array('read_at', $columns, true)) {
+        $pdo->exec('ALTER TABLE messages ADD COLUMN read_at INTEGER NULL');
+    }
     return $pdo;
 }
 
