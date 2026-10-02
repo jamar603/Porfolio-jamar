@@ -65,7 +65,7 @@ function createArticleCard(article, index){
   addText(meta, 'span', 'article-category', article.categoryLabel);
   addText(meta, 'time', '', article.date);
   content.append(meta);
-  addText(content, 'h2', '', article.title);
+  addText(content, 'h3', '', article.title);
   addText(content, 'p', 'article-summary', article.summary);
   addTags(content, article.tags);
 
@@ -144,7 +144,7 @@ async function loadArticles(){
 
     const requestedArticleId = new URLSearchParams(window.location.search).get('article');
     const requestedArticle = articles.find(article => article.id === requestedArticleId);
-    if (requestedArticle) renderArticle(requestedArticle);
+    if (requestedArticle) openArticleById(requestedArticle.id);
   } catch (error){
     articleStatus.textContent = 'Les fiches restent consultables ci-dessous. Pour activer le chargement AJAX, ouvre le site depuis son adresse locale HTTP.';
     console.error('Impossible de charger articles.json', error);
@@ -204,6 +204,22 @@ articleGrid.addEventListener('click', event => {
 
   const fallbackDetails = button.closest('.article-card')?.querySelector('.article-details');
   if (fallbackDetails) openFallbackDetails(fallbackDetails);
+});
+
+// open an article from anywhere on the page (e.g. the project cards)
+function openArticleById(id){
+  const article = articles.find(item => item.id === id);
+  if (article){
+    renderArticle(article);
+    return true;
+  }
+  return false;
+}
+
+document.addEventListener('click', event => {
+  const link = event.target.closest('[data-open-article]');
+  if (!link) return;
+  if (openArticleById(link.dataset.openArticle)) event.preventDefault();
 });
 
 searchField.addEventListener('input', filterArticles);

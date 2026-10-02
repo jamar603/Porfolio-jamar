@@ -7,7 +7,7 @@ const navObs = new IntersectionObserver((entries) => {
       navLinks.forEach(a => a.classList.toggle('active', a.dataset.t === entry.target.id));
     }
   });
-}, { threshold: 0.4 });
+}, { rootMargin: '-45% 0px -50% 0px' });
 sections.forEach(s => navObs.observe(s));
 
 const contactForm = document.getElementById('contactForm');
