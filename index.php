@@ -1,6 +1,7 @@
 <?php
 declare(strict_types=1);
 require __DIR__ . '/php/bootstrap.php';
+require __DIR__ . '/php/admin-service.php';
 
 // result of a contact form post when JavaScript is off (see contact.php)
 $contactFlash = take_flash();
@@ -8,6 +9,16 @@ $contactErrors = $contactFlash['errors'] ?? [];
 $contactOld = $contactFlash['old'] ?? [];
 // time-trap: bots that submit within a few seconds of loading the page are ignored
 $_SESSION['form_started'] = time();
+
+// when the admin is logged in, show a shortcut with the unread count
+$adminUnread = null;
+if (is_admin()) {
+    try {
+        $adminUnread = count_messages(contact_database())['unread'];
+    } catch (PDOException) {
+        $adminUnread = 0;
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -569,8 +580,15 @@ $_SESSION['form_started'] = time();
   <div class="container">
     <span>© <?= date('Y') ?> Jamar Carty</span>
     <span>BTS SIO — Option SLAM — AFIP</span>
+    <a class="footer-admin" href="admin/" rel="nofollow"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>Espace admin</a>
   </div>
 </footer>
+<?php if ($adminUnread !== null): ?>
+<a class="admin-fab" href="admin/">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16v16H4z"/><path d="M4 6l8 7 8-7"/></svg>
+  Admin<?php if ($adminUnread > 0): ?> <span class="admin-fab-count"><?= $adminUnread ?> non lu<?= $adminUnread > 1 ? 's' : '' ?></span><?php endif; ?>
+</a>
+<?php endif; ?>
 
 <script src="script.js"></script>
 <script src="articles.js"></script>
