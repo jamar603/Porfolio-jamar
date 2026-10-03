@@ -623,3 +623,57 @@ html.has-custom-cursor:has(.article-dialog[open]) :is(.cursor-dot,.cursor-ring){
   .section-head.reveal h2::after{ transform:none; transition:none; }
   .project-card:hover .project-icon svg{ transform:none; }
 }
+
+/* ---------- tableau de synthèse BTS (section #synthese) ---------- */
+.synth-wrap{ overflow-x:auto; border:1px solid var(--border); border-radius:12px; background:rgba(17,24,39,.72); backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px); scrollbar-width:thin; }
+.synth-wrap:focus-visible{ outline-offset:2px; }
+.synth-table{ width:100%; min-width:820px; border-collapse:collapse; font-size:13.5px; }
+.synth-table th,.synth-table td{ border-bottom:1px solid var(--border); padding:12px 10px; }
+.synth-table thead th{ vertical-align:bottom; font-size:12px; font-weight:600; line-height:1.35; color:var(--dim); text-align:center; width:12%; cursor:help; }
+.synth-table thead .synth-corner{ text-align:left; width:28%; cursor:default; color:var(--ink); font-family:'Space Grotesk',sans-serif; font-size:13px; }
+.synth-num{ display:block; margin-bottom:4px; font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:700; letter-spacing:.12em; color:var(--amber); }
+.synth-period th{ padding:10px; text-align:left; font-size:11.5px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--indigo); background:rgba(96,165,250,.06); }
+.synth-table tbody th[scope="row"]{ text-align:left; font-weight:500; }
+.synth-table tbody th a{ color:var(--ink); background-image:linear-gradient(var(--indigo),var(--indigo)); background-size:0 1px; background-position:0 100%; background-repeat:no-repeat; transition:color 180ms var(--ease-out),background-size 260ms var(--ease-out); }
+.synth-table tbody th a:hover{ color:var(--indigo); background-size:100% 1px; }
+.synth-table td{ text-align:center; }
+.synth-table tbody tr:not(.synth-period):hover{ background:rgba(96,165,250,.05); }
+.synth-check{ display:inline-grid; width:26px; height:26px; place-items:center; border-radius:7px; background:rgba(229,181,103,.14); box-shadow:inset 0 0 0 1px rgba(229,181,103,.4); color:var(--amber); font-weight:700; font-size:14px; }
+.synth-table tbody tr:last-child th,.synth-table tbody tr:last-child td{ border-bottom:0; }
+/* first column stays visible while the table scrolls sideways on small screens */
+.synth-table th:first-child{ position:sticky; left:0; z-index:1; background:#111827; }
+.synth-period th:first-child{ background:#131d30; }
+.synth-skills{ display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:12px; margin-top:22px; }
+.synth-skills details{ border:1px solid var(--border); border-radius:10px; background:rgba(17,24,39,.6); padding:14px 16px; }
+.synth-skills summary{ cursor:pointer; font-weight:600; font-size:14px; list-style-position:outside; }
+.synth-skills summary .synth-num{ display:inline; margin:0 8px 0 0; }
+.synth-skills ul{ margin:10px 0 0 18px; color:var(--dim); font-size:13.5px; }
+.synth-skills li + li{ margin-top:4px; }
+.synth-actions{ display:flex; flex-wrap:wrap; gap:12px; margin-top:22px; }
+@media (max-width:640px){
+  .synth-table{ font-size:12.5px; }
+  .synth-table thead .synth-corner{ width:auto; min-width:170px; }
+}
+
+/* tableau de synthèse on phones: each realisation becomes a card listing its competences as chips */
+@media (max-width:700px){
+  .synth-wrap{ overflow:visible; border:0; border-radius:0; background:none; backdrop-filter:none; -webkit-backdrop-filter:none; }
+  .synth-table{ display:block; min-width:0; font-size:14px; }
+  .synth-table thead{ display:none; }
+  .synth-table tbody,.synth-table tr,.synth-table th,.synth-table td{ display:block; }
+  .synth-table tbody + tbody{ margin-top:26px; }
+  .synth-table th:first-child,.synth-period th:first-child{ position:static; background:none; }
+  .synth-period th{ padding:0 2px 10px; border:0; background:none; font-size:11px; line-height:1.5; }
+  .synth-table tbody tr:not(.synth-period){ display:flex; flex-wrap:wrap; gap:8px; margin-top:10px; padding:14px 16px 16px; border:1px solid var(--border); border-radius:12px; background:rgba(17,24,39,.82); }
+  .synth-table tbody tr:not(.synth-period):hover{ background:rgba(17,24,39,.82); }
+  .synth-table tbody th[scope="row"]{ flex-basis:100%; padding:0 0 4px; border:0; font-size:15px; font-weight:600; }
+  .synth-table tbody th a{ display:flex; justify-content:space-between; gap:12px; background-image:none; }
+  .synth-table tbody th a::after{ content:'→'; color:var(--indigo); flex-shrink:0; }
+  .synth-table td{ display:none; }
+  .synth-table td.is-on{ display:inline-flex; align-items:center; gap:6px; padding:5px 10px 5px 6px; border:0; border-radius:999px; background:rgba(229,181,103,.1); box-shadow:inset 0 0 0 1px rgba(229,181,103,.32); font-size:12.5px; line-height:1.3; color:var(--ink); }
+  .synth-table td.is-on::before{ content:attr(data-c); padding:2px 6px; border-radius:999px; background:rgba(229,181,103,.2); font-family:'Space Grotesk',sans-serif; font-size:10.5px; font-weight:700; letter-spacing:.06em; color:var(--amber); }
+  .synth-table td.is-on::after{ content:attr(data-label); }
+  .synth-table td.is-on .synth-check{ display:none; }
+  .synth-skills{ grid-template-columns:1fr; }
+  .synth-actions .btn-outline{ flex:1 1 100%; justify-content:center; }
+}

@@ -57,6 +57,7 @@ if (is_admin()) {
       <a href="#profil" data-t="profil">Profil</a>
       <a href="#formation" data-t="formation">Formation</a>
       <a href="#projets" data-t="projets">Projets</a>
+      <a href="#synthese" data-t="synthese">Synthèse</a>
       <a href="#articles" data-t="articles">Articles</a>
       <a href="#competences" data-t="competences">Compétences</a>
       <a href="#atouts" data-t="atouts">Atouts</a>
@@ -245,6 +246,99 @@ if (is_admin()) {
     </div>
     <div class="articles-cta-wrap">
       <a class="btn-outline" href="#articles">Parcourir les 13 articles ↓</a>
+    </div>
+  </div>
+</section>
+
+<section id="synthese">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-icon" style="background:var(--amber-soft);">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#e5b567" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18"/></svg>
+      </div>
+      <div><h2>Tableau de synthèse</h2><p>BTS SIO option SLAM · session 2026 · réalisations professionnelles</p></div>
+    </div>
+
+<?php
+// each competence: full title, its skills, short label for the mobile chips
+$synthCompetences = [
+  ['Gérer le patrimoine informatique', ['Recenser et identifier les ressources numériques', 'Exploiter des référentiels, normes et standards adoptés par le prestataire informatique', 'Mettre en place et vérifier les niveaux d’habilitation associés à un service', 'Vérifier les conditions de la continuité d’un service informatique', 'Gérer des sauvegardes', 'Vérifier le respect des règles d’utilisation des ressources numériques'], 'Patrimoine informatique'],
+  ['Répondre aux incidents et aux demandes d’assistance et d’évolution', ['Collecter, suivre et orienter des demandes', 'Traiter des demandes concernant les services réseau et système, applicatifs', 'Traiter des demandes concernant les applications'], 'Incidents et demandes'],
+  ['Développer la présence en ligne de l’organisation', ['Participer à la valorisation de l’image de l’organisation sur les médias numériques en tenant compte du cadre juridique et des enjeux économiques', 'Référencer les services en ligne de l’organisation et mesurer leur visibilité', 'Participer à l’évolution d’un site Web exploitant les données de l’organisation'], 'Présence en ligne'],
+  ['Travailler en mode projet', ['Analyser les objectifs et les modalités d’organisation d’un projet', 'Planifier les activités', 'Évaluer les indicateurs de suivi d’un projet et analyser les écarts'], 'Mode projet'],
+  ['Mettre à disposition des utilisateurs un service informatique', ['Réaliser les tests d’intégration et d’acceptation d’un service', 'Déployer un service', 'Accompagner les utilisateurs dans la mise en place d’un service'], 'Service informatique'],
+  ['Organiser son développement professionnel', ['Mettre en place son environnement d’apprentissage personnel', 'Mettre en œuvre des outils et stratégies de veille informationnelle', 'Gérer son identité professionnelle', 'Développer son projet professionnel'], 'Développement professionnel'],
+];
+// each row: title, article id opened on click, competences covered (1 = first column)
+$synthRealisations = [
+  'Réalisations en cours de formation' => [
+    ['AP C#', 'ap-csharp-slam', [4]],
+    ['AP M2L : installation du serveur LAMP', 'm2l-infrastructure', [5]],
+    ['TP GLPI', 'glpi-inventory', [1]],
+    ['TP Gestion des incidents et des demandes', 'glpi-tickets', [2]],
+    ['AP Electronitech', 'electronitech-web', [3, 5]],
+    ['AP2 Océane : PHP et SQL', 'ap2-php-sql', [3, 4]],
+    ['AP Mediateq C#', 'mediateq-csharp', [2, 4]],
+    ['TP CV et empreinte numérique', 'cv-empreinte', [3, 6]],
+    ['TP Portfolio avec WordPress', 'portfolio-wordpress', [6]],
+  ],
+  'Réalisations en cours de stage de première année' => [
+    ['Mission 1 : React Native et API', 'react-native-stage', [4, 6]],
+    ['Mission 2 : Laravel 12', 'laravel-stage', [3, 4, 5, 6]],
+  ],
+  'Réalisations en cours de stage de seconde année' => [
+    ['Mission 1 : Kadviser, modélisation 3D', 'kadviser-model3d', [4]],
+    ['Mission 2 : amélioration du site web Kadviser', 'kadviser-themes', [4]],
+  ],
+];
+?>
+    <div class="synth-wrap" tabindex="0" role="region" aria-label="Tableau de synthèse des réalisations professionnelles, défilable horizontalement">
+      <table class="synth-table">
+        <caption class="sr-only">Compétences du bloc 1 mises en œuvre dans chaque réalisation professionnelle</caption>
+        <thead>
+          <tr>
+            <th scope="col" class="synth-corner">Réalisations professionnelles</th>
+<?php foreach ($synthCompetences as $i => [$label, $skills]): ?>
+            <th scope="col" title="<?= e(implode(' · ', $skills)) ?>"><span class="synth-num">C<?= $i + 1 ?></span><?= e($label) ?></th>
+<?php endforeach; ?>
+          </tr>
+        </thead>
+<?php foreach ($synthRealisations as $period => $rows): ?>
+        <tbody>
+          <tr class="synth-period"><th scope="rowgroup" colspan="<?= count($synthCompetences) + 1 ?>"><?= e($period) ?></th></tr>
+<?php foreach ($rows as [$title, $article, $covered]): ?>
+          <tr>
+            <th scope="row"><a href="#articles" data-open-article="<?= e($article) ?>"><?= e($title) ?></a></th>
+<?php for ($c = 1; $c <= count($synthCompetences); $c++): ?>
+<?php if (in_array($c, $covered, true)): ?>
+            <td class="is-on" data-c="C<?= $c ?>" data-label="<?= e($synthCompetences[$c - 1][2]) ?>"><span class="synth-check" aria-hidden="true">✓</span><span class="sr-only">Oui</span></td>
+<?php else: ?>
+            <td><span class="sr-only">Non</span></td>
+<?php endif; ?>
+<?php endfor; ?>
+          </tr>
+<?php endforeach; ?>
+        </tbody>
+<?php endforeach; ?>
+      </table>
+    </div>
+
+    <div class="synth-skills">
+<?php foreach ($synthCompetences as $i => [$label, $skills]): ?>
+      <details>
+        <summary><span class="synth-num">C<?= $i + 1 ?></span><?= e($label) ?></summary>
+        <ul>
+<?php foreach ($skills as $skill): ?>
+          <li><?= e($skill) ?></li>
+<?php endforeach; ?>
+        </ul>
+      </details>
+<?php endforeach; ?>
+    </div>
+
+    <div class="synth-actions">
+      <a class="btn-outline" href="tableau-synthese-bts-sio.pdf" target="_blank" rel="noopener">Ouvrir le tableau officiel (PDF)</a>
+      <a class="btn-outline" href="tableau-synthese-bts-sio.pdf" download>Télécharger le PDF</a>
     </div>
   </div>
 </section>
