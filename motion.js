@@ -1,4 +1,4 @@
-// lively details: hero name cascade, magnetic main button, celebration when the contact form is sent
+// lively details: hero name cascade, rotating role, fact counters, magnetic main button, celebration when the contact form is sent
 (() => {
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)');
@@ -51,6 +51,46 @@
       ty = near ? dy * STRENGTH : 0;
       kick();
     }, { passive: true });
+  }
+
+  // hero role: cycles through specialities; screen readers keep the static title
+  const rotate = document.querySelector('.hero-rotate');
+  if (rotate && !reducedMotion.matches) {
+    const words = rotate.dataset.words.split('|');
+    let index = 0;
+    setInterval(() => {
+      if (document.hidden) return;
+      rotate.classList.add('is-leaving');
+      setTimeout(() => {
+        index = (index + 1) % words.length;
+        rotate.textContent = words[index];
+        rotate.classList.remove('is-leaving');
+        rotate.classList.add('is-entering');
+        rotate.getBoundingClientRect(); // commit the start position before animating in
+        rotate.classList.remove('is-entering');
+      }, 260);
+    }, 2600);
+  }
+
+  // hero facts: numbers count up once when the bento row first shows
+  const counters = document.querySelectorAll('.hero-bento [data-count]');
+  if (counters.length && !reducedMotion.matches && 'IntersectionObserver' in window) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        observer.unobserve(entry.target);
+        const el = entry.target;
+        const target = Number(el.dataset.count);
+        const start = performance.now();
+        const tick = (now) => {
+          const t = Math.min(1, (now - start) / 900);
+          el.textContent = Math.round(target * (1 - (1 - t) ** 3));
+          if (t < 1) requestAnimationFrame(tick);
+        };
+        requestAnimationFrame(tick);
+      });
+    }, { threshold: 0.6 });
+    counters.forEach((el) => observer.observe(el));
   }
 
   // contact form sent: a short burst of particles from the send button (rare event, delight allowed)

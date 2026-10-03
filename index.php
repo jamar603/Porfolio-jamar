@@ -68,21 +68,59 @@ if (is_admin()) {
 </nav>
 
 <section class="hero">
-  <div class="container hero-grid">
-    <div>
-      <div class="badge"><span class="d"></span> Recherche alternance · rythme 2 semaines / 2 semaines</div>
-      <h1><span class="neon-name">Jamar</span> <span class="neon-name">Carty</span><br><span class="sw">Développeur Full Stack</span></h1>
-      <p class="hero-sub">Étudiant en BTS SIO SLAM à l’AFIP, je recherche une alternance en développement informatique. Rythme : deux semaines en entreprise et deux semaines en formation.</p>
-      <div class="hero-cta">
-        <a href="#projets" class="btn-primary">Voir mes projets →</a>
-        <a href="#contact" class="btn-outline">Parler d’alternance</a>
-        <a href="cv-jamar-carty.pdf" class="btn-outline btn-cv" download="CV-Jamar-Carty.pdf"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg> Télécharger mon CV</a>
+  <div class="container">
+    <div class="hero-grid">
+      <div class="hero-copy">
+        <div class="badge"><span class="d"></span> Recherche alternance · rythme 2 semaines / 2 semaines</div>
+        <h1>
+          <span class="neon-name">Jamar</span> <span class="neon-name">Carty</span><br>
+          <span class="sw"><span class="sr-only">Développeur Full Stack</span><span aria-hidden="true">Développeur <span class="hero-rotate" data-words="Full Stack|Laravel &amp; PHP|React Native|C# · SQL">Full Stack</span></span></span>
+        </h1>
+        <p class="hero-sub">Étudiant en BTS SIO SLAM à l’AFIP, je recherche une alternance en développement informatique. Rythme : deux semaines en entreprise et deux semaines en formation.</p>
+        <div class="hero-cta">
+          <a href="#projets" class="btn-primary">Voir mes projets →</a>
+          <a href="#contact" class="btn-outline">Parler d’alternance</a>
+          <a href="cv-jamar-carty.pdf" class="btn-outline btn-cv" download="CV-Jamar-Carty.pdf"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg> Télécharger mon CV</a>
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <div class="hero-window">
+          <div class="hero-window-bar" aria-hidden="true"><i></i><i></i><i></i><span>jamar@portfolio: ~/projets</span></div>
+          <div class="hero-art" id="heroScene" role="img" aria-label="Ordinateur portable 3D affichant du code">
+            <p class="hero-scene-fallback" aria-hidden="true">Ordinateur 3D · développement web</p>
+          </div>
+        </div>
+        <pre class="hero-term" aria-hidden="true"><code><b>$</b> whoami
+<em>jamar.carty</em> · BTS SIO SLAM
+<b>$</b> cat status.json
+{ <s>"alternance"</s>: <u>true</u>, <s>"rythme"</s>: <s>"2/2"</s> }</code></pre>
       </div>
     </div>
-    <div class="hero-art" id="heroScene" role="img" aria-label="Ordinateur portable 3D affichant du code">
-      <p class="hero-scene-fallback" aria-hidden="true">Ordinateur 3D · développement web</p>
-    </div>
+
+    <ul class="hero-bento">
+      <li>
+        <span class="hb-k">Formation</span>
+        <strong>BTS SIO · SLAM</strong>
+        <span class="hb-v">AFIP · session 2026</span>
+      </li>
+      <li>
+        <span class="hb-k">Alternance</span>
+        <strong>2 sem. / 2 sem.</strong>
+        <span class="hb-v">entreprise · formation</span>
+      </li>
+      <li>
+        <span class="hb-k">Réalisations</span>
+        <strong><span data-count="13">13</span> projets</strong>
+        <a class="hb-v hb-link" href="#synthese">dont 4 missions de stage →</a>
+      </li>
+      <li class="hb-stack">
+        <span class="hb-k">Stack principale</span>
+        <span class="hb-chips"><span>Laravel</span><span>PHP</span><span>React Native</span><span>C#</span><span>SQL</span></span>
+      </li>
+    </ul>
   </div>
+  <a class="hero-scroll" href="#profil" aria-label="Défiler vers le profil"><span></span></a>
 </section>
 
 <div class="stack-band" role="region" aria-label="Technologies utilisées">
@@ -298,8 +336,8 @@ $synthRealisations = [
         <thead>
           <tr>
             <th scope="col" class="synth-corner">Réalisations professionnelles</th>
-<?php foreach ($synthCompetences as $i => [$label, $skills]): ?>
-            <th scope="col" title="<?= e(implode(' · ', $skills)) ?>"><span class="synth-num">C<?= $i + 1 ?></span><?= e($label) ?></th>
+<?php foreach ($synthCompetences as $i => [$label, $skills, $short]): ?>
+            <th scope="col" title="<?= e($label . ' : ' . implode(' · ', $skills)) ?>"><span class="synth-num">C<?= $i + 1 ?></span><span class="sr-only"><?= e($label) ?></span><span aria-hidden="true"><?= e($short) ?></span></th>
 <?php endforeach; ?>
           </tr>
         </thead>
