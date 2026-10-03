@@ -1,228 +1,288 @@
-// animated site background: water — spring-simulated wave layers, caustic light, rising bubbles and cursor ripples
+// animated site background: underwater scene rendered with a WebGL2 shader —
+// dispersive caustics, swaying god rays, surface glare, marine snow, rising bubbles,
+// and a ripple height field the cursor disturbs. Scrolling the page sinks you deeper.
 (() => {
   const canvas = document.createElement('canvas');
   canvas.className = 'bg-canvas';
   canvas.setAttribute('aria-hidden', 'true');
   document.body.prepend(canvas);
 
-  const ctx = canvas.getContext('2d');
-  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-  const COLUMN = 10; // horizontal spacing of the simulated water columns, in px
-  const STEP = 1 / 60; // fixed simulation step, so motion is identical at 60, 120 or 144 Hz
+  const gl = canvas.getContext('webgl2', { alpha: true, premultipliedAlpha: true, antialias: false, depth: false, stencil: false });
+  if (!gl) { canvas.remove(); return; } // the CSS background stays as a fallback
 
-  // wave layers, back to front. depth drives parallax and how strongly the cursor disturbs the layer
-  const layers = [
-    { y: 0.34, amp: 30, freqs: [0.0041, 0.0093, 0.0017], speeds: [0.32, -0.21, 0.13], color: '165,180,252', alpha: 0.05, depth: 0.25 },
-    { y: 0.48, amp: 38, freqs: [0.0031, 0.0072, 0.0013], speeds: [-0.38, 0.27, -0.11], color: '96,165,250', alpha: 0.06, depth: 0.45 },
-    { y: 0.62, amp: 28, freqs: [0.0053, 0.0118, 0.0021], speeds: [0.46, -0.31, 0.17], color: '96,165,250', alpha: 0.07, depth: 0.65 },
-    { y: 0.76, amp: 36, freqs: [0.0036, 0.0081, 0.0015], speeds: [-0.34, 0.24, -0.14], color: '165,180,252', alpha: 0.08, depth: 0.85 },
-    { y: 0.88, amp: 22, freqs: [0.0059, 0.0131, 0.0024], speeds: [0.52, -0.36, 0.19], color: '96,165,250', alpha: 0.09, depth: 1 }
-  ];
-  const mouse = { x: 0, y: 0, vx: 0, vy: 0, active: false, last: 0 };
-  const scroll = { current: window.scrollY, velocity: 0, swell: 0 };
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const STEP = 1 / 60; // fixed simulation step, so motion is identical at 60, 120 or 144 Hz
+  const DAMPING = 0.986; // energy kept by the ripple field each step
+
+  const VERTEX = `#version 300 es
+void main() {
+  vec2 p = vec2((gl_VertexID << 1) & 2, gl_VertexID & 2);
+  gl_Position = vec4(p * 2.0 - 1.0, 0.0, 1.0);
+}`;
+
+  const FRAGMENT = `#version 300 es
+precision highp float;
+uniform vec2 uRes;       // drawing buffer size
+uniform vec2 uView;      // viewport size in CSS px
+uniform float uTime;
+uniform float uScroll;   // smoothed scrollY
+uniform float uDepth;    // 0 at the top of the page, 1 at the bottom
+uniform float uSwell;    // scroll speed, stirs the water
+uniform float uFade;
+uniform sampler2D uHeight;
+uniform vec2 uTexel;
+out vec4 outColor;
+
+float hash(vec2 p) {
+  vec3 p3 = fract(vec3(p.xyx) * 0.1031);
+  p3 += dot(p3, p3.yzx + 33.33);
+  return fract((p3.x + p3.y) * p3.z);
+}
+
+float noise1(float x) {
+  float i = floor(x);
+  float f = fract(x);
+  return mix(hash(vec2(i, 1.7)), hash(vec2(i + 1.0, 1.7)), f * f * (3.0 - 2.0 * f));
+}
+
+// iterated-distortion caustic network: bright lines where refracted light converges
+float caustic(vec2 uv, float t) {
+  vec2 p = uv * 6.2831853 - 250.0;
+  vec2 i = p;
+  float c = 1.0;
+  for (int n = 0; n < 5; n++) {
+    float tt = t * (1.0 - 3.5 / float(n + 1));
+    i = p + vec2(cos(tt - i.x) + sin(tt + i.y), sin(tt - i.y) + cos(tt + i.x));
+    c += 1.0 / length(vec2(p.x / (sin(i.x + tt) / 0.005), p.y / (cos(i.y + tt) / 0.005)));
+  }
+  c = 1.17 - pow(c / 5.0, 1.4);
+  return min(pow(abs(c), 8.0), 1.0);
+}
+
+void main() {
+  vec2 suv = vec2(gl_FragCoord.x, uRes.y - gl_FragCoord.y) / uRes; // y points down
+  vec2 px = suv * uView;
+  float aspect = uView.x / uView.y;
+  float y = suv.y;
+  float t = uTime;
+  float shallow = 1.0 - uDepth;
+
+  // surface normal from the ripple field; it refracts everything below
+  float hL = texture(uHeight, suv - vec2(uTexel.x, 0.0)).r;
+  float hR = texture(uHeight, suv + vec2(uTexel.x, 0.0)).r;
+  float hU = texture(uHeight, suv - vec2(0.0, uTexel.y)).r;
+  float hD = texture(uHeight, suv + vec2(0.0, uTexel.y)).r;
+  vec2 n = vec2(hR - hL, hD - hU);
+  vec2 refr = n * 0.02;
+
+  // water body: lighter near the surface, sinking into the page background
+  float g = smoothstep(-0.15, 1.05, y);
+  vec3 tint = mix(vec3(0.07, 0.17, 0.32), vec3(0.043, 0.067, 0.125), g);
+  float tintA = (1.0 - g) * mix(0.25, 0.7, shallow);
+
+  // caustics, each channel sampled slightly apart for dispersion
+  vec2 cuv = (px + vec2(0.0, uScroll * 0.12)) / 560.0 + refr * 3.0;
+  float ct = t * 0.42 + 23.0;
+  vec2 spread = vec2(0.004, 0.002) * (1.0 + uSwell * 4.0);
+  vec3 caus = vec3(caustic(cuv - spread, ct), caustic(cuv, ct), caustic(cuv + spread, ct));
+  float causMask = mix(0.5, 0.12, smoothstep(0.0, 1.0, y)) * mix(0.45, 1.0, shallow);
+  vec3 light = caus * vec3(0.5, 0.72, 1.0) * causMask * 0.3;
+
+  // god rays fanning from a light source above the screen
+  vec2 src = vec2(aspect * (0.5 + sin(t * 0.06) * 0.22), -0.4);
+  vec2 d = vec2(suv.x * aspect, y) - src + refr * 0.6;
+  float ang = atan(d.x, d.y);
+  float shafts = pow(noise1(ang * 21.0 + t * 0.16), 3.0) * 0.6
+               + pow(noise1(ang * 47.0 - t * 0.25 + 10.0), 5.0) * 0.5
+               + pow(noise1(ang * 9.0 + t * 0.07 + 4.0), 2.0) * 0.35;
+  float rayFade = exp(-length(d) * 1.5) * (1.0 - smoothstep(0.0, 1.2, y));
+  light += vec3(0.42, 0.62, 1.0) * shafts * rayFade * 0.4 * mix(0.25, 1.0, shallow);
+
+  // glare of the surface seen from below
+  light += vec3(0.6, 0.8, 1.0) * exp(-y * 11.0) * (0.45 + 0.55 * caus.g) * 0.2 * shallow;
+
+  // ripples catch the light on one flank and shade the other
+  light += vec3(0.7, 0.85, 1.0) * clamp((n.x * 0.6 - n.y * 0.8) * 2.2, -0.06, 0.5) * 0.28;
+
+  // marine snow: three parallax layers of drifting specks
+  for (int i = 0; i < 3; i++) {
+    float fi = float(i);
+    float cell = 74.0 - fi * 18.0;
+    vec2 p = (px + vec2(sin(t * 0.09 + fi) * 24.0, -t * (5.0 + fi * 4.0) + uScroll * (0.04 + fi * 0.05)) + refr * 60.0) / cell;
+    vec2 id = floor(p);
+    float h = hash(id + fi * 17.0);
+    if (h > 0.5) continue;
+    vec2 pos = vec2(hash(id + 3.1), hash(id + 7.7)) * 0.7 + 0.15;
+    pos += vec2(sin(t * 0.6 + h * 40.0), cos(t * 0.5 + h * 30.0)) * 0.08;
+    float dist = length((fract(p) - pos) * cell);
+    float size = 0.6 + fi * 0.45 + hash(id + 1.3) * 0.8;
+    float twinkle = 0.55 + 0.45 * sin(t * (1.0 + h * 2.0) + h * 50.0);
+    light += vec3(0.75, 0.85, 1.0) * (1.0 - smoothstep(0.0, size + 0.8, dist)) * twinkle * (0.1 + fi * 0.07);
+  }
+
+  // bubbles: a couple per column, rising with a wobble, popping at the surface
+  float colW = 90.0;
+  float cx = floor(px.x / colW);
+  for (int k = 0; k < 2; k++) {
+    float id = cx * 2.0 + float(k);
+    if (hash(vec2(id, 4.2)) > 0.32) continue;
+    float h2 = hash(vec2(id, 9.1));
+    float h3 = hash(vec2(id, 2.6));
+    float h4 = hash(vec2(id, 5.3));
+    float r = 1.6 + h2 * 4.2;
+    float speed = 28.0 + r * 14.0;
+    float travel = uView.y + 120.0;
+    float yb = uView.y + 60.0 - mod(t * speed + h3 * travel, travel);
+    float xb = (cx + 0.5) * colW + (h4 - 0.5) * colW * 0.35 + sin(t * (1.4 + h2) + h3 * 20.0) * (3.0 + r);
+    vec2 dd = px - vec2(xb, yb);
+    dd.y *= 1.0 + 0.14 * sin(t * 7.0 + h3 * 30.0);
+    float dist = length(dd);
+    float ring = (1.0 - smoothstep(r - 0.2, r + 0.9, dist)) * smoothstep(r - 1.8, r - 0.3, dist);
+    float glint = 1.0 - smoothstep(0.0, r * 0.38, length(dd + vec2(r * 0.38)));
+    float body = (1.0 - smoothstep(r - 0.6, r + 0.4, dist)) * 0.07;
+    float alive = smoothstep(0.0, 70.0, yb);
+    light += vec3(0.78, 0.88, 1.0) * (ring * 0.42 + glint * 0.55 + body) * alive;
+  }
+
+  float vignette = 1.0 - 0.3 * pow(length(suv - 0.5) * 1.3, 2.0);
+  vec3 col = max(tint * tintA + light * vignette, 0.0);
+  col += (hash(gl_FragCoord.xy + fract(t * 7.0)) - 0.5) / 255.0; // dither away gradient banding
+  outColor = vec4(col, tintA) * uFade;
+}`;
+
+  const mouse = { x: 0, y: 0, active: false, last: 0 };
+  const scroll = { current: window.scrollY, swell: 0 };
+  let program = null;
+  let uniforms = {};
+  let heightTex = null;
   let width = 0;
   let height = 0;
-  let dpr = 1;
-  let columns = 0;
-  let bubbles = [];
-  let ripples = [];
-  let lastRipple = 0;
+  let scale = 0.6; // drawing buffer resolution relative to CSS px; lowered if frames run slow
+  let gw = 0;
+  let gh = 0;
+  let current = null; // ripple field, this step
+  let previousField = null; // ripple field, last step
   let frame = 0;
-  let clock = 0; // simulation time in seconds
+  let clock = 0;
   let previous = 0;
   let accumulator = 0;
   let fadeIn = 0;
+  let nextDrip = 0;
+  let slowFrames = 0;
 
-  const easeOutCubic = t => 1 - (1 - t) ** 3;
   const damp = (from, to, rate, dt) => to + (from - to) * Math.exp(-rate * dt);
+  const easeOutCubic = t => 1 - (1 - t) ** 3;
 
-  const makeBubble = fromBottom => ({
-    x: Math.random() * width,
-    y: fromBottom ? height + 10 + Math.random() * 40 : Math.random() * height,
-    r: Math.random() * 2.2 + 0.8,
-    speed: 0, // px/s, eases up to maxSpeed so bubbles do not start abruptly
-    maxSpeed: Math.random() * 18 + 10,
-    phase: Math.random() * Math.PI * 2,
-    wobble: Math.random() * 0.8 + 0.6
-  });
+  const compile = (type, source) => {
+    const shader = gl.createShader(type);
+    gl.shaderSource(shader, source);
+    gl.compileShader(shader);
+    if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) throw new Error(gl.getShaderInfoLog(shader));
+    return shader;
+  };
+
+  const setup = () => {
+    program = gl.createProgram();
+    gl.attachShader(program, compile(gl.VERTEX_SHADER, VERTEX));
+    gl.attachShader(program, compile(gl.FRAGMENT_SHADER, FRAGMENT));
+    gl.linkProgram(program);
+    if (!gl.getProgramParameter(program, gl.LINK_STATUS)) throw new Error(gl.getProgramInfoLog(program));
+    gl.useProgram(program);
+    ['uRes', 'uView', 'uTime', 'uScroll', 'uDepth', 'uSwell', 'uFade', 'uHeight', 'uTexel']
+      .forEach(name => { uniforms[name] = gl.getUniformLocation(program, name); });
+
+    heightTex = gl.createTexture();
+    gl.activeTexture(gl.TEXTURE0);
+    gl.bindTexture(gl.TEXTURE_2D, heightTex);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+    gl.uniform1i(uniforms.uHeight, 0);
+  };
+
+  const sizeBuffer = () => {
+    canvas.width = Math.max(1, Math.round(width * scale));
+    canvas.height = Math.max(1, Math.round(height * scale));
+    gl.viewport(0, 0, canvas.width, canvas.height);
+  };
 
   const resize = () => {
-    dpr = Math.min(window.devicePixelRatio || 1, 1.5);
     width = window.innerWidth;
     height = window.innerHeight;
-    canvas.width = Math.round(width * dpr);
-    canvas.height = Math.round(height * dpr);
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    scale = Math.min(window.devicePixelRatio || 1, 1.5) * (width < 700 ? 0.55 : 0.6);
+    sizeBuffer();
 
-    columns = Math.ceil(width / COLUMN) + 2;
-    layers.forEach(layer => {
-      layer.h = new Float32Array(columns); // displacement from the resting wave
-      layer.v = new Float32Array(columns); // vertical velocity
-    });
-    const count = Math.min(Math.round((width * height) / 26000), 60);
-    bubbles = Array.from({ length: count }, () => makeBubble(false));
+    gw = Math.min(180, Math.ceil(width / 9));
+    gh = Math.max(8, Math.round(gw * height / width));
+    current = new Float32Array(gw * gh);
+    previousField = new Float32Array(gw * gh);
+    gl.bindTexture(gl.TEXTURE_2D, heightTex);
+    gl.texImage2D(gl.TEXTURE_2D, 0, gl.R16F, gw, gh, 0, gl.RED, gl.FLOAT, current);
   };
 
-  // resting wave shape: three detuned sines, so the pattern never visibly repeats
-  const baseSurface = (layer, x) => {
-    const [f1, f2, f3] = layer.freqs;
-    const [s1, s2, s3] = layer.speeds;
-    const breathe = 1 + Math.sin(clock * 0.21 + layer.depth * 4) * 0.18 + scroll.swell * layer.depth;
-    return layer.y * height + layer.amp * breathe * (
-      Math.sin(x * f1 + clock * s1) +
-      Math.sin(x * f2 + clock * s2) * 0.32 +
-      Math.sin(x * f3 + clock * s3) * 0.55
-    ) / 1.87;
+  // drop a smooth bump into the ripple field at a viewport position
+  const drop = (x, y, strength, radius) => {
+    if (!current) return;
+    const cx = (x / width) * gw;
+    const cy = (y / height) * gh;
+    const r = Math.max(1.2, (radius / width) * gw);
+    const span = Math.ceil(r * 2);
+    for (let j = Math.max(1, Math.floor(cy - span)); j < Math.min(gh - 1, cy + span); j += 1) {
+      for (let i = Math.max(1, Math.floor(cx - span)); i < Math.min(gw - 1, cx + span); i += 1) {
+        const d2 = ((i - cx) ** 2 + (j - cy) ** 2) / (r * r);
+        if (d2 < 4) current[j * gw + i] += strength * Math.exp(-d2 * 1.5);
+      }
+    }
   };
 
-  const parallax = layer => -Math.min(scroll.current, height * 2) * 0.05 * layer.depth;
-
-  const surfaceAt = (layer, x) => {
-    const i = Math.max(0, Math.min(columns - 1, Math.round(x / COLUMN)));
-    return baseSurface(layer, x) + layer.h[i] + parallax(layer);
-  };
-
-  // one fixed step of the water springs: each column pulls back to rest and passes energy to its neighbours
+  // one step of the discrete wave equation; each cell is pulled by its four neighbours
   const simulate = dt => {
     clock += dt;
-
-    const target = window.scrollY;
     const before = scroll.current;
-    scroll.current = damp(scroll.current, target, 8, dt);
-    scroll.velocity = (scroll.current - before) / dt;
-    scroll.swell = damp(scroll.swell, Math.min(Math.abs(scroll.velocity) / 2500, 0.6), 3, dt);
+    scroll.current = damp(scroll.current, window.scrollY, 8, dt);
+    const speed = Math.abs(scroll.current - before) / dt;
+    scroll.swell = damp(scroll.swell, Math.min(speed / 2500, 0.6), 3, dt);
 
-    layers.forEach(layer => {
-      const { h, v } = layer;
-      for (let i = 0; i < columns; i += 1) {
-        v[i] += (-90 * h[i] - 2.2 * v[i]) * dt;
-        h[i] += v[i] * dt;
+    for (let j = 1; j < gh - 1; j += 1) {
+      for (let i = 1; i < gw - 1; i += 1) {
+        const k = j * gw + i;
+        previousField[k] = ((current[k - 1] + current[k + 1] + current[k - gw] + current[k + gw]) * 0.5 - previousField[k]) * DAMPING;
       }
-      for (let pass = 0; pass < 2; pass += 1) {
-        for (let i = 1; i < columns - 1; i += 1) {
-          v[i] += (h[i - 1] + h[i + 1] - 2 * h[i]) * 900 * dt;
-        }
-      }
-    });
+    }
+    [current, previousField] = [previousField, current];
 
-    bubbles.forEach((b, i) => {
-      b.speed = damp(b.speed, b.maxSpeed, 1.5, dt);
-      b.y -= b.speed * dt;
-      b.x += Math.sin(clock * b.wobble * 2 + b.phase) * 8 * dt;
-      if (b.y < -12) bubbles[i] = makeBubble(true);
-    });
-
-    ripples.forEach(r => { r.age += dt; });
-    ripples = ripples.filter(r => r.age < r.duration);
-
-    mouse.vx = damp(mouse.vx, 0, 10, dt);
-    mouse.vy = damp(mouse.vy, 0, 10, dt);
-    fadeIn = Math.min(1, fadeIn + dt / 1.2);
-  };
-
-  // push the water columns under the cursor, scaled by how fast it moves
-  const disturb = (x, y, force, radius) => {
-    layers.forEach(layer => {
-      const gap = Math.abs(y - surfaceAt(layer, x));
-      if (gap > 70) return;
-      const near = 1 - gap / 70;
-      const centre = Math.round(x / COLUMN);
-      const span = Math.ceil(radius / COLUMN);
-      for (let k = -span; k <= span; k += 1) {
-        const i = centre + k;
-        if (i < 0 || i >= columns) continue;
-        const falloff = Math.cos((k / span) * Math.PI * 0.5);
-        layer.v[i] += force * near * falloff * (0.5 + layer.depth * 0.5);
-      }
-    });
+    // light ambient drips keep the surface alive when nobody touches it
+    if (clock > nextDrip) {
+      nextDrip = clock + 0.6 + Math.random() * 1.4;
+      drop(Math.random() * width, Math.random() * height, 0.35 + scroll.swell, 14);
+    }
+    fadeIn = Math.min(1, fadeIn + dt / 1.4);
   };
 
   const draw = () => {
-    ctx.clearRect(0, 0, width, height);
-    ctx.globalAlpha = easeOutCubic(fadeIn);
+    gl.bindTexture(gl.TEXTURE_2D, heightTex);
+    gl.texSubImage2D(gl.TEXTURE_2D, 0, 0, 0, gw, gh, gl.RED, gl.FLOAT, current);
+    const maxScroll = Math.max(1, document.documentElement.scrollHeight - height);
+    gl.uniform2f(uniforms.uRes, canvas.width, canvas.height);
+    gl.uniform2f(uniforms.uView, width, height);
+    gl.uniform1f(uniforms.uTime, clock);
+    gl.uniform1f(uniforms.uScroll, scroll.current);
+    gl.uniform1f(uniforms.uDepth, Math.min(1, scroll.current / maxScroll));
+    gl.uniform1f(uniforms.uSwell, scroll.swell);
+    gl.uniform1f(uniforms.uFade, easeOutCubic(fadeIn));
+    gl.uniform2f(uniforms.uTexel, 1 / gw, 1 / gh);
+    gl.drawArrays(gl.TRIANGLES, 0, 3);
+  };
 
-    // caustic light drifting near the top
-    ctx.globalCompositeOperation = 'lighter';
-    for (let i = 0; i < 4; i += 1) {
-      const t = clock * 0.11 + i * 1.7;
-      const x = (0.15 + i * 0.24 + Math.sin(t) * 0.06) * width;
-      const r = Math.max(width, height) * 0.35;
-      const g = ctx.createRadialGradient(x, -r * 0.2, 0, x, -r * 0.2, r);
-      g.addColorStop(0, `rgba(165,180,252,${0.05 + Math.sin(t * 2.3) * 0.015})`);
-      g.addColorStop(1, 'rgba(165,180,252,0)');
-      ctx.fillStyle = g;
-      ctx.fillRect(0, 0, width, height);
+  // drop the resolution step by step while frames keep running long
+  const adapt = elapsed => {
+    slowFrames = elapsed > 0.024 ? slowFrames + 1 : Math.max(0, slowFrames - 1);
+    if (slowFrames > 45 && scale > 0.35) {
+      slowFrames = 0;
+      scale *= 0.8;
+      sizeBuffer();
     }
-    ctx.globalCompositeOperation = 'source-over';
-
-    // wave layers: soft body + bright crest
-    layers.forEach(layer => {
-      const points = [];
-      for (let i = 0; i < columns; i += 1) {
-        const x = i * COLUMN;
-        points.push(x, baseSurface(layer, x) + layer.h[i] + parallax(layer));
-      }
-
-      const trace = () => {
-        ctx.moveTo(points[0], points[1]);
-        for (let p = 2; p < points.length - 2; p += 2) {
-          // quadratic curve through midpoints keeps the surface smooth between columns
-          ctx.quadraticCurveTo(points[p], points[p + 1], (points[p] + points[p + 2]) / 2, (points[p + 1] + points[p + 3]) / 2);
-        }
-        ctx.lineTo(points[points.length - 2], points[points.length - 1]);
-      };
-
-      ctx.beginPath();
-      trace();
-      ctx.lineTo(width, height);
-      ctx.lineTo(0, height);
-      ctx.closePath();
-      const top = layer.y * height - layer.amp + parallax(layer);
-      const fill = ctx.createLinearGradient(0, top, 0, height);
-      fill.addColorStop(0, `rgba(${layer.color},${layer.alpha})`);
-      fill.addColorStop(1, `rgba(${layer.color},0)`);
-      ctx.fillStyle = fill;
-      ctx.fill();
-
-      ctx.beginPath();
-      trace();
-      ctx.strokeStyle = `rgba(${layer.color},${layer.alpha * 2.4})`;
-      ctx.lineWidth = 1.2;
-      ctx.stroke();
-    });
-
-    // rising bubbles, slightly squashing as they wobble
-    bubbles.forEach(b => {
-      const squash = 1 + Math.sin(clock * b.wobble * 4 + b.phase) * 0.12;
-      ctx.strokeStyle = 'rgba(165,180,252,0.35)';
-      ctx.lineWidth = 1;
-      ctx.beginPath();
-      ctx.ellipse(b.x, b.y, b.r * squash, b.r / squash, 0, 0, Math.PI * 2);
-      ctx.stroke();
-      ctx.fillStyle = 'rgba(229,231,235,0.5)';
-      ctx.beginPath();
-      ctx.arc(b.x - b.r * 0.35, b.y - b.r * 0.35, b.r * 0.3, 0, Math.PI * 2);
-      ctx.fill();
-    });
-
-    // ripple rings: fast start, slow settle, fading out
-    ripples.forEach(r => {
-      const p = r.age / r.duration;
-      const radius = r.size * easeOutCubic(p);
-      ctx.strokeStyle = `rgba(96,165,250,${r.strength * (1 - p) ** 2 * 0.45})`;
-      ctx.lineWidth = 1.5 * (1 - p) + 0.4;
-      ctx.beginPath();
-      ctx.ellipse(r.x, r.y, radius, radius * 0.42, 0, 0, Math.PI * 2);
-      ctx.stroke();
-      if (r.strength > 0.8 && p > 0.12) {
-        const inner = r.size * 0.6 * easeOutCubic((p - 0.12) / 0.88);
-        ctx.beginPath();
-        ctx.ellipse(r.x, r.y, inner, inner * 0.42, 0, 0, Math.PI * 2);
-        ctx.stroke();
-      }
-    });
-
-    ctx.globalAlpha = 1;
   };
 
   const loop = now => {
@@ -234,6 +294,7 @@
       accumulator -= STEP;
     }
     draw();
+    adapt(elapsed);
     frame = requestAnimationFrame(loop);
   };
 
@@ -242,32 +303,24 @@
     frame = 0;
     previous = 0;
     accumulator = 0;
+    if (gl.isContextLost()) return;
     if (reducedMotion.matches) {
       fadeIn = 1;
+      scroll.current = window.scrollY;
+      if (!clock) clock = 12; // a still frame with the rays already spread out
       draw();
     } else if (!document.hidden) {
       frame = requestAnimationFrame(loop);
     }
   };
 
-  const addRipple = (x, y, strength) => {
-    if (reducedMotion.matches || ripples.length > 12) return;
-    ripples.push({ x, y, age: 0, strength, duration: 1.1 + strength * 0.9, size: 40 + strength * 70 });
-  };
-
   window.addEventListener('pointermove', event => {
     if (event.pointerType !== 'mouse' || reducedMotion.matches) return;
     const now = performance.now();
-    const dt = Math.max((now - mouse.last) / 1000, 0.008);
     if (mouse.active && now - mouse.last < 100) {
-      mouse.vx = (event.clientX - mouse.x) / dt;
-      mouse.vy = (event.clientY - mouse.y) / dt;
-      const speed = Math.min(Math.hypot(mouse.vx, mouse.vy), 3000);
-      disturb(event.clientX, event.clientY, Math.sign(mouse.vy || 1) * speed * 0.035, 50);
-      if (speed > 250 && now - lastRipple > 160) {
-        lastRipple = now;
-        addRipple(event.clientX, event.clientY, Math.min(speed / 1500, 0.7));
-      }
+      const dt = Math.max((now - mouse.last) / 1000, 0.008);
+      const speed = Math.min(Math.hypot(event.clientX - mouse.x, event.clientY - mouse.y) / dt, 3000);
+      if (speed > 40) drop(event.clientX, event.clientY, Math.min(speed / 900, 1.6), 16);
     }
     mouse.x = event.clientX;
     mouse.y = event.clientY;
@@ -276,14 +329,23 @@
   }, { passive: true });
   window.addEventListener('pointerdown', event => {
     if (reducedMotion.matches) return;
-    disturb(event.clientX, event.clientY, 140, 80);
-    addRipple(event.clientX, event.clientY, 1);
+    drop(event.clientX, event.clientY, 2.4, 22);
   }, { passive: true });
   document.addEventListener('mouseout', event => { if (!event.relatedTarget) mouse.active = false; });
   window.addEventListener('resize', () => { resize(); if (reducedMotion.matches) draw(); });
+  window.addEventListener('scroll', () => { if (reducedMotion.matches) { scroll.current = window.scrollY; draw(); } }, { passive: true });
   document.addEventListener('visibilitychange', start);
   reducedMotion.addEventListener('change', start);
+  canvas.addEventListener('webglcontextlost', event => { event.preventDefault(); cancelAnimationFrame(frame); });
+  canvas.addEventListener('webglcontextrestored', () => { setup(); resize(); start(); });
 
+  try {
+    setup();
+  } catch (error) {
+    console.warn('Water background disabled:', error);
+    canvas.remove();
+    return;
+  }
   resize();
   start();
 })();
