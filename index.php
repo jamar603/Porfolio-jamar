@@ -601,6 +601,7 @@ if (is_admin()) {
 <script src="background.js"></script>
 <script src="cursor.js"></script>
 <script src="certificats.js"></script>
+<script src="motion.js"></script>
 <script type="module" src="hero-3d.js"></script>
 
 </body>

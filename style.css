@@ -588,3 +588,38 @@ html.has-custom-cursor:has(.article-dialog[open]) :is(.cursor-dot,.cursor-ring){
 
 /* notification toasts sit above the floating admin button */
 :root{ --notify-bottom:76px; }
+
+/* ---------- pass 6 : animations vivantes (motion.js) ---------- */
+.sr-only{ position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; border:0; }
+
+/* hero name: letters rise one after another, then keep the neon glow */
+.hero-chars{ display:inline-block; perspective:600px; }
+.hero-char{ display:inline-block; transform-origin:50% 100%; animation:char-rise 650ms var(--ease-out) both; animation-delay:calc(180ms + var(--ci,0) * 40ms); }
+@keyframes char-rise{ from{ opacity:0; transform:translateY(.45em) rotateX(-70deg); } to{ opacity:1; transform:none; } }
+/* letters lift slightly under the pointer */
+@media (hover:hover) and (pointer:fine){
+  .hero-char{ transition:transform 200ms var(--ease-out),color 200ms ease; }
+  .hero-char:hover{ transform:translateY(-.08em); color:var(--mint); }
+}
+
+/* magnetic button (translate written by motion.js) */
+.hero .btn-primary{ will-change:translate; }
+
+/* section titles: accent line draws in once the head is revealed */
+.section-head h2::after{ content:''; display:block; width:56px; height:3px; margin-top:10px; border-radius:3px; background:linear-gradient(90deg,var(--indigo),var(--mint),var(--coral)); transform-origin:left; }
+.section-head.reveal h2::after{ transform:scaleX(0); transition:transform 700ms var(--ease-out) 350ms; }
+.section-head.reveal.is-visible h2::after{ transform:scaleX(1); }
+
+/* project icons react when the card is hovered */
+.project-icon svg{ transition:transform 220ms var(--ease-out); }
+@media (hover:hover) and (pointer:fine){ .project-card:hover .project-icon svg{ transform:scale(1.12) rotate(-8deg); } }
+
+/* contact sent: particles (motion.js) */
+.burst-dot{ position:fixed; z-index:9500; width:8px; height:8px; border-radius:50%; pointer-events:none; box-shadow:0 0 10px currentColor; }
+
+@media (prefers-reduced-motion:reduce){
+  .hero-char{ animation:hero-fade 300ms ease both; animation-delay:0ms; }
+  .hero-char:hover{ transform:none; }
+  .section-head.reveal h2::after{ transform:none; transition:none; }
+  .project-card:hover .project-icon svg{ transform:none; }
+}
