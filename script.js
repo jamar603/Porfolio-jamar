@@ -10,7 +10,7 @@ const navObs = new IntersectionObserver((entries) => {
 }, { rootMargin: '-45% 0px -50% 0px' });
 sections.forEach(s => navObs.observe(s));
 
-// contact form: sent to contact.php in the background; without JavaScript the form posts normally
+// contact form: sent to its action (contact.php, or FormSubmit on the static build) in the background; without JavaScript the form posts normally
 const contactForm = document.getElementById('contactForm');
 if (contactForm) {
   const submitButton = contactForm.querySelector('.contact-submit');
@@ -81,6 +81,13 @@ if (contactForm) {
         headers: { Accept: 'application/json' },
       });
       const result = await response.json();
+      // static build (GitHub Pages) posts to FormSubmit, which answers { success: "true" } instead of { ok, message }
+      if (result.ok === undefined) {
+        result.ok = String(result.success) === 'true';
+        result.message = result.ok
+          ? 'Message envoyé, merci ! Je vous réponds rapidement.'
+          : 'L’envoi a échoué. Réessayez ou écrivez-moi à jamarcarty131@gmail.com.';
+      }
       Object.entries(result.errors || {}).forEach(([name, message]) => setFieldError(name, message));
       setStatus(result.ok ? 'success' : 'error', result.message);
       if (result.ok) {

@@ -6,3 +6,6 @@ php/admin-config.php
 
 # private notification settings
 php/secrets.php
+
+# static build for GitHub Pages
+_site/
