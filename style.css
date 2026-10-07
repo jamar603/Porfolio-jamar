@@ -732,12 +732,13 @@ html.has-custom-cursor:has(.article-dialog[open]) :is(.cursor-dot,.cursor-ring){
 }
 @media (max-width:520px){
   .hero{ padding:56px 0 52px; }
-  .hero-bento{ grid-template-columns:1fr 1fr; gap:10px; margin-top:58px; }
+  .hero-bento{ grid-template-columns:1fr 1fr; gap:10px; margin-top:28px; }
   .hero-bento li{ padding:14px; }
   .hero-bento strong{ font-size:17px; }
   .hero-bento li:nth-child(3),.hero-bento .hb-stack{ grid-column:1 / -1; }
-  .hero-window .hero-art{ height:300px; }
-  .hero-term{ font-size:11px; padding:10px 12px; }
+  .hero-window .hero-art{ height:min(250px,62vw); }
+  /* the terminal card sits under the window instead of covering the laptop */
+  .hero-term{ position:relative; left:auto; bottom:auto; margin:-22px 12px 0; font-size:11px; padding:10px 12px; overflow-wrap:anywhere; }
 }
 @media (prefers-reduced-motion:reduce){
   .hero-term,.hero-scroll span{ animation:none; }
@@ -779,7 +780,7 @@ html.has-custom-cursor:has(.article-dialog[open]) :is(.cursor-dot,.cursor-ring){
    over it is recomposited every frame too. Drop backdrop blurs, blur filters and the extra
    full-screen layers; keep opacity/transform motion, which the compositor handles cheaply */
 @media (pointer:coarse){
-  nav{ background:rgba(11,17,32,.94); backdrop-filter:none; -webkit-backdrop-filter:none; }
+  nav{ background:#0b1120; backdrop-filter:none; -webkit-backdrop-filter:none; }
   .hero-window,.hero-term,.hero-bento li,.synth-wrap{ backdrop-filter:none; -webkit-backdrop-filter:none; }
   .hero-bento li{ background:rgba(17,24,39,.86); }
   body::before,body::after{ animation:none; }

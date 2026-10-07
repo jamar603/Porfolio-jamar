@@ -28,6 +28,12 @@ $html = str_replace(
 );
 $html = preg_replace('/\s*<a class="footer-admin".*?<\/a>/s', '', $html);
 
+// cache busting: phones keep style.css and scripts cached, so a new deploy could show new HTML with old CSS
+$html = preg_replace_callback('/(href|src)="([\w-]+\.(?:css|js))"/', function ($m) use ($root) {
+    $file = $root . '/' . $m[2];
+    return is_file($file) ? sprintf('%s="%s?v=%s"', $m[1], $m[2], substr(md5_file($file), 0, 8)) : $m[0];
+}, $html);
+
 if (is_dir($out)) {
     exit("Output folder already exists: $out\n");
 }
