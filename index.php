@@ -56,6 +56,7 @@ if (is_admin()) {
       </a>
       <a href="#profil" data-t="profil">Profil</a>
       <a href="#formation" data-t="formation">Formation</a>
+      <a href="#experience" data-t="experience" class="nav-mobile-only">Expérience</a>
       <a href="#projets" data-t="projets">Projets</a>
       <a href="#synthese" data-t="synthese">Synthèse</a>
       <a href="#articles" data-t="articles">Articles</a>

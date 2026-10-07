@@ -68,8 +68,10 @@ try {
   camera.position.copy(cameraBase);
   camera.lookAt(lookTarget);
 
+  // phones also run the satin background: a smaller buffer keeps both under budget
+  const coarse = window.matchMedia('(pointer: coarse)').matches;
   const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true, powerPreference: 'high-performance' });
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.75));
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, coarse ? 1.25 : 1.75));
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.15;

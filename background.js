@@ -13,6 +13,7 @@
   if (!gl) { canvas.remove(); return; } // the CSS background stays as a fallback
 
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const coarse = window.matchMedia('(pointer: coarse)').matches; // phones and tablets: lighter buffer, 60 fps cap
 
   const VERTEX = `#version 300 es
 void main() {
@@ -123,7 +124,7 @@ void main() {
   const pointer = { x: 0, y: 0, tx: 0, ty: 0 };
   const scroll = { current: window.scrollY, swirl: 0 };
   let anchors = [0]; // page offsets where each form takes over: top of page, then every section
-  let anchorsAge = Infinity;
+  let anchorsDirty = true;
   let form = 0;      // smoothed position in FORMS, fractional while morphing
   let program = null;
   let uniforms = {};
@@ -164,18 +165,25 @@ void main() {
     gl.viewport(0, 0, canvas.width, canvas.height);
   };
 
+  // the canvas is sized by CSS (100vh = the tallest viewport on phones), so the mobile address bar
+  // showing or hiding only changes innerHeight: ignore that instead of reallocating the buffer mid-scroll
   const resize = () => {
-    width = window.innerWidth;
-    height = window.innerHeight;
-    scale = Math.min(window.devicePixelRatio || 1, 1.5) * (width < 700 ? 0.5 : 0.6);
+    const w = canvas.clientWidth || window.innerWidth;
+    const h = canvas.clientHeight || window.innerHeight;
+    if (w === width && Math.abs(h - height) < height * 0.25) return;
+    width = w;
+    height = h;
+    scale = Math.min(window.devicePixelRatio || 1, 1.5) * (coarse ? 0.42 : width < 700 ? 0.5 : 0.6);
     sizeBuffer();
   };
 
   const measureAnchors = () => {
     const sections = [...document.querySelectorAll('section[id]')]; // the hero has no id, it keeps the first form
     anchors = [0, ...sections.map(s => s.getBoundingClientRect().top + window.scrollY)].sort((a, b) => a - b);
-    anchorsAge = 0;
+    anchorsDirty = false;
   };
+  // re-measure only when the page height changes, not on a timer (a forced layout every second stutters phones)
+  new ResizeObserver(() => { anchorsDirty = true; }).observe(document.body);
 
   // which form the page is on: the section under the middle of the viewport,
   // morphing into the next one over the last third of each section
@@ -191,8 +199,7 @@ void main() {
 
   const update = dt => {
     clock += dt;
-    anchorsAge += dt;
-    if (anchorsAge > 1) measureAnchors(); // content (articles, images) can shift sections after load
+    if (anchorsDirty) measureAnchors(); // content (articles, images) can shift sections after load
     const before = scroll.current;
     scroll.current = damp(scroll.current, window.scrollY, 4, dt);
     scroll.swirl = damp(scroll.swirl, Math.min(Math.abs(scroll.current - before) / dt / 3000, 0.6), 2.5, dt);
@@ -230,6 +237,11 @@ void main() {
   };
 
   const loop = now => {
+    // 120 Hz phones would shade every pixel twice as often for no visible gain
+    if (coarse && previous && now - previous < 15) {
+      frame = requestAnimationFrame(loop);
+      return;
+    }
     const elapsed = previous ? Math.min((now - previous) / 1000, 0.1) : 1 / 60;
     previous = now;
     update(elapsed);

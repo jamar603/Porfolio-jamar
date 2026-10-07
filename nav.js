@@ -72,7 +72,7 @@ if (navMenu){
   let hovered = null;
   const moveIndicator = () => {
     const target = hovered || navMenu.querySelector('a.active');
-    if (!target){
+    if (!target || !target.offsetWidth){ // links hidden on desktop (mobile-only) have no box
       indicator.classList.remove('is-visible');
       return;
     }
