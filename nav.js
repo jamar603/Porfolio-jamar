@@ -21,6 +21,8 @@ if (menuButton && navMenu){
     if (event.target.closest('a')) setMenuOpen(false);
   });
 
+  document.querySelector('nav .logo')?.addEventListener('click', () => setMenuOpen(false));
+
   document.addEventListener('click', event => {
     if (menuButton.getAttribute('aria-expanded') === 'true' && !event.target.closest('nav')){
       setMenuOpen(false);

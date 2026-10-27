@@ -40,7 +40,7 @@ if (is_admin()) {
 
 <nav>
   <div class="container">
-    <div class="logo"><img class="logo-mark" src="logo-jc.svg" alt=""><span><span class="neon-name">Jamar</span> <span class="neon-name">Carty</span></span></div>
+    <a class="logo" href="#top" aria-label="Jamar Carty, retour à l’accueil"><img class="logo-mark" src="logo-jc.svg" alt=""><span><span class="neon-name">Jamar</span> <span class="neon-name">Carty</span></span></a>
     <button class="nav-menu-toggle" type="button" aria-expanded="false" aria-controls="siteNavLinks">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16"/><path d="M4 12h16"/><path d="M4 17h16"/></svg>
       <span class="menu-toggle-label">Menu</span>
