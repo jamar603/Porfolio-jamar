@@ -546,7 +546,7 @@ $synthRealisations = [
     </div>
 
     <div class="skills-groups">
-      <div class="skill-group"><h3>Langages et programmation</h3><div class="project-tags"><span>POO</span><span>C#</span><span>C++</span><span>Java</span><span>JavaScript</span><span>PHP</span><span>HTML</span><span>CSS</span></div></div>
+      <div class="skill-group"><h3>Langages et programmation</h3><div class="project-tags"><span>POO</span><span>C#</span><span>C++</span><span>Java</span><span>JavaScript</span><span>TypeScript</span><span>PHP</span><span>Python</span><span>HTML</span><span>CSS</span></div></div>
       <div class="skill-group"><h3>Frameworks et applications</h3><div class="project-tags"><span>Laravel 12</span><span>Symfony</span><span>React Native</span><span>Node.js</span></div></div>
       <div class="skill-group"><h3>API et données</h3><div class="project-tags"><span>API REST</span><span>SQL</span><span>Merise</span><span>Postman</span></div></div>
       <div class="skill-group"><h3>Outils et environnements</h3><div class="project-tags"><span>Git / GitHub</span><span>npm</span><span>Docker</span><span>Visual Studio Code</span><span>Visual Studio</span><span>Windows</span><span>Linux · Ubuntu / Debian</span></div></div>
