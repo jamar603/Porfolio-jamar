@@ -29,7 +29,7 @@ if (is_admin()) {
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Jamar Carty — Développeur Full Stack</title>
-<meta name="description" content="Jamar Carty, étudiant en BTS SIO SLAM à l’AFIP, recherche une alternance en développement Full Stack au rythme de deux semaines en entreprise et deux semaines en formation.">
+<meta name="description" content="Jamar Carty, étudiant en deuxième année de BTS SIO SLAM à l’AFIP, recherche une alternance en développement Full Stack au rythme de deux semaines en entreprise et deux semaines en formation.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -77,7 +77,7 @@ if (is_admin()) {
           <span class="neon-name">Jamar</span> <span class="neon-name">Carty</span><br>
           <span class="sw"><span class="sr-only">Développeur Full Stack</span><span aria-hidden="true">Développeur <span class="hero-rotate" data-words="Full Stack|Laravel &amp; PHP|React Native|C# · SQL">Full Stack</span></span></span>
         </h1>
-        <p class="hero-sub">Étudiant en BTS SIO SLAM à l’AFIP, je recherche une alternance en développement informatique. Rythme : deux semaines en entreprise et deux semaines en formation.</p>
+        <p class="hero-sub">Étudiant en deuxième année de BTS SIO SLAM à l’AFIP, je recherche une alternance en développement informatique. Rythme : deux semaines en entreprise et deux semaines en formation.</p>
         <div class="hero-cta">
           <a href="#projets" class="btn-primary">Voir mes projets →</a>
           <a href="#contact" class="btn-outline">Parler d’alternance</a>
@@ -102,7 +102,7 @@ if (is_admin()) {
     <ul class="hero-bento">
       <li>
         <span class="hb-k">Formation</span>
-        <strong>BTS SIO · SLAM</strong>
+        <strong>BTS SIO · SLAM · 2<sup>e</sup> année</strong>
         <span class="hb-v">AFIP · session 2026</span>
       </li>
       <li>
@@ -141,7 +141,7 @@ if (is_admin()) {
     </div>
     <div class="profile-grid">
       <blockquote>« Développeur Full Stack, je conçois des applications web et mobiles, des API REST et des expériences 3D interactives. »</blockquote>
-      <p>Actuellement en BTS Services Informatiques aux Organisations, option SLAM, à l’AFIP pour 2026–2027, j’ai auparavant suivi cette formation à l’ICOF de 2023 à 2026.</p>
+      <p>Actuellement en deuxième année de BTS Services Informatiques aux Organisations, option SLAM, à l’AFIP pour 2026–2027, j’ai auparavant suivi cette formation à l’ICOF de 2023 à 2026.</p>
       <p>Je recherche une alternance en développement informatique au rythme de <strong>deux semaines en entreprise et deux semaines en formation</strong>. Mes expériences couvrent Laravel, React Native, les API REST, WordPress et la modélisation 3D.</p>
     </div>
   </div>
@@ -153,13 +153,13 @@ if (is_admin()) {
       <div class="section-icon" style="background:var(--coral-soft);">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#f28b82" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9l10-5 10 5-10 5-10-5z"/><path d="M6 11v5c0 1.5 3 3 6 3s6-1.5 6-3v-5"/></svg>
       </div>
-      <div><h2>Formation</h2><p>BTS SIO SLAM · AFIP, 2026–2027</p></div>
+      <div><h2>Formation</h2><p>BTS SIO SLAM · 2<sup>e</sup> année · AFIP, 2026–2027</p></div>
     </div>
 
     <div class="branch-grid">
       <div class="branch-card current">
         <div class="branch-top"><h4>BTS SIO · option SLAM</h4><span class="pill-current">En cours</span></div>
-        <p class="branch-summary">AFIP · 2026–2027</p>
+        <p class="branch-summary">AFIP · 2026–2027 · 2<sup>e</sup> année</p>
       </div>
       <div class="branch-card">
         <div class="branch-top"><h4>BTS SIO · option SLAM</h4></div>
