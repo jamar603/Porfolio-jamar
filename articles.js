@@ -105,6 +105,49 @@ function renderArticle(article){
     dialogContent.append(sectionElement);
   });
 
+  if (article.gallery?.length){
+    const gallerySection = document.createElement('section');
+    gallerySection.className = 'article-dialog-section';
+    addText(gallerySection, 'h3', '', 'Captures du projet');
+    const gallery = document.createElement('div');
+    gallery.className = 'article-gallery';
+    article.gallery.forEach(photo => {
+      const figure = document.createElement('figure');
+      const link = document.createElement('a');
+      link.href = photo.full || photo.src;
+      link.target = '_blank';
+      link.rel = 'noopener';
+      link.setAttribute('aria-label', `Agrandir : ${photo.alt || photo.caption || 'capture'}`);
+      const image = document.createElement('img');
+      image.src = photo.src;
+      image.alt = photo.alt || '';
+      image.loading = 'lazy';
+      image.decoding = 'async';
+      link.append(image);
+      figure.append(link);
+      if (photo.caption) addText(figure, 'figcaption', '', photo.caption);
+      gallery.append(figure);
+    });
+    gallerySection.append(gallery);
+    dialogContent.append(gallerySection);
+  }
+
+  if (article.documents?.length){
+    const docSection = document.createElement('section');
+    docSection.className = 'article-dialog-section article-documents';
+    addText(docSection, 'h3', '', 'Documentation');
+    article.documents.forEach(doc => {
+      const link = document.createElement('a');
+      link.className = 'article-download';
+      link.href = doc.href;
+      link.setAttribute('download', '');
+      addText(link, 'span', '', doc.label);
+      if (doc.meta) addText(link, 'small', '', doc.meta);
+      docSection.append(link);
+    });
+    dialogContent.append(docSection);
+  }
+
   addTags(dialogContent, article.tags);
   articleDialog.showModal();
   dialogClose.focus();
