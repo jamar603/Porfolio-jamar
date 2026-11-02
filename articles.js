@@ -111,20 +111,22 @@ function renderArticle(article){
     addText(gallerySection, 'h3', '', 'Captures du projet');
     const gallery = document.createElement('div');
     gallery.className = 'article-gallery';
-    article.gallery.forEach(photo => {
+    article.gallery.forEach((photo, index) => {
       const figure = document.createElement('figure');
-      const link = document.createElement('a');
-      link.href = photo.full || photo.src;
-      link.target = '_blank';
-      link.rel = 'noopener';
-      link.setAttribute('aria-label', `Agrandir : ${photo.alt || photo.caption || 'capture'}`);
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'article-gallery-open';
+      button.setAttribute('aria-label', `Agrandir : ${photo.caption || 'capture'}`);
+      button.addEventListener('click', () => openLightbox(article.gallery, index));
       const image = document.createElement('img');
       image.src = photo.src;
-      image.alt = photo.alt || '';
+      image.alt = photo.caption || '';
+      if (photo.width) image.width = photo.width;
+      if (photo.height) image.height = photo.height;
       image.loading = 'lazy';
       image.decoding = 'async';
-      link.append(image);
-      figure.append(link);
+      button.append(image);
+      figure.append(button);
       if (photo.caption) addText(figure, 'figcaption', '', photo.caption);
       gallery.append(figure);
     });
@@ -152,6 +154,66 @@ function renderArticle(article){
   articleDialog.showModal();
   dialogClose.focus();
 }
+
+// photo viewer: opens the photo full size inside the page, with previous / next
+const lightbox = document.createElement('dialog');
+lightbox.className = 'photo-lightbox';
+lightbox.setAttribute('aria-label', 'Photo agrandie');
+lightbox.innerHTML = `
+  <figure class="photo-lightbox-figure">
+    <figcaption><span class="photo-lightbox-caption"></span><span class="photo-lightbox-count"></span></figcaption>
+  </figure>
+  <button type="button" class="photo-lightbox-btn photo-lightbox-close" aria-label="Fermer">×</button>
+  <button type="button" class="photo-lightbox-btn photo-lightbox-prev" aria-label="Photo précédente">‹</button>
+  <button type="button" class="photo-lightbox-btn photo-lightbox-next" aria-label="Photo suivante">›</button>`;
+document.body.append(lightbox);
+// the image gets its src when a photo is opened
+const lightboxImage = document.createElement('img');
+lightbox.querySelector('figure').prepend(lightboxImage);
+const lightboxCaption = lightbox.querySelector('.photo-lightbox-caption');
+const lightboxCount = lightbox.querySelector('.photo-lightbox-count');
+const lightboxPrev = lightbox.querySelector('.photo-lightbox-prev');
+const lightboxNext = lightbox.querySelector('.photo-lightbox-next');
+let lightboxPhotos = [];
+let lightboxIndex = 0;
+
+function showLightboxPhoto(index){
+  lightboxIndex = (index + lightboxPhotos.length) % lightboxPhotos.length;
+  const photo = lightboxPhotos[lightboxIndex];
+  lightboxImage.src = photo.src;
+  lightboxImage.alt = photo.caption || '';
+  lightboxCaption.textContent = photo.caption || '';
+  lightboxCount.textContent = lightboxPhotos.length > 1 ? `${lightboxIndex + 1} / ${lightboxPhotos.length}` : '';
+}
+
+function openLightbox(photos, index){
+  lightboxPhotos = photos;
+  const several = photos.length > 1;
+  lightboxPrev.hidden = !several;
+  lightboxNext.hidden = !several;
+  showLightboxPhoto(index);
+  lightbox.showModal();
+}
+
+lightbox.querySelector('.photo-lightbox-close').addEventListener('click', () => lightbox.close());
+lightboxPrev.addEventListener('click', () => showLightboxPhoto(lightboxIndex - 1));
+lightboxNext.addEventListener('click', () => showLightboxPhoto(lightboxIndex + 1));
+lightbox.addEventListener('click', event => {
+  if (event.target === lightbox || event.target.classList.contains('photo-lightbox-figure')) lightbox.close();
+});
+lightbox.addEventListener('keydown', event => {
+  if (lightboxPhotos.length < 2) return;
+  if (event.key === 'ArrowLeft') showLightboxPhoto(lightboxIndex - 1);
+  if (event.key === 'ArrowRight') showLightboxPhoto(lightboxIndex + 1);
+});
+let touchStartX = null;
+lightbox.addEventListener('touchstart', event => { touchStartX = event.touches[0].clientX; }, { passive:true });
+lightbox.addEventListener('touchend', event => {
+  if (touchStartX === null || lightboxPhotos.length < 2) return;
+  const distance = event.changedTouches[0].clientX - touchStartX;
+  touchStartX = null;
+  if (Math.abs(distance) > 50) showLightboxPhoto(lightboxIndex + (distance < 0 ? 1 : -1));
+}, { passive:true });
 
 function filterArticles(){
   const query = normalizeText(searchField.value.trim());
