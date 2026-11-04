@@ -44,8 +44,8 @@ nav.menu-open{ background:rgba(11,17,32,0.98); border-bottom-color:var(--border)
 .nav-menu-toggle[aria-expanded="true"] svg path:first-child{ transform:translateY(5px) rotate(45deg); }
 .nav-menu-toggle[aria-expanded="true"] svg path:nth-child(2){ opacity:0; }
 .nav-menu-toggle[aria-expanded="true"] svg path:last-child{ transform:translateY(-5px) rotate(-45deg); }
-@media (min-width:961px) and (max-width:1120px){
-  .nav-links a{ padding:7px 10px; font-size:13px; }
+@media (min-width:961px) and (max-width:1200px){
+  .nav-links a{ padding:7px 8px; font-size:12.5px; }
   .nav-links .nav-github span,.nav-links .nav-linkedin span{ position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; }
 }
 @media (max-width:960px){
@@ -801,8 +801,6 @@ html.has-custom-cursor:has(.article-dialog[open]) :is(.cursor-dot,.cursor-ring){
   #synthese .section-head p{ margin-top:0; }
 }
 
-/* mobile menu: a link for the experience section, so menu numbers match the section numbers */
-@media (min-width:961px){ .nav-links .nav-mobile-only{ display:none; } }
 
 /* small phones: one-line badge, full-width hero buttons */
 @media (max-width:520px){
