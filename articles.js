@@ -1,8 +1,17 @@
 const searchField = document.getElementById('articleSearch');
-const categoryChips = document.getElementById('articleCategory');
+const periodChips = document.getElementById('articlePeriod');
+const competenceChips = document.getElementById('articleCompetence');
 const railPrev = document.getElementById('articlePrev');
 const railNext = document.getElementById('articleNext');
-let activeCategory = 'all';
+// period and competences of each article, read from the tableau de synthèse (see index.php)
+const synthData = (() => {
+  try { return JSON.parse(document.getElementById('articleSynth')?.textContent || '{}'); }
+  catch { return {}; }
+})();
+const synthArticles = synthData.articles || {};
+const synthCompetences = synthData.competences || [];
+let activePeriod = 'all';
+let activeCompetence = 'all';
 const articleGrid = document.getElementById('articleGrid');
 const articleCount = document.getElementById('articleCount');
 const articleStatus = document.getElementById('articleStatus');
@@ -32,6 +41,19 @@ function addTags(parent, tags){
   parent.append(tagList);
 }
 
+function addCompetenceBadges(parent, articleId){
+  const competences = synthArticles[articleId]?.competences || [];
+  if (!competences.length) return;
+  const list = document.createElement('span');
+  list.className = 'article-comps';
+  competences.forEach(number => {
+    const badge = addText(list, 'span', '', `C${number}`);
+    const competence = synthCompetences[number - 1];
+    if (competence) badge.title = competence.label;
+  });
+  parent.append(list);
+}
+
 function addArticlePlaceholder(media, article){
   media.classList.add('article-media-placeholder');
   media.setAttribute('aria-hidden', 'true');
@@ -43,6 +65,7 @@ function createArticleCard(article, index){
   card.className = 'article-card';
   card.dataset.category = article.category;
   card.dataset.articleId = article.id;
+  if (synthArticles[article.id]) card.dataset.period = synthArticles[article.id].period;
   card.style.setProperty('--article-delay', `${index * 35}ms`);
 
   const media = document.createElement('div');
@@ -65,17 +88,20 @@ function createArticleCard(article, index){
   content.className = 'article-card-content';
   const meta = document.createElement('div');
   meta.className = 'article-meta';
-  addText(meta, 'span', 'article-category', article.categoryLabel);
+  addText(meta, 'span', 'article-category', synthArticles[article.id]?.periodLabel || article.categoryLabel);
   addText(meta, 'time', '', article.date);
   content.append(meta);
   addText(content, 'h3', '', article.title);
   addText(content, 'p', 'article-summary', article.summary);
   addTags(content, article.tags);
 
-  const openButton = addText(content, 'button', 'article-read', 'Lire l’article');
+  const foot = document.createElement('div');
+  foot.className = 'article-foot';
+  const openButton = addText(foot, 'button', 'article-read', 'Lire l’article');
   openButton.type = 'button';
   openButton.dataset.articleId = article.id;
-  content.append(openButton);
+  addCompetenceBadges(foot, article.id);
+  content.append(foot);
   card.append(content);
   return card;
 }
@@ -94,7 +120,11 @@ function renderArticle(article){
 
   const meta = document.createElement('div');
   meta.className = 'article-dialog-meta';
-  addText(meta, 'span', 'article-category', article.categoryLabel);
+  const metaStart = document.createElement('span');
+  metaStart.className = 'article-dialog-tags';
+  addText(metaStart, 'span', 'article-category', synthArticles[article.id]?.periodLabel || article.categoryLabel);
+  addCompetenceBadges(metaStart, article.id);
+  meta.append(metaStart);
   addText(meta, 'time', '', article.date);
   dialogContent.append(meta);
   addText(dialogContent, 'h2', '', article.title).id = 'articleDialogTitle';
@@ -220,23 +250,29 @@ lightbox.addEventListener('touchend', event => {
 
 function filterArticles(){
   const query = normalizeText(searchField.value.trim());
-  const category = activeCategory;
   let visibleCount = 0;
 
   [...articleGrid.querySelectorAll('.article-card')].forEach(card => {
-    const article = articles.find(item => item.id === card.dataset.articleId);
-    const searchableText = article
-      ? `${card.textContent} ${article.sections.flatMap(section => [section.heading, ...section.paragraphs]).join(' ')}`
-      : card.textContent;
-    const matchesText = normalizeText(searchableText).includes(query);
-    const matchesCategory = category === 'all' || card.dataset.category === category;
-    card.hidden = !matchesText || !matchesCategory;
+    // the static fallback cards carry their id on the read button only
+    const articleId = card.dataset.articleId || card.querySelector('[data-article-id]')?.dataset.articleId;
+    const article = articles.find(item => item.id === articleId);
+    const synth = synthArticles[articleId];
+    // competence names count as searchable text, so "sauvegardes" or "mode projet" finds the right articles
+    const competenceText = (synth?.competences || []).map(number => {
+      const competence = synthCompetences[number - 1];
+      return competence ? `C${number} ${competence.label} ${(competence.skills || []).join(' ')}` : '';
+    }).join(' ');
+    const sectionText = article ? article.sections.flatMap(section => [section.heading, ...section.paragraphs]).join(' ') : '';
+    const matchesText = normalizeText(`${card.textContent} ${synth?.periodLabel || ''} ${competenceText} ${sectionText}`).includes(query);
+    const matchesPeriod = activePeriod === 'all' || synth?.period === activePeriod;
+    const matchesCompetence = activeCompetence === 'all' || (synth?.competences || []).includes(Number(activeCompetence));
+    card.hidden = !matchesText || !matchesPeriod || !matchesCompetence;
     if (!card.hidden) visibleCount += 1;
   });
 
   articleCount.textContent = `${visibleCount} article${visibleCount === 1 ? '' : 's'}`;
   emptyMessage.hidden = visibleCount !== 0;
-  resetButton.hidden = !query && category === 'all';
+  resetButton.hidden = !query && activePeriod === 'all' && activeCompetence === 'all';
   articleGrid.scrollTo({ left:0 });
   updateRailButtons();
 }
@@ -253,11 +289,17 @@ function scrollRail(direction){
   articleGrid.scrollBy({ left:direction * articleGrid.clientWidth * 0.9, behavior:reduceMotion ? 'auto' : 'smooth' });
 }
 
-function setCategory(category){
-  activeCategory = category;
-  categoryChips.querySelectorAll('[data-category]').forEach(chip => {
-    chip.setAttribute('aria-pressed', String(chip.dataset.category === category));
+function pressChip(group, value){
+  group.querySelectorAll('[data-filter]').forEach(chip => {
+    chip.setAttribute('aria-pressed', String(chip.dataset.filter === value));
   });
+}
+
+function setFilters(period, competence){
+  activePeriod = period;
+  activeCompetence = competence;
+  pressChip(periodChips, period);
+  pressChip(competenceChips, competence);
   filterArticles();
 }
 
@@ -354,13 +396,17 @@ document.addEventListener('click', event => {
 });
 
 searchField.addEventListener('input', filterArticles);
-categoryChips.addEventListener('click', event => {
-  const chip = event.target.closest('[data-category]');
-  if (chip) setCategory(chip.dataset.category);
+periodChips.addEventListener('click', event => {
+  const chip = event.target.closest('[data-filter]');
+  if (chip) setFilters(chip.dataset.filter, activeCompetence);
+});
+competenceChips.addEventListener('click', event => {
+  const chip = event.target.closest('[data-filter]');
+  if (chip) setFilters(activePeriod, chip.dataset.filter);
 });
 resetButton.addEventListener('click', () => {
   searchField.value = '';
-  setCategory('all');
+  setFilters('all', 'all');
   searchField.focus();
 });
 railPrev.addEventListener('click', () => scrollRail(-1));

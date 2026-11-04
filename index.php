@@ -396,23 +396,36 @@ $synthRealisations = [
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
           <input type="search" id="articleSearch" placeholder="Titre, technologie, sujet…" autocomplete="off">
         </label>
-        <div class="article-chips" id="articleCategory" role="group" aria-label="Filtrer par thème">
-          <button type="button" data-category="all" aria-pressed="true">Tous</button>
-          <button type="button" data-category="stage" aria-pressed="false">Stages</button>
-          <button type="button" data-category="development" aria-pressed="false">Développement</button>
-          <button type="button" data-category="systems" aria-pressed="false">Systèmes</button>
-          <button type="button" data-category="portfolio" aria-pressed="false">Parcours</button>
+<?php
+// article filters come from the tableau de synthèse: period = row group, competences = ticked columns
+$synthPeriods = [['formation', 'Formation'], ['stage1', 'Stage 1re année'], ['stage2', 'Stage 2e année']];
+$synthArticleMap = [];
+foreach (array_values($synthRealisations) as $p => $rows) {
+  foreach ($rows as [$title, $article, $covered]) {
+    $synthArticleMap[$article] = ['period' => $synthPeriods[$p][0], 'periodLabel' => $synthPeriods[$p][1], 'competences' => $covered];
+  }
+}
+?>
+        <div class="article-chips" id="articlePeriod" role="group" aria-label="Filtrer par période du tableau de synthèse">
+          <button type="button" data-filter="all" aria-pressed="true">Toutes</button>
+<?php foreach ($synthPeriods as [$slug, $label]): ?>
+          <button type="button" data-filter="<?= e($slug) ?>" aria-pressed="false"><?= e($label) ?></button>
+<?php endforeach; ?>
         </div>
         <button class="article-reset" id="resetArticles" type="button" hidden>Réinitialiser</button>
-      </div>
-      <div class="article-rail-head">
         <p class="article-count" id="articleCount" aria-live="polite">13 articles</p>
-        <div class="article-rail-nav">
-          <button type="button" class="article-rail-btn" id="articlePrev" aria-label="Articles précédents" disabled>‹</button>
-          <button type="button" class="article-rail-btn" id="articleNext" aria-label="Articles suivants">›</button>
-        </div>
       </div>
+      <div class="article-chips article-chips-comp" id="articleCompetence" role="group" aria-label="Filtrer par compétence du tableau de synthèse">
+        <button type="button" data-filter="all" aria-pressed="true">Toutes les compétences</button>
+<?php foreach ($synthCompetences as $i => [$label, $skills, $short]): ?>
+        <button type="button" data-filter="<?= $i + 1 ?>" aria-pressed="false" title="<?= e($label) ?>"><span class="chip-num">C<?= $i + 1 ?></span><?= e($short) ?></button>
+<?php endforeach; ?>
+      </div>
+      <script type="application/json" id="articleSynth"><?= json_encode(['articles' => $synthArticleMap, 'competences' => array_map(fn($c) => ['label' => $c[0], 'short' => $c[2], 'skills' => $c[1]], $synthCompetences)], JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_AMP) ?></script>
       <p class="article-status" id="articleStatus" role="status" aria-live="polite">Chargement des articles…</p>
+      <div class="article-rail-wrap">
+      <button type="button" class="article-rail-btn article-rail-prev" id="articlePrev" aria-label="Articles précédents" disabled>‹</button>
+      <button type="button" class="article-rail-btn article-rail-next" id="articleNext" aria-label="Articles suivants">›</button>
       <div class="article-grid article-rail" id="articleGrid" tabindex="-1">
         <article class="article-card" data-category="portfolio">
           <div class="article-meta"><span class="article-category">Portfolio & parcours</span><time>6 mars</time></div>
@@ -530,6 +543,7 @@ $synthRealisations = [
           <div class="project-tags"><span>Canva</span><span>CV</span><span>LinkedIn</span></div>
           <button class="article-read" type="button" data-article-id="cv-empreinte">Lire l’article →</button>
         </article>
+      </div>
       </div>
       <p class="article-empty" id="articleEmpty" hidden>Aucun article ne correspond à cette recherche.</p>
   </div>
