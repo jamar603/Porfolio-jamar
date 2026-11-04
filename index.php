@@ -390,24 +390,30 @@ $synthRealisations = [
       </div>
       <div><h2>Articles & travaux pratiques</h2><p>Missions de stage, projets de développement et TP</p></div>
     </div>
-      <div class="article-controls" role="search">
-        <label for="articleSearch">Rechercher un article
+      <div class="article-toolbar" role="search">
+        <label class="article-search" for="articleSearch">
+          <span class="sr-only">Rechercher un article</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
           <input type="search" id="articleSearch" placeholder="Titre, technologie, sujet…" autocomplete="off">
         </label>
-        <label for="articleCategory">Thème
-          <select id="articleCategory">
-            <option value="all">Tous les thèmes</option>
-            <option value="stage">Missions de stage</option>
-            <option value="development">Développement</option>
-            <option value="systems">Systèmes & support</option>
-            <option value="portfolio">Portfolio & parcours</option>
-          </select>
-        </label>
-        <button id="resetArticles" type="button">Réinitialiser</button>
+        <div class="article-chips" id="articleCategory" role="group" aria-label="Filtrer par thème">
+          <button type="button" data-category="all" aria-pressed="true">Tous</button>
+          <button type="button" data-category="stage" aria-pressed="false">Stages</button>
+          <button type="button" data-category="development" aria-pressed="false">Développement</button>
+          <button type="button" data-category="systems" aria-pressed="false">Systèmes</button>
+          <button type="button" data-category="portfolio" aria-pressed="false">Parcours</button>
+        </div>
+        <button class="article-reset" id="resetArticles" type="button" hidden>Réinitialiser</button>
       </div>
-      <p class="article-count" id="articleCount" aria-live="polite">13 articles</p>
+      <div class="article-rail-head">
+        <p class="article-count" id="articleCount" aria-live="polite">13 articles</p>
+        <div class="article-rail-nav">
+          <button type="button" class="article-rail-btn" id="articlePrev" aria-label="Articles précédents" disabled>‹</button>
+          <button type="button" class="article-rail-btn" id="articleNext" aria-label="Articles suivants">›</button>
+        </div>
+      </div>
       <p class="article-status" id="articleStatus" role="status" aria-live="polite">Chargement des articles…</p>
-      <div class="article-grid" id="articleGrid">
+      <div class="article-grid article-rail" id="articleGrid" tabindex="-1">
         <article class="article-card" data-category="portfolio">
           <div class="article-meta"><span class="article-category">Portfolio & parcours</span><time>6 mars</time></div>
           <h3>TP Portfolio avec WordPress</h3>

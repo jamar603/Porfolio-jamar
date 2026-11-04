@@ -1,5 +1,8 @@
 const searchField = document.getElementById('articleSearch');
-const categoryFilter = document.getElementById('articleCategory');
+const categoryChips = document.getElementById('articleCategory');
+const railPrev = document.getElementById('articlePrev');
+const railNext = document.getElementById('articleNext');
+let activeCategory = 'all';
 const articleGrid = document.getElementById('articleGrid');
 const articleCount = document.getElementById('articleCount');
 const articleStatus = document.getElementById('articleStatus');
@@ -217,7 +220,7 @@ lightbox.addEventListener('touchend', event => {
 
 function filterArticles(){
   const query = normalizeText(searchField.value.trim());
-  const category = categoryFilter.value;
+  const category = activeCategory;
   let visibleCount = 0;
 
   [...articleGrid.querySelectorAll('.article-card')].forEach(card => {
@@ -233,6 +236,29 @@ function filterArticles(){
 
   articleCount.textContent = `${visibleCount} article${visibleCount === 1 ? '' : 's'}`;
   emptyMessage.hidden = visibleCount !== 0;
+  resetButton.hidden = !query && category === 'all';
+  articleGrid.scrollTo({ left:0 });
+  updateRailButtons();
+}
+
+// horizontal rail: arrows scroll by one screen of cards, and turn off at each end
+function updateRailButtons(){
+  const maxScroll = articleGrid.scrollWidth - articleGrid.clientWidth;
+  railPrev.disabled = articleGrid.scrollLeft <= 4;
+  railNext.disabled = articleGrid.scrollLeft >= maxScroll - 4;
+}
+
+function scrollRail(direction){
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  articleGrid.scrollBy({ left:direction * articleGrid.clientWidth * 0.9, behavior:reduceMotion ? 'auto' : 'smooth' });
+}
+
+function setCategory(category){
+  activeCategory = category;
+  categoryChips.querySelectorAll('[data-category]').forEach(chip => {
+    chip.setAttribute('aria-pressed', String(chip.dataset.category === category));
+  });
+  filterArticles();
 }
 
 async function loadArticles(){
@@ -328,13 +354,20 @@ document.addEventListener('click', event => {
 });
 
 searchField.addEventListener('input', filterArticles);
-categoryFilter.addEventListener('change', filterArticles);
+categoryChips.addEventListener('click', event => {
+  const chip = event.target.closest('[data-category]');
+  if (chip) setCategory(chip.dataset.category);
+});
 resetButton.addEventListener('click', () => {
   searchField.value = '';
-  categoryFilter.value = 'all';
-  filterArticles();
+  setCategory('all');
   searchField.focus();
 });
+railPrev.addEventListener('click', () => scrollRail(-1));
+railNext.addEventListener('click', () => scrollRail(1));
+articleGrid.addEventListener('scroll', updateRailButtons, { passive:true });
+window.addEventListener('resize', updateRailButtons, { passive:true });
+updateRailButtons();
 
 dialogClose.addEventListener('click', closeArticleDialog);
 articleDialog.addEventListener('cancel', event => {
