@@ -545,6 +545,10 @@ foreach (array_values($synthRealisations) as $p => $rows) {
         </article>
       </div>
       </div>
+      <div class="article-rail-foot" aria-hidden="true">
+        <span class="article-rail-count" id="articleRailCount">13 articles</span>
+        <span class="article-rail-track"><span class="article-rail-thumb" id="articleRailThumb"></span></span>
+      </div>
       <p class="article-empty" id="articleEmpty" hidden>Aucun article ne correspond à cette recherche.</p>
   </div>
   <dialog class="article-dialog" id="articleDialog" aria-labelledby="articleDialogTitle">

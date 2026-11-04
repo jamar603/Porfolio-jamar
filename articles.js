@@ -10,6 +10,8 @@ const synthData = (() => {
 })();
 const synthArticles = synthData.articles || {};
 const synthCompetences = synthData.competences || [];
+const railCount = document.getElementById('articleRailCount');
+const railThumb = document.getElementById('articleRailThumb');
 let activePeriod = 'all';
 let activeCompetence = 'all';
 const articleGrid = document.getElementById('articleGrid');
@@ -271,6 +273,7 @@ function filterArticles(){
   });
 
   articleCount.textContent = `${visibleCount} article${visibleCount === 1 ? '' : 's'}`;
+  if (railCount) railCount.textContent = articleCount.textContent;
   emptyMessage.hidden = visibleCount !== 0;
   resetButton.hidden = !query && activePeriod === 'all' && activeCompetence === 'all';
   articleGrid.scrollTo({ left:0 });
@@ -282,6 +285,13 @@ function updateRailButtons(){
   const maxScroll = articleGrid.scrollWidth - articleGrid.clientWidth;
   railPrev.disabled = articleGrid.scrollLeft <= 4;
   railNext.disabled = articleGrid.scrollLeft >= maxScroll - 4;
+  // progress bar under the rail (shown on phones, where the arrows are hidden)
+  if (railThumb){
+    const visibleShare = articleGrid.scrollWidth ? Math.min(1, articleGrid.clientWidth / articleGrid.scrollWidth) : 1;
+    const progress = maxScroll > 0 ? articleGrid.scrollLeft / maxScroll : 0;
+    // thumb spans the whole track; scaleX sizes it, translateX moves it (no layout work while swiping)
+    railThumb.style.transform = `translateX(${progress * (1 - visibleShare) * 100}%) scaleX(${visibleShare})`;
+  }
 }
 
 function scrollRail(direction){
