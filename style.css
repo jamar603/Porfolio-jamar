@@ -801,6 +801,21 @@ html.has-custom-cursor:has(.article-dialog[open]) :is(.cursor-dot,.cursor-ring){
   #synthese .section-head p{ margin-top:0; }
 }
 
+/* expérience on wider screens: two columns so the nav link lands on every entry at once */
+@media (min-width:961px){
+  #experience{ scroll-margin-top:-28px; } /* same offset as #synthese: skip most of the top padding, stay clear of the sticky nav */
+  #experience .timeline{ display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:22px; }
+  #experience .t-row{ grid-template-columns:34px 1fr; gap:12px; }
+  #experience .t-line{ display:none; }
+  #experience .t-content,#experience .t-row:last-child .t-content{ margin-bottom:0; padding:16px 20px 18px; }
+  #experience .experience-points{ gap:6px; font-size:14px; line-height:1.55; }
+}
+@media (min-width:961px) and (max-height:760px){
+  #experience .section-head h2{ font-size:26px; }
+  #experience .t-content,#experience .t-row:last-child .t-content{ padding:12px 16px 14px; }
+  #experience .experience-points{ margin-top:6px; gap:4px; font-size:13px; line-height:1.45; }
+}
+
 
 /* small phones: one-line badge, full-width hero buttons */
 @media (max-width:520px){
