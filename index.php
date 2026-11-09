@@ -198,10 +198,10 @@ if (is_admin()) {
     </div>
     <figure class="motivation-card">
       <blockquote>
-        <p>Personne n’est parfait. Mon parcours n’a pas toujours été simple, et il le sera parfois encore.</p>
-        <p>Mais je n’abandonne pas : chaque difficulté m’apprend quelque chose, et je continue d’avancer, <strong>un pas après l’autre</strong>, jusqu’à mon objectif.</p>
+        <p>Personne n’est parfait. Mon parcours n’a pas toujours été linéaire, et il comportera encore des défis.</p>
+        <p>Mais chaque obstacle me rend plus solide. Je ne lâche rien : j’avance, <strong>un pas après l’autre</strong>, avec la volonté d’apprendre et de réussir.</p>
       </blockquote>
-      <figcaption>— Jamar Carty</figcaption>
+      <figcaption>Jamar Carty</figcaption>
     </figure>
   </div>
 </section>

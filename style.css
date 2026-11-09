@@ -983,13 +983,27 @@ html{ overflow-x:clip; }
 }
 
 /* ===== motivation ===== */
-.motivation-card{ position:relative; max-width:860px; margin:0; padding:38px 38px 30px 76px; border:1px solid rgba(110,231,183,.22); border-radius:14px; background:radial-gradient(90% 130% at 0% 0%,rgba(110,231,183,.09),transparent 60%),rgba(17,24,39,.7); }
-.motivation-card::before{ content:'C'; position:absolute; top:8px; left:22px; font-family:'Space Grotesk',sans-serif; font-size:84px; line-height:1; color:var(--green); text-shadow:0 0 22px rgba(110,231,183,.4); }
-.motivation-card blockquote{ margin:0; padding:0; border:0; background:none; max-width:none; font-family:'Space Grotesk',sans-serif; font-style:normal; font-size:clamp(18px,2.1vw,23px); font-weight:500; line-height:1.45; letter-spacing:-.01em; color:var(--ink); }
+.motivation-card{ position:relative; overflow:hidden; max-width:860px; margin:0; padding:38px 40px 32px 44px; border:1px solid rgba(110,231,183,.22); border-radius:14px; background:radial-gradient(90% 130% at 0% 0%,rgba(110,231,183,.09),transparent 60%),rgba(17,24,39,.7); transition:transform 260ms var(--ease-out),border-color 260ms var(--ease-out),box-shadow 260ms var(--ease-out); }
+/* green accent bar on the left, grows on hover */
+.motivation-card::before{ content:''; position:absolute; left:0; top:18%; bottom:18%; width:3px; border-radius:0 3px 3px 0; background:var(--green); box-shadow:0 0 14px rgba(110,231,183,.55); transition:top 320ms var(--ease-out),bottom 320ms var(--ease-out); }
+/* soft light that follows the hover */
+.motivation-card::after{ content:''; position:absolute; inset:0; background:radial-gradient(60% 90% at 100% 100%,rgba(110,231,183,.1),transparent 70%); opacity:0; transition:opacity 320ms var(--ease-out); pointer-events:none; }
+.motivation-card blockquote{ position:relative; z-index:1; margin:0; padding:0; border:0; background:none; max-width:none; font-family:'Space Grotesk',sans-serif; font-style:normal; font-size:clamp(18px,2.1vw,23px); font-weight:500; line-height:1.45; letter-spacing:-.01em; color:var(--ink); }
 .motivation-card blockquote p + p{ margin-top:14px; }
-.motivation-card strong{ color:var(--green); font-weight:600; }
-.motivation-card figcaption{ margin-top:20px; color:var(--dim); font-size:14px; font-weight:600; letter-spacing:.02em; }
+.motivation-card strong{ color:var(--green); font-weight:600; transition:text-shadow 260ms var(--ease-out); }
+.motivation-card figcaption{ position:relative; z-index:1; display:flex; align-items:center; gap:10px; margin-top:22px; color:var(--dim); font-size:14px; font-weight:600; letter-spacing:.02em; }
+.motivation-card figcaption::before{ content:''; width:28px; height:2px; border-radius:2px; background:var(--green); transition:width 320ms var(--ease-out); }
+@media (hover:hover) and (pointer:fine){
+  .motivation-card:hover{ transform:translateY(-3px); border-color:rgba(110,231,183,.5); box-shadow:0 18px 40px rgba(0,0,0,.32),0 0 0 1px rgba(110,231,183,.12); }
+  .motivation-card:hover::before{ top:0; bottom:0; }
+  .motivation-card:hover::after{ opacity:1; }
+  .motivation-card:hover strong{ text-shadow:0 0 16px rgba(110,231,183,.45); }
+  .motivation-card:hover figcaption::before{ width:44px; }
+}
+@media (prefers-reduced-motion:reduce){
+  .motivation-card,.motivation-card::before,.motivation-card::after,.motivation-card figcaption::before{ transition:none; }
+  .motivation-card:hover{ transform:none; }
+}
 @media (max-width:640px){
-  .motivation-card{ padding:56px 20px 24px; }
-  .motivation-card::before{ top:4px; left:16px; font-size:64px; }
+  .motivation-card{ padding:28px 20px 24px 24px; }
 }
