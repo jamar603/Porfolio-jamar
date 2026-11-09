@@ -159,7 +159,7 @@ if (is_admin()) {
     <div class="branch-grid">
       <div class="branch-card current">
         <div class="branch-top"><h4>BTS SIO · option SLAM</h4><span class="pill-current">En cours</span></div>
-        <p class="branch-summary">AFIP · 2026–2027 · 2<sup>e</sup> année</p>
+        <p class="branch-summary">AFIP · 2026–2027 · 2<sup>e</sup> année · rattrapage des épreuves restantes pour obtenir le BTS en 2027</p>
       </div>
       <div class="branch-card">
         <div class="branch-top"><h4>BTS SIO · option SLAM</h4><span class="pill-validated"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>Épreuves validées</span></div>
@@ -185,6 +185,24 @@ if (is_admin()) {
         </div>
       </div>
     </div>
+  </div>
+</section>
+
+<section id="motivation">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-icon" style="background:var(--green-soft);">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#6ee7b7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg>
+      </div>
+      <div><h2>Motivation</h2><p>Ce qui me fait avancer</p></div>
+    </div>
+    <figure class="motivation-card">
+      <blockquote>
+        <p>Personne n’est parfait. Mon parcours n’a pas toujours été simple, et il le sera parfois encore.</p>
+        <p>Mais je n’abandonne pas : chaque difficulté m’apprend quelque chose, et je continue d’avancer, <strong>un pas après l’autre</strong>, jusqu’à mon objectif.</p>
+      </blockquote>
+      <figcaption>— Jamar Carty</figcaption>
+    </figure>
   </div>
 </section>
 

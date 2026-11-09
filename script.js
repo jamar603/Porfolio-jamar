@@ -111,7 +111,7 @@ if (contactForm) {
 
 
 // scroll reveal
-const revealTargets = document.querySelectorAll('.section-head, .profile-grid, .branch-card, .t-row, .project-card, .skill-group, .veille-grid, .contact-wrap');
+const revealTargets = document.querySelectorAll('.section-head, .profile-grid, .motivation-card, .branch-card, .t-row, .project-card, .skill-group, .veille-grid, .contact-wrap');
 if ('IntersectionObserver' in window){
   const revealObs = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
