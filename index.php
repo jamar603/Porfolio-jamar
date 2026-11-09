@@ -141,7 +141,7 @@ if (is_admin()) {
     </div>
     <div class="profile-grid">
       <blockquote>« Développeur Full Stack, je conçois des applications web et mobiles, des API REST et des expériences 3D interactives. »</blockquote>
-      <p>Actuellement en deuxième année de BTS Services Informatiques aux Organisations, option SLAM, à l’AFIP pour 2026–2027, j’ai auparavant suivi cette formation à l’ICOF de 2024 à 2026, où j’ai validé plusieurs épreuves. Je la termine à l’AFIP pour obtenir mon BTS en 2027.</p>
+      <p>Actuellement en deuxième année de BTS Services Informatiques aux Organisations, option SLAM, à l’AFIP pour 2026–2027, j’ai auparavant suivi cette formation à l’ICOF de 2024 à 2026, où j’ai <strong>validé plusieurs épreuves</strong>. Je la termine à l’AFIP pour obtenir mon BTS en 2027.</p>
       <p>Je recherche une alternance en développement informatique au rythme de <strong>deux semaines en entreprise et deux semaines en formation</strong>. Mes expériences couvrent Laravel, React Native, les API REST, WordPress et la modélisation 3D.</p>
     </div>
   </div>
@@ -162,8 +162,8 @@ if (is_admin()) {
         <p class="branch-summary">AFIP · 2026–2027 · 2<sup>e</sup> année</p>
       </div>
       <div class="branch-card">
-        <div class="branch-top"><h4>BTS SIO · option SLAM</h4></div>
-        <p class="branch-summary">ICOF · 2024–2026 · plusieurs épreuves validées</p>
+        <div class="branch-top"><h4>BTS SIO · option SLAM</h4><span class="pill-validated"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>Épreuves validées</span></div>
+        <p class="branch-summary">ICOF · 2024–2026 · plusieurs épreuves du BTS déjà validées</p>
       </div>
     </div>
 
