@@ -34,7 +34,7 @@ if (is_admin()) {
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="icon" href="logo-jc.svg" type="image/svg+xml">
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="style.css?v=<?= md5_file(__DIR__ . '/style.css') ?>">
 </head>
 <body>
 
@@ -770,7 +770,7 @@ foreach (array_values($synthRealisations) as $p => $rows) {
 <script src="admin/notify.js" defer></script>
 <?php endif; ?>
 
-<script src="script.js"></script>
+<script src="script.js?v=<?= md5_file(__DIR__ . '/script.js') ?>"></script>
 <script src="articles.js"></script>
 <script src="nav.js"></script>
 <script src="background.js"></script>
