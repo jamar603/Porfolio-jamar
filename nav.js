@@ -133,7 +133,9 @@ if (navMenu){
     const first = !indicator.classList.contains('is-visible');
     if (first) indicator.style.transition = 'none';
     indicator.style.width = `${target.offsetWidth}px`;
-    indicator.style.transform = `translateX(${target.offsetLeft}px)`;
+    // position measured against the whole bar (offsetLeft would be relative to the group itself)
+    const x = target.getBoundingClientRect().left - list.getBoundingClientRect().left - list.clientLeft;
+    indicator.style.transform = `translateX(${x}px)`;
     indicator.classList.add('is-visible');
     if (first){ indicator.offsetWidth; indicator.style.transition = ''; }
   }

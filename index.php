@@ -317,14 +317,20 @@ foreach (['webp', 'jpg', 'jpeg', 'png'] as $ext) {
 }
 ?>
       <div class="profile-intro">
-        <figure class="profile-photo">
-<?php if ($profilePhoto): ?>
-          <img src="<?= e($profilePhoto) ?>?v=<?= filemtime(__DIR__ . '/' . $profilePhoto) ?>" alt="Photo de Jamar Carty" width="400" height="400">
-<?php else: ?>
-          <span class="profile-photo-initials" aria-hidden="true">JC</span>
-<?php endif; ?>
-          <a class="profile-photo-badge" href="https://www.linkedin.com/in/jamar-carty" target="_blank" rel="noopener noreferrer" aria-label="Profil LinkedIn de Jamar Carty"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.35V9h3.414v1.561h.049c.476-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 1 1 0-4.124 2.062 2.062 0 0 1 0 4.124zM7.119 20.452H3.555V9h3.564v11.452z"/></svg></a>
-        </figure>
+        <div class="profile-id">
+          <figure class="profile-photo">
+  <?php if ($profilePhoto): ?>
+            <img src="<?= e($profilePhoto) ?>?v=<?= filemtime(__DIR__ . '/' . $profilePhoto) ?>" alt="Photo de Jamar Carty" width="400" height="400">
+  <?php else: ?>
+            <span class="profile-photo-initials" aria-hidden="true">JC</span>
+  <?php endif; ?>
+            <a class="profile-photo-badge" href="https://www.linkedin.com/in/jamar-carty" target="_blank" rel="noopener noreferrer" aria-label="Profil LinkedIn de Jamar Carty"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.35V9h3.414v1.561h.049c.476-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 1 1 0-4.124 2.062 2.062 0 0 1 0 4.124zM7.119 20.452H3.555V9h3.564v11.452z"/></svg></a>
+          </figure>
+          <a class="profile-github" href="https://github.com/jamar603" target="_blank" rel="noopener noreferrer" aria-label="GitHub de Jamar Carty : github.com/jamar603">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .5A11.5 11.5 0 0 0 8.36 22.91c.58.1.79-.25.79-.56v-2.02c-3.2.7-3.87-1.36-3.87-1.36-.52-1.33-1.28-1.69-1.28-1.69-1.04-.71.08-.7.08-.7 1.15.08 1.75 1.18 1.75 1.18 1.02 1.74 2.68 1.24 3.33.95.1-.74.4-1.24.73-1.53-2.55-.29-5.23-1.28-5.23-5.68 0-1.26.45-2.28 1.18-3.08-.12-.29-.51-1.46.11-3.04 0 0 .96-.31 3.15 1.17a10.9 10.9 0 0 1 5.74 0c2.19-1.48 3.15-1.17 3.15-1.17.62 1.58.23 2.75.11 3.04.73.8 1.18 1.82 1.18 3.08 0 4.41-2.68 5.38-5.24 5.67.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5z"/></svg>
+            <span><strong>GitHub</strong><small>github.com/jamar603</small></span>
+          </a>
+        </div>
         <div class="profile-intro-main">
           <div class="profile-school">
             <img src="images/logo-afip.svg" alt="AFIP" width="153" height="102">
