@@ -1,6 +1,6 @@
 // nav active state: the section crossing the middle of the screen
 // (computed from real positions: sections may be scaled with CSS zoom, which IntersectionObserver ignores)
-const navLinks = document.querySelectorAll('.nav-links a[data-t]');
+const navLinks = document.querySelectorAll('.site-menu a[data-t]');
 const sections = [...navLinks].map(a => document.getElementById(a.dataset.t)).filter(Boolean);
 let navFrame = 0;
 const updateNavActive = () => {
