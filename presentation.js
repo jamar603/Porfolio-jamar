@@ -62,6 +62,44 @@
   // (so a section reached from the menu is seen whole) and always in presentation mode (above the
   // control bar). A section still too tall at the minimum scale stays scrollable; in presentation mode
   // it is split into "pages" of one screen each, so every step shows a complete screenful.
+  // Navigation scroll, animated by hand: the browser's smooth scroll stalls while the WebGL background
+  // and the 3D scene are busy, and could stop short of the section. This one lasts a fixed time whatever
+  // the frame rate, reads the target again on every frame (images loading above it cannot shift it)
+  // and ends exactly on it. A wheel, touch or key from the visitor stops it.
+  let glide = 0;
+  const stopGlide = () => { cancelAnimationFrame(glide); glide = 0; };
+  ['wheel', 'touchstart', 'keydown'].forEach(type => window.addEventListener(type, event => {
+    // keys handled by the presentation (next / previous) start a new glide themselves
+    if (type === 'keydown' && (event.defaultPrevented || !['ArrowUp', 'ArrowDown', 'PageUp', 'PageDown', 'Home', 'End', ' '].includes(event.key))) return;
+    stopGlide();
+  }, { passive: true }));
+  const glideTo = getTarget => {
+    stopGlide();
+    const clamp = y => Math.max(0, Math.min(document.documentElement.scrollHeight - window.innerHeight, y));
+    if (reduceMotion.matches) { window.scrollTo({ top: clamp(getTarget()), behavior: 'instant' }); return; }
+    const startY = window.scrollY;
+    const distance = Math.abs(clamp(getTarget()) - startY);
+    const duration = Math.min(900, 380 + distance * 0.12);
+    const t0 = performance.now();
+    const ease = t => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
+    const step = now => {
+      const t = Math.min(1, (now - t0) / duration);
+      const target = clamp(getTarget());
+      window.scrollTo({ top: startY + (target - startY) * ease(t), behavior: 'instant' });
+      if (t < 1) glide = requestAnimationFrame(step);
+      else {
+        glide = 0;
+        // final check once late layout (images, fonts) has settled
+        setTimeout(() => {
+          if (glide) return;
+          const final = clamp(getTarget());
+          if (Math.abs(window.scrollY - final) > 2) window.scrollTo({ top: final, behavior: 'instant' });
+        }, 180);
+      }
+    };
+    glide = requestAnimationFrame(step);
+  };
+
   // Browsing: never below 0.6 (only reached on 768 px high laptops; 70 % or more from 900 px).
   // Presentation (read by the jury): never below 0.85 (a taller section is split into pages instead),
   // and a short section is enlarged up to 130 % to fill the screen, as wide as the screen allows.
@@ -116,7 +154,7 @@
     const index = steps.indexOf(target);
     if (index >= 0) { goTo(index); return; }
     target.querySelectorAll('.reveal').forEach(el => el.classList.add('is-visible'));
-    window.scrollTo({ top: sectionTop(target), behavior: reduceMotion.matches ? 'auto' : 'smooth' });
+    glideTo(() => sectionTop(target));
     history.replaceState(null, '', `#${target.id}`);
   });
   // where page p of section i starts; the last page ends exactly where the section ends
@@ -165,7 +203,7 @@
     requestAnimationFrame(() => { render(); ticking = false; });
   }, { passive: true });
   window.addEventListener('resize', () => { fitSections(); render(); });
-  window.addEventListener('scrollend', () => { lockedUntil = 0; render(); });
+  window.addEventListener('scrollend', () => { if (glide) return; lockedUntil = 0; render(); });
 
   // shows the whole section at once (its scroll reveals included) with a short entrance
   const enter = section => {
@@ -185,7 +223,7 @@
     currentPage = p;
     lockedUntil = performance.now() + 1000;
     render();
-    window.scrollTo({ top: pageStart(i, p), behavior: reduceMotion.matches ? 'auto' : 'smooth' });
+    glideTo(() => pageStart(i, p));
     history.replaceState(null, '', `#${target.id}`);
   };
   // next / previous: page by page inside a split section, then section by section
