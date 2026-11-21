@@ -266,6 +266,13 @@ if (is_admin()) {
 
     <div class="projects-grid">
       <div class="project-card">
+        <div class="project-icon" style="background:var(--amber-soft);"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#e5b567" stroke-width="2" stroke-linecap="round"><path d="M4 19V5a2 2 0 012-2h8l6 6v10a2 2 0 01-2 2H6a2 2 0 01-2-2z"/><path d="M14 3v6h6"/></svg></div>
+        <div class="project-title">Application Mediateq</div>
+        <div class="project-desc">Application Windows Forms organisée en onglets pour gérer plusieurs fonctionnalités métier.</div>
+        <div class="project-tags"><span>C#</span><span>Windows Forms</span></div>
+        <a class="project-link" href="#articles" data-open-article="mediateq-csharp">Lire le projet →</a>
+      </div>
+      <div class="project-card">
         <div class="project-icon" style="background:var(--indigo-soft);"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M8 21h8M12 18v3"/></svg></div>
         <div class="project-title">Gestion des conventions de stage</div>
         <div class="project-desc">Application web avec des espaces et des droits adaptés aux étudiants, enseignants et membres du secrétariat.</div>
@@ -278,13 +285,6 @@ if (is_admin()) {
         <div class="project-desc">Mission de développement mobile réalisée pendant la formation.</div>
         <div class="project-tags"><span>React Native</span><span>API</span></div>
         <a class="project-link" href="#articles" data-open-article="react-native-stage">Lire la mission →</a>
-      </div>
-      <div class="project-card">
-        <div class="project-icon" style="background:var(--amber-soft);"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#e5b567" stroke-width="2" stroke-linecap="round"><path d="M4 19V5a2 2 0 012-2h8l6 6v10a2 2 0 01-2 2H6a2 2 0 01-2-2z"/><path d="M14 3v6h6"/></svg></div>
-        <div class="project-title">Application Mediateq</div>
-        <div class="project-desc">Application Windows Forms organisée en onglets pour gérer plusieurs fonctionnalités métier.</div>
-        <div class="project-tags"><span>C#</span><span>Windows Forms</span></div>
-        <a class="project-link" href="#articles" data-open-article="mediateq-csharp">Lire le projet →</a>
       </div>
       <div class="project-card">
         <div class="project-icon" style="background:var(--mint-soft);"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#a5b4fc" stroke-width="2" stroke-linecap="round"><path d="M13 2L3 14h7l-1 8 10-12h-7l1-8z"/></svg></div>
