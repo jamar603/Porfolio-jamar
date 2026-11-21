@@ -73,8 +73,10 @@
   });
 
   const stop = () => { clearInterval(timer); timer = null; };
+  // on a computer the certificates are shown as a wall (grid, all visible): no autoplay there
+  const isWall = () => getComputedStyle(track).display === 'grid';
   const start = () => {
-    if (reducedMotion.matches || timer) return;
+    if (reducedMotion.matches || timer || isWall()) return;
     timer = setInterval(() => goTo(current + 1), AUTOPLAY_DELAY);
   };
   const restart = () => { stop(); start(); };
@@ -90,4 +92,18 @@
   }, { threshold: 0.3 }).observe(slider);
 
   setActive(0);
+
+  // a certificate opens full size in the site's photo viewer (articles.js) instead of a new tab;
+  // previous / next go through all the certificates
+  const photos = cards.map(card => ({
+    src: card.getAttribute('href'),
+    caption: [card.querySelector('.cert-info strong')?.textContent, card.querySelector('.cert-info span')?.textContent].filter(Boolean).join(' · '),
+  }));
+  cards.forEach((card, index) => {
+    card.addEventListener('click', event => {
+      if (typeof openLightbox !== 'function' || event.ctrlKey || event.metaKey || event.shiftKey) return;
+      event.preventDefault();
+      openLightbox(photos, index);
+    });
+  });
 })();

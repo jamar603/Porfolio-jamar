@@ -1,14 +1,21 @@
-// nav active state
+// nav active state: the section crossing the middle of the screen
+// (computed from real positions: sections may be scaled with CSS zoom, which IntersectionObserver ignores)
 const navLinks = document.querySelectorAll('.nav-links a[data-t]');
 const sections = [...navLinks].map(a => document.getElementById(a.dataset.t)).filter(Boolean);
-const navObs = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting){
-      navLinks.forEach(a => a.classList.toggle('active', a.dataset.t === entry.target.id));
-    }
+let navFrame = 0;
+const updateNavActive = () => {
+  navFrame = 0;
+  const line = window.innerHeight * 0.45;
+  let activeId = null;
+  sections.forEach(section => {
+    const r = section.getBoundingClientRect();
+    if (r.top <= line && r.bottom > line) activeId = section.id;
   });
-}, { rootMargin: '-45% 0px -50% 0px' });
-sections.forEach(s => navObs.observe(s));
+  navLinks.forEach(a => a.classList.toggle('active', a.dataset.t === activeId));
+};
+window.addEventListener('scroll', () => { if (!navFrame) navFrame = requestAnimationFrame(updateNavActive); }, { passive: true });
+window.addEventListener('resize', updateNavActive);
+updateNavActive();
 
 // contact form: sent to its action (contact.php, or FormSubmit on the static build) in the background; without JavaScript the form posts normally
 const contactForm = document.getElementById('contactForm');
@@ -129,6 +136,19 @@ if ('IntersectionObserver' in window){
     el.classList.add('reveal');
     revealObs.observe(el);
   });
+  // a section that comes into view reveals all its blocks together (in their stagger order),
+  // so a section reached from the menu appears whole instead of piece by piece while scrolling
+  const sectionObs = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      entry.target.querySelectorAll('.reveal').forEach(el => {
+        el.classList.add('is-visible');
+        revealObs.unobserve(el);
+      });
+      sectionObs.unobserve(entry.target);
+    });
+  }, { rootMargin: '0px 0px -30% 0px' });
+  document.querySelectorAll('body > section').forEach(section => sectionObs.observe(section));
 }
 
 // pointer spotlight on cards: write coordinates on the hovered card only

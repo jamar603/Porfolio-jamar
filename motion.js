@@ -53,23 +53,49 @@
     }, { passive: true });
   }
 
-  // hero role: cycles through specialities; screen readers keep the static title
+  // hero role: cycles through specialities with a "decode" effect (random glyphs settle left to right);
+  // screen readers keep the static title
   const rotate = document.querySelector('.hero-rotate');
   if (rotate && !reducedMotion.matches) {
     const words = rotate.dataset.words.split('|');
+    // all words sit stacked in the same grid cell (hidden), so the box always has the size of the
+    // longest one: changing word never reflows the title, so the page below never jumps
+    rotate.textContent = '';
+    words.forEach((word) => {
+      const ghost = document.createElement('span');
+      ghost.className = 'hero-rotate-ghost';
+      ghost.textContent = word;
+      rotate.append(ghost);
+    });
+    const live = document.createElement('span');
+    live.className = 'hero-rotate-live';
+    live.textContent = words[0];
+    rotate.append(live);
+    const GLYPHS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#%&*+<>/';
     let index = 0;
+    const decode = (word) => {
+      const start = performance.now();
+      rotate.classList.add('is-decoding');
+      const tick = (now) => {
+        const elapsed = now - start;
+        let done = true;
+        live.textContent = [...word].map((char, i) => {
+          if (char === ' ' || elapsed > 160 + i * 45) return char;
+          done = false;
+          return GLYPHS[Math.floor(Math.random() * GLYPHS.length)];
+        }).join('');
+        if (done) rotate.classList.remove('is-decoding');
+        else requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    };
+    // first word decodes once the name has landed, then the words cycle
+    setTimeout(() => decode(words[0]), 900);
     setInterval(() => {
       if (document.hidden) return;
-      rotate.classList.add('is-leaving');
-      setTimeout(() => {
-        index = (index + 1) % words.length;
-        rotate.textContent = words[index];
-        rotate.classList.remove('is-leaving');
-        rotate.classList.add('is-entering');
-        rotate.getBoundingClientRect(); // commit the start position before animating in
-        rotate.classList.remove('is-entering');
-      }, 260);
-    }, 2600);
+      index = (index + 1) % words.length;
+      decode(words[index]);
+    }, 3200);
   }
 
   // hero facts: numbers count up once when the bento row first shows

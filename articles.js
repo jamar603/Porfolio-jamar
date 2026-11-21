@@ -22,6 +22,9 @@ const resetButton = document.getElementById('resetArticles');
 const articleDialog = document.getElementById('articleDialog');
 const dialogContent = document.getElementById('articleDialogContent');
 const dialogClose = document.getElementById('closeArticleDialog');
+// the dialog lives directly in <body>: inside #articles it inherited the section's scale (fit to screen)
+// and its fading in presentation mode
+document.body.append(articleDialog);
 let articles = [];
 
 function normalizeText(value){
@@ -186,8 +189,10 @@ function renderArticle(article){
   }
 
   addTags(dialogContent, article.tags);
-  articleDialog.showModal();
-  dialogClose.focus();
+  // already open (previous / next article from the reader): only the content changes
+  articleDialog.querySelector('.article-dialog-surface')?.scrollTo(0, 0);
+  if (!articleDialog.open) articleDialog.showModal();
+  dialogClose.focus({ preventScroll: true });
 }
 
 // photo viewer: opens the photo full size inside the page, with previous / next
