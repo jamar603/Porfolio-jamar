@@ -404,8 +404,8 @@ foreach ($synthRealisations as $period => $rows) {
         <div class="t-node"><div class="t-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2.4" stroke-linecap="round"><circle cx="12" cy="12" r="1"/></svg></div><div class="t-line"></div></div>
         <div class="t-content">
           <div class="t-yr">2019 – 2020</div>
-          <div class="t-title">BTS Système Numérique · option Réseaux</div>
-          <div class="t-org">Lycée Hyrome</div>
+          <div class="t-title">BUT Informatique</div>
+          <div class="t-org">IUT de Nantes · Nantes Université</div>
         </div>
       </div>
       <div class="t-row">
