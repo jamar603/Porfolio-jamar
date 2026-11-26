@@ -102,10 +102,10 @@
     glide = requestAnimationFrame(step);
   };
 
-  // Browsing: never below 0.6 (only reached on 768 px high laptops; 70 % or more from 900 px).
+  // Browsing: every section is shrunk until it fits the screen whole (floor 0.5 for tiny screens).
   // Presentation (read by the jury): never below 0.85 (a taller section is split into pages instead),
   // and a short section is enlarged up to 130 % to fill the screen, as wide as the screen allows.
-  const MIN_ZOOM = 0.6;
+  const MIN_ZOOM = 0.5;
   const MIN_ZOOM_PRESENTING = 0.85;
   const MAX_ZOOM_PRESENTING = 1.3;
   const ONE_PAGE_ZOOM = 0.72;

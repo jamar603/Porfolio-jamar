@@ -442,33 +442,50 @@ foreach ($synthRealisations as $period => $rows) {
       <div><h2>Formation</h2><p>BTS SIO SLAM · 2<sup>e</sup> année · AFIP, 2026–2027</p></div>
     </div>
 
-    <div class="branch-grid">
-      <div class="branch-card current">
-        <img class="branch-logo" src="images/logo-afip.svg" alt="AFIP" width="153" height="102">
-        <div class="branch-top"><h4>BTS SIO · option SLAM</h4><span class="pill-current">En cours</span></div>
-        <p class="branch-summary">AFIP · 2026–2027 · diplôme en 2027</p>
-      </div>
-      <div class="branch-card">
-        <div class="branch-top"><h4>BTS SIO · option SLAM</h4><span class="pill-validated"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>Épreuves validées</span></div>
-        <p class="branch-summary">ICOF · 2024–2026</p>
-      </div>
-    </div>
-
-    <div class="timeline">
-      <div class="t-row">
-        <div class="t-node"><div class="t-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2.4" stroke-linecap="round"><circle cx="12" cy="12" r="1"/></svg></div><div class="t-line"></div></div>
-        <div class="t-content">
-          <div class="t-yr">2020 – 2021</div>
-          <div class="t-title">BUT MMI</div>
-          <div class="t-org">IUT de Nantes · Nantes Université</div>
+    <div class="fpath">
+      <div class="fpath-grid" role="list" aria-label="Mon parcours de formation, du plus ancien au plus récent">
+        <svg class="fpath-curves" viewBox="0 0 1000 300" preserveAspectRatio="none" aria-hidden="true">
+          <defs>
+            <linearGradient id="fpathGrad" x1="0" x2="1" y1="0" y2="0">
+              <stop offset="0" stop-color="#64748b"/><stop offset=".45" stop-color="#a5b4fc"/><stop offset=".75" stop-color="#6ee7b7"/><stop offset="1" stop-color="#60a5fa"/>
+            </linearGradient>
+          </defs>
+          <path class="fpath-track" d="M109 225 C 218 225, 217 75, 326 75 S 434 225, 543 225 S 652 75, 761 75 S 860 150, 934 150"/>
+          <path class="fpath-line fpath-l1" pathLength="1" d="M109 225 C 218 225, 217 75, 326 75"/>
+          <path class="fpath-line fpath-l2" pathLength="1" d="M326 75 C 435 75, 434 225, 543 225"/>
+          <path class="fpath-line fpath-l3" pathLength="1" d="M543 225 C 652 225, 652 75, 761 75"/>
+          <path class="fpath-line fpath-l4 fpath-future" pathLength="1" d="M761 75 C 850 75, 860 150, 934 150"/>
+          <path class="fpath-comet" pathLength="1" d="M109 225 C 218 225, 217 75, 326 75 S 434 225, 543 225 S 652 75, 761 75"/>
+        </svg>
+        <div class="fpath-node fpath-bac" role="listitem" style="--d:0">
+          <span class="fpath-year">2018 – 2020</span>
+          <strong>Baccalauréat STI2D</strong>
+          <span class="fpath-org">Lycée Robert Weinum</span>
         </div>
-      </div>
-      <div class="t-row">
-        <div class="t-node"><div class="t-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2.4" stroke-linecap="round"><circle cx="12" cy="12" r="1"/></svg></div></div>
-        <div class="t-content">
-          <div class="t-yr">2018 – 2020</div>
-          <div class="t-title">Baccalauréat STI2D</div>
-          <div class="t-org">Lycée Robert Weinum</div>
+        <div class="fpath-node fpath-but" role="listitem" style="--d:1">
+          <span class="fpath-year">2020 – 2021</span>
+          <strong>BUT MMI</strong>
+          <span class="fpath-org">IUT de Nantes · Nantes Université</span>
+        </div>
+        <div class="fpath-node fpath-icof" role="listitem" style="--d:2">
+          <span class="fpath-year">2024 – 2026</span>
+          <strong>BTS SIO · option SLAM</strong>
+          <span class="fpath-org">ICOF</span>
+          <span class="pill-validated"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>Épreuves validées</span>
+        </div>
+        <div class="fpath-node fpath-afip" role="listitem" style="--d:3">
+          <div class="fpath-top">
+            <img class="fpath-logo" src="images/logo-afip.svg" alt="AFIP" width="153" height="102">
+            <span class="pill-current">En cours</span>
+          </div>
+          <span class="fpath-year">2026 – 2027</span>
+          <strong>BTS SIO · option SLAM</strong>
+          <span class="fpath-org">AFIP · 2<sup>e</sup> année</span>
+        </div>
+        <div class="fpath-goal" role="listitem" style="--d:4">
+          <span class="fpath-goal-dot" aria-hidden="true"></span>
+          <span class="fpath-year">2027</span>
+          <strong>Diplôme</strong>
         </div>
       </div>
     </div>

@@ -2370,3 +2370,200 @@ html[data-theme="light"] .theme-toggle .ico-moon{ display:block; }
 html[data-theme="light"] .theme-toggle .ico-sun{ display:none; }
 html[data-theme="light"] .synth-period th:first-child{ background:#e8eefa; }
 html[data-theme="light"] .synth-table tfoot th:first-child{ background:#e8eefa; }
+
+/* ===== wider, more readable sections =====
+   Wider containers make each section shorter, so presentation.js shrinks it less
+   (the text stays close to its real size). Small texts are raised for reading at a distance. */
+.container{ max-width:1240px; padding:0 clamp(22px,4vw,56px); }
+@media (min-width:1300px){ .container,.fit-sections .e5 .container,.fit-sections #atouts .container,.fit-sections #conclusion .container{ max-width:1360px; } }
+@media (min-width:1700px){ .container,.fit-sections .e5 .container,.fit-sections #atouts .container,.fit-sections #conclusion .container{ max-width:1520px; } }
+nav .container{ max-width:1520px; }
+
+/* section titles */
+.section-head h2{ font-size:clamp(30px,3.6vw,44px); }
+.section-head p{ font-size:clamp(15px,1.2vw,17px); }
+
+/* body texts: nothing under 14 px on a computer */
+@media (min-width:961px){
+  .hero-sub{ font-size:clamp(17px,1.4vw,20px); max-width:620px; }
+  .profile-grid p,.profile-grid > p{ font-size:16.5px; max-width:820px; }
+  .branch-card h4{ font-size:16.5px; }
+  .branch-summary,.branch-card ul{ font-size:14.5px; }
+  .t-title{ font-size:18px; }
+  .t-org{ font-size:14.5px; }
+  .t-desc,.experience-points{ font-size:15px; max-width:none; }
+  .project-title{ font-size:18px; }
+  .project-desc{ font-size:14.5px; }
+  .projects-grid .project-card:first-child .project-desc{ max-width:none; }
+  .project-tags span{ font-size:12px; }
+  .project-link,.article-read{ font-size:14px; }
+  .veille-copy h3,.contact-message h3{ font-size:22px; }
+  .veille-copy p,.contact-message p{ font-size:16px; max-width:none; }
+  .veille-links a{ font-size:15.5px; }
+  .veille-links span{ font-size:13px; }
+  .article-card h2,.article-card h3{ font-size:20px; }
+  .article-summary,.article-details{ font-size:14.5px; }
+  .article-meta{ font-size:12.5px; }
+  .cert-info strong{ font-size:16px; }
+  .cert-info span{ font-size:14px; }
+  .field label{ font-size:13.5px; }
+  .field input,.field textarea{ font-size:15px; }
+  .row-text .k{ font-size:12.5px; }
+  .row-text .v{ font-size:15px; }
+  .tag-soft,.t-yr{ font-size:12.5px; }
+}
+
+/* Projects on a wide screen: 4 columns, the main project takes a 2 x 2 block,
+   so the five cards sit on two rows instead of three tall ones */
+@media (min-width:1100px){
+  .projects-grid{ grid-template-columns:repeat(4,minmax(0,1fr)); gap:20px; }
+  .projects-grid .project-card:first-child{ grid-column:span 2; grid-row:span 2; }
+  .projects-grid .project-card:first-child .project-cover{ aspect-ratio:auto; flex:1 1 auto; min-height:240px; }
+  .projects-grid .project-card:first-child .project-title{ font-size:26px; }
+  .projects-grid .project-card:first-child .project-desc{ font-size:16px; }
+  .projects-grid .project-card:first-child .project-tags{ margin-top:0; }
+}
+
+/* fit-sections makes each section a flex column: with margin:auto the container shrank to its
+   content (Formation, Motivation, Conclusion looked narrow). It now always takes the full width. */
+.fit-sections body > section > .container{ width:100%; }
+.motivation-card{ max-width:none; }
+@media (min-width:961px){
+  .motivation-card{ padding:48px 56px 40px 60px; }
+  .motivation-card blockquote{ font-size:clamp(22px,2.2vw,32px); }
+  #formation .timeline{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:18px 40px; }
+  #formation .t-line{ display:none; }
+}
+
+/* E5 on a computer: the plan on two columns (shorter section, so it is shrunk less) */
+@media (min-width:1100px){
+  .e5-plan,.fit-sections .e5-plan{ grid-template-columns:repeat(2,minmax(0,1fr)); gap:6px 28px; }
+  .e5-plan-text{ font-size:15px; }
+  .e5-plan-text strong{ font-size:17px; }
+  .e5-plan-time{ font-size:14.5px; }
+  .e5-v{ font-size:15px; }
+  .e5-k{ font-size:13px; }
+  .e5-facts strong{ font-size:25px; }
+  .e5-phase p{ font-size:16.5px; }
+  .e5-phase h3{ font-size:22px; }
+}
+
+/* Tableau de synthèse on a computer: larger text, same compact rows */
+@media (min-width:1100px){
+  .synth-table{ font-size:15px; }
+  .synth-table thead th{ font-size:13px; }
+  .synth-period th{ font-size:12px; }
+  .synth-table tfoot th{ font-size:12.5px; }
+}
+/* Contact: larger labels and values */
+@media (min-width:961px){
+  .contact-form .contact-form-note{ font-size:13.5px; }
+  .row-text .k{ font-size:13px; }
+  .row-text .v{ font-size:16px; }
+}
+
+/* ===== Tableau de synthèse on a computer / projector: one screen =====
+   The PDF button sits beside the title, the table takes the full width under it. */
+@media (min-width:961px){
+  #synthese .container{ display:grid; grid-template-columns:minmax(0,1fr) auto; column-gap:24px; align-items:end; }
+  #synthese .container > *{ grid-column:1 / -1; }
+  #synthese .container > .section-head{ grid-column:1; margin-bottom:18px; }
+  #synthese .container > .synth-actions{ grid-column:2; grid-row:1; margin:0 0 18px; }
+  #synthese .synth-table th,#synthese .synth-table td{ padding-top:4px; padding-bottom:4px; }
+  #synthese .synth-period th{ padding-top:3px; padding-bottom:3px; }
+  #synthese .synth-table thead th{ padding-top:8px; padding-bottom:8px; }
+  .synth-ready .synth-hint{ margin-top:8px; }
+}
+
+/* Projects and conclusion: a little shorter so they fit a laptop screen whole */
+@media (min-width:1100px){
+  .project-cover{ aspect-ratio:2/1; }
+  .projects-grid .project-card:first-child .project-cover{ min-height:200px; }
+  .projects-grid .project-desc{ margin-bottom:10px; }
+  #projets .articles-cta-wrap{ margin-top:18px; }
+}
+.fit-sections .conclu-end{ margin-top:24px; }
+
+/* Projects on a computer: the five cards on one row (the section fits the screen at a larger size) */
+@media (min-width:1100px){
+  .projects-grid{ grid-template-columns:repeat(5,minmax(0,1fr)); gap:16px; }
+  .projects-grid .project-card:first-child{ grid-column:auto; grid-row:auto; padding:22px; }
+  .projects-grid .project-card:first-child .project-cover{ width:calc(100% + 44px); margin:-22px -22px 16px; aspect-ratio:4/3; min-height:0; flex:none; }
+  .projects-grid .project-card:first-child .project-title{ font-size:18px; }
+  .projects-grid .project-card:first-child .project-desc{ font-size:14.5px; }
+  .project-cover{ aspect-ratio:4/3; }
+  .projects-grid .project-card:first-child .project-tags{ margin-top:auto; }
+}
+
+/* Conclusion on a computer: title and message to the jury on one row, the road under them full width */
+@media (min-width:1100px){
+  #conclusion .container{ display:grid; grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr); column-gap:40px; align-items:center; }
+  #conclusion .container > *{ grid-column:1 / -1; }
+  #conclusion .container > .conclu-eyebrow{ grid-column:1; grid-row:1; align-self:end; }
+  #conclusion .container > .conclu-title{ grid-column:1; grid-row:2; align-self:start; margin-bottom:0; }
+  #conclusion .container > .conclu-main{ grid-column:2; grid-row:1 / span 2; margin-bottom:0; }
+  #conclusion .conclu-main-single .conclu-speech{ max-width:none; }
+  #conclusion .container > .conclu-after{ margin-top:36px; }
+}
+
+/* ===== Formation: chronological path on a curve (Bac → BUT → BTS ICOF → BTS AFIP → diploma) =====
+   Cards alternate low / high on a 4 + 1 column grid; the SVG behind joins their centres
+   (viewBox 1000 x 300 stretched to the grid: column centres 109 / 326 / 543 / 761, goal 934). */
+.fpath{ margin-top:8px; }
+.fpath-grid{ position:relative; display:grid; grid-template-columns:repeat(4,minmax(0,1fr)) minmax(0,.6fr); grid-template-rows:1fr 1fr; column-gap:28px; row-gap:34px; align-items:center; min-height:330px; }
+.fpath-curves{ position:absolute; inset:0; width:100%; height:100%; overflow:visible; pointer-events:none; }
+.fpath-track{ fill:none; stroke:rgba(var(--border-rgb),.9); stroke-width:10; stroke-linecap:round; vector-effect:non-scaling-stroke; opacity:.35; }
+.fpath-line{ fill:none; stroke:url(#fpathGrad); stroke-width:3; stroke-linecap:round; vector-effect:non-scaling-stroke; filter:drop-shadow(0 0 6px rgba(96,165,250,.45)); }
+.fpath-future{ stroke-dasharray:.02 .025; opacity:.7; }
+.fpath-comet{ fill:none; stroke:#e0e7ff; stroke-width:4; stroke-linecap:round; vector-effect:non-scaling-stroke; stroke-dasharray:.05 .95; stroke-dashoffset:.05; opacity:0; filter:drop-shadow(0 0 8px rgba(165,180,252,.95)); }
+.fpath-node{ position:relative; z-index:1; display:flex; flex-direction:column; align-items:flex-start; gap:5px; padding:18px 20px; border:1px solid var(--border); border-radius:16px; background:rgba(var(--bg-rgb),.92); box-shadow:0 16px 38px -20px rgba(var(--shadow-rgb),.85); transition:border-color 220ms var(--ease-out),translate 220ms var(--ease-out); }
+.fpath-node strong{ font-family:'Space Grotesk',sans-serif; font-size:clamp(18px,1.5vw,22px); line-height:1.2; color:var(--ink); }
+.fpath-org{ color:var(--dim); font-size:15px; line-height:1.4; }
+.fpath-year{ font-size:12.5px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--indigo); }
+.fpath-node .pill-validated{ margin-top:4px; }
+.fpath-bac{ grid-column:1; grid-row:2; }
+.fpath-bac .fpath-year{ color:var(--dim); }
+.fpath-but{ grid-column:2; grid-row:1; }
+.fpath-but .fpath-year{ color:var(--mint); }
+.fpath-icof{ grid-column:3; grid-row:2; border-color:rgba(110,231,183,.4); }
+.fpath-icof .fpath-year{ color:var(--green); }
+.fpath-afip{ grid-column:4; grid-row:1; border-color:rgba(96,165,250,.65); background:radial-gradient(120% 120% at 100% 0%,rgba(96,165,250,.16),transparent 60%),rgba(var(--bg-rgb),.94); box-shadow:0 0 0 1px rgba(96,165,250,.15),0 18px 44px -18px rgba(96,165,250,.45); }
+.fpath-top{ display:flex; align-items:center; justify-content:space-between; gap:10px; width:100%; margin-bottom:6px; }
+.fpath-logo{ width:auto; height:38px; padding:4px 6px; border-radius:8px; background:#fff; }
+.fpath-goal{ position:relative; z-index:1; grid-column:5; grid-row:1 / span 2; display:flex; flex-direction:column; align-items:center; gap:4px; text-align:center; }
+.fpath-goal strong{ font-family:'Space Grotesk',sans-serif; font-size:20px; color:var(--amber); }
+.fpath-goal .fpath-year{ color:var(--amber); }
+.fpath-goal-dot{ position:relative; width:22px; height:22px; margin-bottom:6px; border:3px solid var(--amber); border-radius:50%; background:var(--bg); box-shadow:0 0 18px rgba(229,181,103,.55); }
+.fpath-goal-dot::after{ content:''; position:absolute; inset:-8px; border:2px solid rgba(229,181,103,.5); border-radius:50%; animation:fpath-pulse 2.2s ease-out infinite; }
+@keyframes fpath-pulse{ 0%{ opacity:.9; transform:scale(.7); } 100%{ opacity:0; transform:scale(1.5); } }
+@keyframes fpath-comet{ from{ stroke-dashoffset:.05; } to{ stroke-dashoffset:-1; } }
+@media (hover:hover) and (pointer:fine){ .fpath-node:hover{ translate:0 -3px; border-color:rgba(96,165,250,.6); } }
+
+/* entry (section-motion.js adds .sx / .is-in): the curve draws segment by segment, cards land one after the other */
+#formation.sx .fpath-line{ stroke-dasharray:1 1; stroke-dashoffset:1; }
+#formation.sx .fpath-future{ stroke-dasharray:1 1; }
+#formation.sx :is(.fpath-node,.fpath-goal){ opacity:0; translate:0 18px; }
+#formation.sx.is-in .fpath-line{ stroke-dashoffset:0; transition:stroke-dashoffset 700ms var(--ease-in-out); transition-delay:calc(700ms + var(--seg) * 450ms); }
+#formation.sx.is-in .fpath-l1{ --seg:0; } #formation.sx.is-in .fpath-l2{ --seg:1; } #formation.sx.is-in .fpath-l3{ --seg:2; } #formation.sx.is-in .fpath-l4{ --seg:3; }
+#formation.sx.is-in :is(.fpath-node,.fpath-goal){ opacity:1; translate:0 0; transition:opacity 500ms ease,translate 600ms var(--ease-out),border-color 220ms var(--ease-out); transition-delay:calc(550ms + var(--d) * 450ms),calc(550ms + var(--d) * 450ms),0ms; }
+#formation.sx.is-in .fpath-comet{ opacity:1; animation:fpath-comet 3.2s var(--ease-in-out) 2.6s infinite; }
+#formation .fpath-grid{ opacity:1; translate:none; scale:none; }
+.fpath.sx-item{ opacity:1 !important; translate:none !important; scale:none !important; }
+
+/* phones and tablets: vertical path */
+@media (max-width:900px){
+  .fpath-grid{ grid-template-columns:1fr; grid-template-rows:none; row-gap:14px; min-height:0; padding-left:30px; }
+  .fpath-grid::before{ content:''; position:absolute; top:14px; bottom:14px; left:9px; width:3px; border-radius:3px; background:linear-gradient(180deg,#64748b,#a5b4fc 45%,#6ee7b7 75%,#60a5fa); }
+  .fpath-curves{ display:none; }
+  .fpath-node,.fpath-goal{ grid-column:1 !important; grid-row:auto !important; }
+  .fpath-node::before{ content:''; position:absolute; left:-27px; top:22px; width:11px; height:11px; border-radius:50%; background:var(--bg); border:3px solid var(--indigo); }
+  .fpath-goal{ flex-direction:row; align-items:center; gap:10px; text-align:left; margin-left:-30px; }
+  .fpath-goal-dot{ margin:0; }
+}
+@media (prefers-reduced-motion:reduce){
+  .fpath-goal-dot::after{ animation:none; }
+  .fpath-comet{ display:none; }
+}
+.fpath-node{ background-color:var(--bg); }
+.fpath-afip{ background:radial-gradient(120% 120% at 100% 0%,rgba(96,165,250,.16),transparent 60%),var(--bg); }
+@media (min-width:901px){ .fpath-grid{ min-height:clamp(330px,40vh,460px); } }
