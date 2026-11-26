@@ -131,14 +131,17 @@
   const body = viewer.querySelector('.cert-viewer-body');
   let viewerIndex = 0;
 
-  const docs = cards.map(card => ({
-    src: card.getAttribute('href'),
-    alt: card.querySelector('img')?.alt || '',
-    title: card.querySelector('.cert-info strong')?.textContent || '',
-    badge: card.dataset.badge || '',
-    meta: card.querySelector('.cert-meta')?.textContent || '',
-    details: card.querySelector('template.cert-details'),
+  // every attestation (the CNIL card groups 5 of them): written by index.php in .cert-docs
+  const docs = [...document.querySelectorAll('.cert-docs template')].map(tpl => ({
+    src: tpl.dataset.src,
+    alt: tpl.dataset.alt || '',
+    title: tpl.dataset.title || '',
+    badge: tpl.dataset.badge || '',
+    meta: '',
+    details: tpl,
   }));
+  // card shown for a document: the last card whose first document comes at or before it
+  const cardOf = index => cards.reduce((found, card, i) => (Number(card.dataset.doc) <= index ? i : found), 0);
 
   const thumbs = docs.map((doc, index) => {
     const thumb = document.createElement('button');
@@ -208,15 +211,15 @@
   }, { passive: true });
   // back in the page: the slideshow follows the last certificate seen
   viewer.addEventListener('close', () => {
-    if (!isWall()) goTo(viewerIndex);
-    cards[viewerIndex].focus({ preventScroll: true });
+    if (!isWall()) goTo(cardOf(viewerIndex));
+    cards[cardOf(viewerIndex)].focus({ preventScroll: true });
   });
 
-  cards.forEach((card, index) => {
+  cards.forEach(card => {
     card.addEventListener('click', event => {
       if (event.ctrlKey || event.metaKey || event.shiftKey || event.button === 1) return;
       event.preventDefault();
-      openViewer(index);
+      openViewer(Number(card.dataset.doc) || 0);
     });
   });
 })();

@@ -26,132 +26,63 @@ if (is_admin()) {
 // certificats (section Atouts): card + explanation shown in the certificate viewer (certificats.js)
 // each one: what the document is, the result, the details, what it taught, the BTS SIO competences it supports
 $certificats = [
+  // each certificate: one card on the page; 'docs' = the documents shown in the viewer
+  // (short text: one sentence, the result, up to 3 key points, competences C1 to C6)
   [
-    'file' => 'anssi.jpg', 'w' => 1754, 'h' => 1241, 'badge' => 'MOOC',
-    'title' => 'SecNumacadémie', 'org' => 'ANSSI', 'date' => 'Octobre 2023',
-    'alt' => "Attestation de suivi SecNumacadémie de l'ANSSI délivrée à Jamar Carty",
-    'about' => 'MOOC officiel de l’ANSSI (Agence nationale de la sécurité des systèmes d’information) pour acquérir les bases de la cybersécurité.',
-    'result' => '4 modules validés · 26 octobre 2023',
-    'facts' => [
-      ['Panorama de la SSI', '82 %'],
-      ['Sécurité de l’authentification', '86 %'],
-      ['Sécurité sur Internet', '96 %'],
-      ['Sécurité du poste de travail et nomadisme', '90 %'],
-    ],
-    'learned' => [
-      'Les menaces courantes et les acteurs de la cybersécurité',
-      'Mots de passe robustes et authentification à plusieurs facteurs',
-      'Navigation sûre et repérage de l’hameçonnage',
-      'Mises à jour, sauvegardes et sécurité en mobilité',
-    ],
-    'skills' => ['Gérer le patrimoine informatique', 'Répondre aux incidents et aux demandes d’assistance et d’évolution'],
+    'badge' => 'MOOC', 'title' => 'SecNumacadémie', 'meta' => 'ANSSI · 2023',
+    'docs' => [[
+      'file' => 'anssi.jpg', 'w' => 1754, 'h' => 1241,
+      'alt' => "Attestation de suivi SecNumacadémie de l'ANSSI délivrée à Jamar Carty",
+      'title' => 'SecNumacadémie', 'badge' => 'MOOC · ANSSI',
+      'about' => 'Le MOOC de l’ANSSI sur les bases de la cybersécurité.',
+      'result' => '4 modules validés · 82 à 96 %',
+      'points' => ['Mots de passe et double authentification', 'Navigation sûre et hameçonnage', 'Sécurité du poste et sauvegardes'],
+      'skills' => [1, 2],
+    ]],
   ],
   [
-    'file' => 'cyber-awareness.jpg', 'w' => 1754, 'h' => 1241, 'badge' => 'Certificat',
-    'title' => 'Cyber Awareness Challenge 2025', 'org' => 'DoD Cyber Exchange', 'date' => 'Novembre 2024',
-    'alt' => 'Certificat Cyber Awareness Challenge 2025 délivré à Jamar Carty',
-    'about' => 'Formation de sensibilisation à la cybersécurité du Département de la Défense des États-Unis, suivie entièrement en anglais.',
-    'result' => 'Formation terminée · 22 novembre 2024',
-    'facts' => [
-      ['Organisme', 'DoD Cyber Exchange'],
-      ['Langue', 'Anglais'],
-      ['Code de vérification', 'FOH30U1QHE'],
-    ],
-    'learned' => [
-      'Ingénierie sociale et hameçonnage (phishing)',
-      'Protection des informations sensibles',
-      'Sécurité des appareils mobiles et du télétravail',
-      'Bonnes pratiques sur les réseaux sociaux',
-    ],
-    'skills' => ['Gérer le patrimoine informatique', 'Organiser son développement professionnel'],
+    'badge' => 'Certificat', 'title' => 'Cyber Awareness 2025', 'meta' => 'DoD Cyber Exchange · 2024',
+    'docs' => [[
+      'file' => 'cyber-awareness.jpg', 'w' => 1754, 'h' => 1241,
+      'alt' => 'Certificat Cyber Awareness Challenge 2025 délivré à Jamar Carty',
+      'title' => 'Cyber Awareness Challenge 2025', 'badge' => 'Certificat · en anglais',
+      'about' => 'Sensibilisation à la cybersécurité du Département de la Défense américain.',
+      'result' => 'Terminé · novembre 2024',
+      'points' => ['Hameçonnage et ingénierie sociale', 'Protection des informations sensibles', 'Sécurité mobile et télétravail'],
+      'skills' => [1, 6],
+    ]],
   ],
   [
-    'file' => 'pix.jpg', 'w' => 1754, 'h' => 1241, 'badge' => 'Certification',
-    'title' => 'Pix · 434 pix', 'org' => 'Pix', 'date' => 'Février 2026',
-    'alt' => 'Certification Pix, niveau Indépendant 2, délivrée à Jamar Carty',
-    'about' => 'Certification nationale des compétences numériques, reconnue par l’État, passée en centre agréé (Lycée ICOF).',
-    'result' => 'Niveau global Indépendant 2 · 2 février 2026',
-    'facts' => [
-      ['Score', '434 / 895 pix'],
-      ['Niveau global', 'Indépendant 2'],
-      ['Code de vérification', 'P-9WQRM66F'],
-    ],
-    'learned' => [
-      'Rechercher l’information et vérifier sa fiabilité',
-      'Outils collaboratifs et création de documents (texte, tableur, diaporama, images)',
-      'Protection des données personnelles et des appareils',
-      'Usage responsable du numérique (environnement, santé)',
-    ],
-    'skills' => ['Organiser son développement professionnel', 'Développer la présence en ligne de l’organisation'],
+    'badge' => 'Certification', 'title' => 'Pix · 434 pix', 'meta' => 'Niveau Indépendant 2 · 2026',
+    'docs' => [[
+      'file' => 'pix.jpg', 'w' => 1754, 'h' => 1241,
+      'alt' => 'Certification Pix, niveau Indépendant 2, délivrée à Jamar Carty',
+      'title' => 'Certification Pix', 'badge' => 'Certification nationale',
+      'about' => 'La certification officielle des compétences numériques.',
+      'result' => '434 pix · niveau Indépendant 2',
+      'points' => ['Recherche et fiabilité de l’information', 'Outils bureautiques et collaboratifs', 'Protection des données'],
+      'skills' => [6],
+    ]],
   ],
   [
-    'file' => 'cnil-1.jpg', 'w' => 1754, 'h' => 1241, 'badge' => 'Module 1',
-    'title' => 'Le RGPD et ses notions clés', 'org' => 'CNIL · L’atelier RGPD', 'date' => 'Octobre 2023', 'score' => '90 %',
-    'alt' => "Attestation CNIL, L'atelier RGPD, Module 1 · Le RGPD et ses notions clés, délivrée à Jamar Carty",
-    'about' => 'Premier module du MOOC de la CNIL sur le Règlement général sur la protection des données (RGPD).',
-    'result' => 'Score de 90 % · 28 octobre 2023',
-    'facts' => [['Organisme', 'CNIL'], ['Score', '90 %']],
-    'learned' => [
-      'Ce qu’est une donnée personnelle et un traitement',
-      'Les rôles de responsable de traitement et de sous-traitant',
-      'Le champ d’application du RGPD',
+    'badge' => '5 modules', 'title' => 'RGPD · L’atelier CNIL', 'meta' => 'CNIL · 2023 · 90 à 100 %',
+    'docs' => [
+      ['file' => 'cnil-1.jpg', 'w' => 1754, 'h' => 1241, 'alt' => "Attestation CNIL, L'atelier RGPD, Module 1, délivrée à Jamar Carty",
+       'title' => 'Le RGPD et ses notions clés', 'badge' => 'CNIL · Module 1', 'about' => 'Les bases du RGPD.', 'result' => 'Score 90 %',
+       'points' => ['Donnée personnelle et traitement', 'Responsable de traitement et sous-traitant'], 'skills' => [1, 3]],
+      ['file' => 'cnil-2.jpg', 'w' => 1754, 'h' => 1241, 'alt' => "Attestation CNIL, L'atelier RGPD, Module 2, délivrée à Jamar Carty",
+       'title' => 'Les principes de la protection des données', 'badge' => 'CNIL · Module 2', 'about' => 'Les règles de chaque traitement de données.', 'result' => 'Score 100 %',
+       'points' => ['Finalité et base légale', 'Minimisation et durée de conservation', 'Droits des personnes'], 'skills' => [1, 3]],
+      ['file' => 'cnil-3.jpg', 'w' => 1754, 'h' => 1241, 'alt' => "Attestation CNIL, L'atelier RGPD, Module 3, délivrée à Jamar Carty",
+       'title' => 'Les responsabilités des acteurs', 'badge' => 'CNIL · Module 3', 'about' => 'Qui est responsable de quoi.', 'result' => 'Score 100 %',
+       'points' => ['Principe de responsabilité', 'Gestion d’une violation de données'], 'skills' => [1, 4]],
+      ['file' => 'cnil-4.jpg', 'w' => 1754, 'h' => 1241, 'alt' => "Attestation CNIL, L'atelier RGPD, Module 4, délivrée à Jamar Carty",
+       'title' => 'Le DPO et les outils de la conformité', 'badge' => 'CNIL · Module 4', 'about' => 'Le délégué à la protection des données et ses outils.', 'result' => 'Score 93 %',
+       'points' => ['Rôle du DPO', 'Registre des traitements', 'Analyse d’impact (AIPD)'], 'skills' => [1, 4]],
+      ['file' => 'cnil-5.png', 'w' => 1523, 'h' => 1523, 'alt' => "Attestation CNIL, L'atelier RGPD, Module 5, délivrée à Jamar Carty",
+       'title' => 'Les collectivités territoriales', 'badge' => 'CNIL · Module 5', 'about' => 'Le RGPD dans les services publics locaux.', 'result' => 'Score 96 %',
+       'points' => ['Traitements propres aux collectivités'], 'skills' => [1, 5]],
     ],
-    'skills' => ['Développer la présence en ligne de l’organisation', 'Gérer le patrimoine informatique'],
-  ],
-  [
-    'file' => 'cnil-2.jpg', 'w' => 1754, 'h' => 1241, 'badge' => 'Module 2',
-    'title' => 'Les principes de la protection des données', 'org' => 'CNIL · L’atelier RGPD', 'date' => 'Octobre 2023', 'score' => '100 %',
-    'alt' => "Attestation CNIL, L'atelier RGPD, Module 2 · Les principes de la protection des données, délivrée à Jamar Carty",
-    'about' => 'Deuxième module du MOOC de la CNIL : les règles à respecter pour chaque traitement de données.',
-    'result' => 'Score de 100 % · 29 octobre 2023',
-    'facts' => [['Organisme', 'CNIL'], ['Score', '100 %']],
-    'learned' => [
-      'Bases légales et finalité d’un traitement',
-      'Minimisation et durée de conservation des données',
-      'Sécurité des données et droits des personnes',
-    ],
-    'skills' => ['Développer la présence en ligne de l’organisation', 'Gérer le patrimoine informatique'],
-  ],
-  [
-    'file' => 'cnil-3.jpg', 'w' => 1754, 'h' => 1241, 'badge' => 'Module 3',
-    'title' => 'Les responsabilités des acteurs', 'org' => 'CNIL · L’atelier RGPD', 'date' => 'Octobre 2023', 'score' => '100 %',
-    'alt' => "Attestation CNIL, L'atelier RGPD, Module 3 · Les responsabilités des acteurs, délivrée à Jamar Carty",
-    'about' => 'Troisième module du MOOC de la CNIL : qui est responsable de quoi dans la conformité au RGPD.',
-    'result' => 'Score de 100 % · 29 octobre 2023',
-    'facts' => [['Organisme', 'CNIL'], ['Score', '100 %']],
-    'learned' => [
-      'Le principe de responsabilité (accountability)',
-      'Les obligations du responsable de traitement et du sous-traitant',
-      'La gestion d’une violation de données',
-    ],
-    'skills' => ['Gérer le patrimoine informatique', 'Travailler en mode projet'],
-  ],
-  [
-    'file' => 'cnil-4.jpg', 'w' => 1754, 'h' => 1241, 'badge' => 'Module 4',
-    'title' => 'Le DPO et les outils de la conformité', 'org' => 'CNIL · L’atelier RGPD', 'date' => 'Octobre 2023', 'score' => '93 %',
-    'alt' => "Attestation CNIL, L'atelier RGPD, Module 4 · Le DPO et les outils de la conformité, délivrée à Jamar Carty",
-    'about' => 'Quatrième module du MOOC de la CNIL : le délégué à la protection des données et les outils pour prouver la conformité.',
-    'result' => 'Score de 93 % · 29 octobre 2023',
-    'facts' => [['Organisme', 'CNIL'], ['Score', '93 %']],
-    'learned' => [
-      'Le rôle et les missions du DPO',
-      'Le registre des activités de traitement',
-      'L’analyse d’impact (AIPD)',
-    ],
-    'skills' => ['Gérer le patrimoine informatique', 'Travailler en mode projet'],
-  ],
-  [
-    'file' => 'cnil-5.png', 'w' => 1523, 'h' => 1523, 'badge' => 'Module 5',
-    'title' => 'Les collectivités territoriales', 'org' => 'CNIL · L’atelier RGPD', 'date' => 'Octobre 2023', 'score' => '96 %',
-    'alt' => "Attestation CNIL, L'atelier RGPD, Module 5 · Les collectivités territoriales, délivrée à Jamar Carty",
-    'about' => 'Cinquième module du MOOC de la CNIL : l’application du RGPD dans les mairies et les collectivités.',
-    'result' => 'Score de 96 % · 29 octobre 2023',
-    'facts' => [['Organisme', 'CNIL'], ['Score', '96 %']],
-    'learned' => [
-      'Les traitements de données propres aux collectivités',
-      'Les obligations RGPD d’un service public local',
-    ],
-    'skills' => ['Gérer le patrimoine informatique', 'Mettre à disposition des utilisateurs un service informatique'],
   ],
 ];
 
@@ -194,6 +125,10 @@ $synthRealisations = [
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#0b1120">
+<script>
+  // theme chosen by the visitor (light for a projector), applied before the page paints
+  try { if (localStorage.getItem('theme') === 'light') document.documentElement.dataset.theme = 'light'; } catch (e) {}
+</script>
 <title>Jamar Carty — Portfolio épreuve E5 · BTS SIO SLAM</title>
 <meta name="description" content="Portfolio de Jamar Carty pour l’épreuve E5 du BTS SIO option SLAM à l’AFIP : parcours de professionnalisation, tableau de synthèse et réalisations couvrant les compétences du bloc 1.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -253,6 +188,10 @@ $synthRealisations = [
         </li>
       </ul>
       <div class="menu-end">
+        <button class="theme-toggle" type="button" data-theme-toggle aria-pressed="false" aria-label="Passer en thème clair" title="Thème clair / sombre">
+          <svg class="ico-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+          <svg class="ico-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+        </button>
         <a class="menu-social" href="https://www.linkedin.com/in/jamar-carty" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn de Jamar Carty" title="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.35V9h3.414v1.561h.049c.476-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 1 1 0-4.124 2.062 2.062 0 0 1 0 4.124zM7.119 20.452H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.225 0z"/></svg><span>LinkedIn</span></a>
         <a class="menu-social" href="https://github.com/jamar603" target="_blank" rel="noopener noreferrer" aria-label="GitHub de Jamar Carty" title="GitHub"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .5A11.5 11.5 0 0 0 8.36 22.91c.58.1.79-.25.79-.56v-2.02c-3.2.7-3.87-1.36-3.87-1.36-.52-1.33-1.28-1.69-1.28-1.69-1.04-.71.08-.7.08-.7 1.15.08 1.75 1.18 1.75 1.18 1.02 1.74 2.68 1.24 3.33.95.1-.74.4-1.24.73-1.53-2.55-.29-5.23-1.28-5.23-5.68 0-1.26.45-2.28 1.18-3.08-.12-.29-.51-1.46.11-3.04 0 0 .96-.31 3.15 1.17a10.9 10.9 0 0 1 5.74 0c2.19-1.48 3.15-1.17 3.15-1.17.62 1.58.23 2.75.11 3.04.73.8 1.18 1.82 1.18 3.08 0 4.41-2.68 5.38-5.24 5.67.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5z"/></svg><span>GitHub</span></a>
         <a class="menu-cta" href="#contact" data-t="contact">Contact<span aria-hidden="true">→</span></a>
@@ -269,12 +208,11 @@ $synthRealisations = [
           <img src="images/logo-afip.svg" alt="" width="153" height="102">
           <span><strong>Formation actuelle</strong> BTS SIO · option SLAM · AFIP 2026–2027</span>
         </a>
-        <div class="badge"><span class="d"></span> Épreuve E5 · BTS SIO option SLAM</div>
         <h1>
           <span class="neon-name">Jamar</span> <span class="neon-name">Carty</span><br>
           <span class="sw"><span class="sr-only">Support et mise à disposition de services informatiques</span><span aria-hidden="true">Portfolio <span class="hero-rotate" data-words="Épreuve E5|Bloc 1|BTS SIO SLAM">Épreuve E5</span></span></span>
         </h1>
-        <p class="hero-sub">Étudiant en deuxième année de BTS SIO option SLAM à l’AFIP, je présente ici mon parcours de professionnalisation et les réalisations qui démontrent les compétences du bloc 1 : <strong>Support et mise à disposition de services informatiques</strong>.</p>
+        <p class="hero-sub">Développeur web et applicatif en 2<sup>e</sup> année de BTS SIO SLAM. <strong>13 réalisations</strong> qui couvrent <strong>les 6 compétences du bloc 1</strong>.</p>
         <div class="hero-cta">
           <a href="#epreuve-e5" class="btn-primary">Dossier épreuve E5 →</a>
           <a href="#projets" class="btn-outline">Voir mes projets</a>
@@ -340,11 +278,11 @@ $e5Covered = count(array_filter($e5Coverage));
 $e5Total = array_sum(array_map('count', $synthRealisations));
 // oral plan: phase 1 lasts 10 minutes at most
 $e5Plan = [
-  ['#profil', 'Présentation et parcours', 'Profil, formation ICOF puis AFIP, projet professionnel', '1 min 30'],
-  ['#experience', 'Parcours de professionnalisation', 'Stages de 1re et 2e année, missions réalisées', '2 min'],
-  ['#synthese', 'Tableau de synthèse', 'Réalisations et couverture des 6 compétences du bloc 1', '2 min'],
-  ['#articles', 'Réalisations commentées', 'Deux ou trois réalisations : contexte, démarche, preuves, contribution personnelle', '3 min 30'],
-  ['#veille', 'Développement professionnel', 'Veille technologique, certifications, identité numérique', '1 min'],
+  ['#profil', 'Qui je suis', 'Profil, formation, projet', '1 min 30'],
+  ['#experience', 'Mes stages', 'Missions de 1re et 2e année', '2 min'],
+  ['#synthese', 'Tableau de synthèse', '6 compétences couvertes', '2 min'],
+  ['#articles', 'Réalisations commentées', '2 ou 3 projets en détail', '3 min 30'],
+  ['#veille', 'Développement professionnel', 'Veille, certifications', '1 min'],
 ];
 ?>
 <section id="epreuve-e5" class="e5">
@@ -353,44 +291,33 @@ $e5Plan = [
       <img class="e5-logo" src="images/logo-afip.svg" alt="AFIP" width="153" height="102">
       <div>
         <h2>Épreuve E5</h2>
-        <p>Support et mise à disposition de services informatiques · BTS SIO option SLAM · AFIP 2026–2027</p>
+        <p>Support et mise à disposition de services informatiques</p>
       </div>
     </div>
 
     <ul class="e5-facts" aria-label="Modalités de l’épreuve E5">
       <li><span class="e5-k">Bloc évalué</span><strong>Bloc 1</strong><span class="e5-v">6 compétences</span></li>
-      <li><span class="e5-k">Coefficient</span><strong>4</strong><span class="e5-v">contrôle en cours de formation</span></li>
-      <li><span class="e5-k">Forme</span><strong>Oral · 40 min</strong><span class="e5-v">10 min de présentation · 30 min d’échange</span></li>
-      <li><span class="e5-k">Commission</span><strong>2 membres</strong><span class="e5-v">un enseignant de l’option et un professionnel</span></li>
+      <li><span class="e5-k">Coefficient</span><strong>4</strong><span class="e5-v">CCF</span></li>
+      <li><span class="e5-k">Forme</span><strong>Oral · 40 min</strong><span class="e5-v">10 min + 30 min</span></li>
+      <li><span class="e5-k">Commission</span><strong>2 membres</strong><span class="e5-v">enseignant + professionnel</span></li>
     </ul>
 
     <div class="e5-phases">
       <div class="e5-phase">
         <span class="e5-phase-time">Phase 1 · 10 min max</span>
         <h3>Présentation du parcours</h3>
-        <p>Le candidat présente son parcours de professionnalisation et explique comment il a acquis les compétences du bloc 1, à l’appui de son portfolio.</p>
+        <p>Mon parcours et mes compétences, à l’appui du portfolio.</p>
         <button class="btn-primary e5-start" type="button" data-present-start>Lancer le mode présentation</button>
       </div>
       <div class="e5-phase">
         <span class="e5-phase-time">Phase 2 · 30 min</span>
         <h3>Échange avec la commission</h3>
-        <p>Retour sur le parcours, approfondissement d’une ou plusieurs réalisations choisies par la commission, et mise en évidence de la contribution personnelle au sein d’un travail d’équipe.</p>
+        <p>Questions sur les réalisations choisies par le jury et ma contribution personnelle.</p>
         <a class="btn-outline" href="#articles">Ouvrir les réalisations</a>
       </div>
     </div>
 
-    <div class="e5-grid">
-      <div class="e5-block">
-        <h3>Ce que contient le dossier</h3>
-        <ul class="e5-checklist">
-          <li><span class="e5-tick" aria-hidden="true">✓</span><div><strong>Portfolio numérique</strong> retraçant le parcours et décrivant chaque réalisation avec les compétences mobilisées. <a href="#articles"><?= $e5Total ?> réalisations</a></div></li>
-          <li><span class="e5-tick" aria-hidden="true">✓</span><div><strong>Tableau de synthèse</strong> des réalisations professionnelles, modèle national. <a href="#synthese">Voir le tableau</a> · <a href="tableau-synthese-bts-sio.pdf" target="_blank" rel="noopener">PDF</a></div></li>
-          <li><span class="e5-tick" aria-hidden="true">✓</span><div><strong>Couverture du bloc 1</strong> : <?= $e5Covered ?> compétences sur <?= count($synthCompetences) ?> mises en œuvre dans au moins une réalisation.</div></li>
-          <li><span class="e5-tick" aria-hidden="true">✓</span><div><strong>Preuves</strong> : captures, documentation technique, procédures et code présentés dans chaque article. <a href="documentation-technique-mediateq.pdf" target="_blank" rel="noopener">Exemple de documentation</a></div></li>
-          <li><span class="e5-tick e5-tick-doc" aria-hidden="true">✓</span><div><strong>Attestations de stage</strong> : remises à la commission avec le dossier.</div></li>
-        </ul>
-      </div>
-
+    <div class="e5-grid e5-grid-single">
       <div class="e5-block">
         <h3>Plan de ma présentation <small>phase 1 · 10 min</small></h3>
         <ol class="e5-plan">
@@ -409,18 +336,21 @@ $e5Plan = [
       <div class="section-icon" style="background:var(--amber-soft);">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#e5b567" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3 8-8"/><path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9"/></svg>
       </div>
-      <div><h2>Critères évalués</h2><p>Les 6 compétences du bloc 1 : savoir-faire du référentiel et réalisations qui les prouvent. Cliquez sur une réalisation pour l’ouvrir.</p></div>
+      <div><h2>Critères évalués</h2><p>Les 6 compétences du bloc 1 et leurs preuves</p></div>
     </div>
     <div class="e5-comps">
 <?php foreach ($synthCompetences as $i => [$label, $skills, $short]): ?>
       <article class="e5-comp">
         <div class="e5-comp-top"><span class="synth-num">C<?= $i + 1 ?></span><span class="e5-comp-count"><?= count($e5Coverage[$i + 1]) ?> réalisation<?= count($e5Coverage[$i + 1]) > 1 ? 's' : '' ?></span></div>
         <h4><?= e($label) ?></h4>
-        <ul class="e5-skills">
+        <details class="e5-skills-wrap">
+          <summary>Savoir-faire du référentiel</summary>
+          <ul class="e5-skills">
 <?php foreach ($skills as $skill): ?>
-          <li><?= e($skill) ?></li>
+            <li><?= e($skill) ?></li>
 <?php endforeach; ?>
-        </ul>
+          </ul>
+        </details>
         <div class="e5-proofs">
 <?php foreach ($e5Coverage[$i + 1] as [$title, $article]): ?>
           <a href="#articles" data-open-article="<?= e($article) ?>"><?= e($title) ?></a>
@@ -438,7 +368,7 @@ $e5Plan = [
       <div class="section-icon" style="background:var(--indigo-soft);">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.5-7 8-7s8 3 8 7"/></svg>
       </div>
-      <div><h2>Profil</h2><p>Présentation du candidat · ouverture de la phase 1 de l’épreuve E5</p></div>
+      <div><h2>Profil</h2><p>Qui je suis</p></div>
     </div>
     <div class="profile-grid">
 <?php
@@ -465,16 +395,12 @@ foreach ($synthRealisations as $period => $rows) {
           <div class="pf-id-main">
           <h3 class="pf-name">Jamar Carty</h3>
           <p class="pf-role">Développeur web et applicatif</p>
-          <blockquote class="pf-quote">« Je suis Jamar Carty, étudiant en 2<sup>e</sup> année de BTS SIO option SLAM. Développeur web et applicatif, je vais vous montrer comment mes stages et mes projets m’ont permis d’acquérir les 6 compétences du bloc 1. »</blockquote>
           </div>
           <div class="pf-id-side">
           <div class="pf-school">
             <img src="images/logo-afip.svg" alt="AFIP" width="153" height="102">
             <div><strong>BTS SIO · option SLAM</strong><span>2<sup>e</sup> année · AFIP · 2026–2027</span></div>
           </div>
-          <ul class="pf-badges" aria-label="Repères">
-            <li>Épreuve E5</li><li>Bloc 1</li><li>Session 2027</li><li class="is-goal">Objectif : alternance</li>
-          </ul>
           <div class="pf-links">
             <a class="pf-link" href="https://www.linkedin.com/in/jamar-carty" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.35V9h3.414v1.561h.049c.476-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 1 1 0-4.124 2.062 2.062 0 0 1 0 4.124zM7.119 20.452H3.555V9h3.564v11.452z"/></svg>LinkedIn</a>
             <a class="pf-link" href="https://github.com/jamar603" target="_blank" rel="noopener noreferrer" aria-label="GitHub : github.com/jamar603"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .5A11.5 11.5 0 0 0 8.36 22.91c.58.1.79-.25.79-.56v-2.02c-3.2.7-3.87-1.36-3.87-1.36-.52-1.33-1.28-1.69-1.28-1.69-1.04-.71.08-.7.08-.7 1.15.08 1.75 1.18 1.75 1.18 1.02 1.74 2.68 1.24 3.33.95.1-.74.4-1.24.73-1.53-2.55-.29-5.23-1.28-5.23-5.68 0-1.26.45-2.28 1.18-3.08-.12-.29-.51-1.46.11-3.04 0 0 .96-.31 3.15 1.17a10.9 10.9 0 0 1 5.74 0c2.19-1.48 3.15-1.17 3.15-1.17.62 1.58.23 2.75.11 3.04.73.8 1.18 1.82 1.18 3.08 0 4.41-2.68 5.38-5.24 5.67.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5z"/></svg>GitHub</a>
@@ -486,22 +412,19 @@ foreach ($synthRealisations as $period => $rows) {
         <div class="pf-main">
           <ul class="profile-stats pf-anim" style="--i:2" aria-label="Mon parcours en chiffres">
             <li><strong><span data-count="<?= $e5Total ?>"><?= $e5Total ?></span></strong><span>réalisations professionnelles</span></li>
-            <li><strong><span data-count="<?= $profileStageMissions ?>"><?= $profileStageMissions ?></span></strong><span>missions en stage</span></li>
             <li><strong><span data-count="3">3</span></strong><span>stages en entreprise</span></li>
             <li class="is-key"><strong><span data-count="<?= $e5Covered ?>"><?= $e5Covered ?></span>/<?= count($synthCompetences) ?></strong><span>compétences du bloc 1 couvertes</span></li>
           </ul>
 
           <article class="profile-pitch pf-anim" style="--i:3">
             <div class="profile-pitch-head">
-              <h3 class="profile-fact-k">Ma présentation devant la commission</h3>
-              <span class="profile-pitch-time"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Phase 1 · ≈ 1 min 30</span>
-              <div class="profile-pitch-actions"><a class="btn-outline" href="#experience">Mon parcours de stage</a><a class="btn-outline" href="#synthese">Tableau de synthèse</a></div>
+              <h3 class="profile-fact-k">Ma présentation</h3>
             </div>
             <ol class="profile-pitch-steps">
-              <li style="--s:0"><div class="pf-step-top"><span class="pf-step-dot" aria-hidden="true">1</span><span class="profile-pitch-n">Qui je suis</span></div><p>Bonjour, je m’appelle <strong>Jamar Carty</strong>. J’ai commencé mon BTS SIO option SLAM à l’ICOF en 2024, où j’ai validé plusieurs épreuves. Je poursuis ma 2<sup>e</sup> année à l’AFIP pour obtenir mon diplôme en 2027.</p></li>
-              <li style="--s:1"><div class="pf-step-top"><span class="pf-step-dot" aria-hidden="true">2</span><span class="profile-pitch-n">Ce que j’ai fait</span></div><p>En stage, j’ai développé un <strong>outil de gestion des conventions avec Laravel 12</strong> et une <strong>API REST pour une application React Native</strong>. J’ai ensuite conçu une <strong>application 3D</strong> et fait évoluer le <strong>site web Kadviser</strong>.</p></li>
-              <li style="--s:2"><div class="pf-step-top"><span class="pf-step-dot" aria-hidden="true">3</span><span class="profile-pitch-n">Ce que je prouve</span></div><p>Ce portfolio regroupe <strong><?= $e5Total ?> réalisations</strong>, dont <?= $profileStageMissions ?> missions de stage. Ensemble, elles couvrent <strong><?= $e5Covered ?> compétences sur <?= count($synthCompetences) ?></strong> du bloc 1. Pour chacune, je présente le contexte, ma démarche, mes preuves et ma contribution personnelle.</p></li>
-              <li style="--s:3"><div class="pf-step-top"><span class="pf-step-dot" aria-hidden="true">4</span><span class="profile-pitch-n">Où je vais</span></div><p>Mon objectif est de poursuivre en <strong>alternance en développement informatique</strong>, pour continuer à progresser sur des projets réels.</p></li>
+              <li style="--s:0"><div class="pf-step-top"><span class="pf-step-dot" aria-hidden="true">1</span><span class="profile-pitch-n">Qui je suis</span></div><p>BTS SIO SLAM commencé à l’<strong>ICOF</strong> en 2024, terminé à l’<strong>AFIP</strong> en 2027.</p></li>
+              <li style="--s:1"><div class="pf-step-top"><span class="pf-step-dot" aria-hidden="true">2</span><span class="profile-pitch-n">Ce que j’ai fait</span></div><p><strong>Laravel 12</strong>, <strong>API REST + React Native</strong>, <strong>application 3D</strong> et <strong>site Kadviser</strong>.</p></li>
+              <li style="--s:2"><div class="pf-step-top"><span class="pf-step-dot" aria-hidden="true">3</span><span class="profile-pitch-n">Ce que je prouve</span></div><p><strong><?= $e5Total ?> réalisations</strong> qui couvrent <strong><?= $e5Covered ?>/<?= count($synthCompetences) ?> compétences</strong> du bloc 1.</p></li>
+              <li style="--s:3"><div class="pf-step-top"><span class="pf-step-dot" aria-hidden="true">4</span><span class="profile-pitch-n">Où je vais</span></div><p>Une <strong>alternance en développement</strong>, sur des projets réels.</p></li>
             </ol>
           </article>
         </div>
@@ -523,11 +446,11 @@ foreach ($synthRealisations as $period => $rows) {
       <div class="branch-card current">
         <img class="branch-logo" src="images/logo-afip.svg" alt="AFIP" width="153" height="102">
         <div class="branch-top"><h4>BTS SIO · option SLAM</h4><span class="pill-current">En cours</span></div>
-        <p class="branch-summary">AFIP · 2026–2027 · 2<sup>e</sup> année · rattrapage des épreuves restantes pour obtenir le BTS en 2027</p>
+        <p class="branch-summary">AFIP · 2026–2027 · diplôme en 2027</p>
       </div>
       <div class="branch-card">
         <div class="branch-top"><h4>BTS SIO · option SLAM</h4><span class="pill-validated"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>Épreuves validées</span></div>
-        <p class="branch-summary">ICOF · 2024–2026 · plusieurs épreuves du BTS déjà validées</p>
+        <p class="branch-summary">ICOF · 2024–2026</p>
       </div>
     </div>
 
@@ -562,8 +485,7 @@ foreach ($synthRealisations as $period => $rows) {
     </div>
     <figure class="motivation-card">
       <blockquote>
-        <p>Personne n’est parfait. Mon parcours n’a pas toujours été linéaire, et il comportera encore des défis.</p>
-        <p>Mais chaque obstacle me rend plus solide. Je ne lâche rien : j’avance, <strong>un pas après l’autre</strong>, avec la volonté d’apprendre et de réussir.</p>
+        <p>Mon parcours n’a pas toujours été linéaire. Chaque obstacle me rend plus solide : j’avance, <strong>un pas après l’autre</strong>.</p>
       </blockquote>
       <figcaption>Jamar Carty</figcaption>
     </figure>
@@ -586,7 +508,8 @@ foreach ($synthRealisations as $period => $rows) {
           <div class="t-yr">10 novembre – 19 décembre 2025</div>
           <div class="t-title">Stage · Développement d’applications et web</div>
           <div class="t-org">COF</div>
-          <ul class="experience-points"><li>Conception d’une application 3D de chargeur avec Kadviser et Geometry, incluant modélisation et interactions.</li><li>Développement de fonctionnalités dynamiques pour le site Kadviser.</li><li>Tests et corrections pour fiabiliser l’application.</li></ul>
+          <ul class="experience-points"><li>Application 3D d’un chargeur (Kadviser)</li><li>Nouvelles fonctionnalités du site Kadviser</li><li>Tests et corrections</li></ul>
+          <button type="button" class="exp-shot" data-open-article="kadviser-model3d" aria-label="Ouvrir la mission : application 3D Kadviser"><img src="images/articles/kadviser-model3d/cover.webp" alt="" loading="lazy"><span>Voir la mission</span></button>
         </div>
       </div>
       <div class="t-row">
@@ -594,7 +517,8 @@ foreach ($synthRealisations as $period => $rows) {
         <div class="t-content">
           <div class="t-yr">12 mai – 20 juin 2025</div>
           <div class="t-title">Stage · Développement web et API REST</div>
-          <ul class="experience-points"><li>Développement d’un outil de gestion des conventions avec Laravel 12.</li><li>Création d’une API REST reliée à la base Océane pour une application React Native.</li><li>Code modulaire en POO, travail collaboratif avec Git/GitHub et revues de code.</li></ul>
+          <ul class="experience-points"><li>Gestion des conventions avec Laravel 12</li><li>API REST pour une application React Native</li><li>Git/GitHub et revues de code</li></ul>
+          <button type="button" class="exp-shot" data-open-article="laravel-stage" aria-label="Ouvrir la mission : gestion des conventions Laravel"><img src="images/articles/laravel-stage/cover.webp" alt="" loading="lazy"><span>Voir la mission</span></button>
         </div>
       </div>
       <div class="t-row">
@@ -603,7 +527,7 @@ foreach ($synthRealisations as $period => $rows) {
           <div class="t-yr">2024</div>
           <div class="t-title">Stage · Programmation web</div>
           <div class="t-org">AAB Fabrication · Saint-Martin</div>
-          <ul class="experience-points"><li>Développement d’un site web dynamique pour soutenir la vente en ligne et la visibilité de l’entreprise.</li><li>Intégration front-end en HTML, CSS et JavaScript et mise en place des fonctionnalités principales.</li></ul>
+          <ul class="experience-points"><li>Site web dynamique pour la vente en ligne</li><li>HTML, CSS et JavaScript</li></ul>
         </div>
       </div>
       <div class="t-row">
@@ -611,7 +535,7 @@ foreach ($synthRealisations as $period => $rows) {
         <div class="t-content">
           <div class="t-yr">2023</div>
           <div class="t-title">Développement de sites web · Indépendant</div>
-          <ul class="experience-points"><li>Conception et gestion d’un site e-commerce WordPress pour un photographe : portfolio, rendez-vous et vente en ligne.</li></ul>
+          <ul class="experience-points"><li>Site e-commerce WordPress pour un photographe</li></ul>
         </div>
       </div>
     </div>
@@ -630,37 +554,37 @@ foreach ($synthRealisations as $period => $rows) {
 
     <div class="projects-grid">
       <div class="project-card">
-        <div class="project-icon" style="background:var(--amber-soft);"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#e5b567" stroke-width="2" stroke-linecap="round"><path d="M4 19V5a2 2 0 012-2h8l6 6v10a2 2 0 01-2 2H6a2 2 0 01-2-2z"/><path d="M14 3v6h6"/></svg></div>
+        <img class="project-cover" src="images/articles/mediateq-csharp/cover.webp" alt="" loading="lazy">
         <div class="project-title">Application Mediateq</div>
-        <div class="project-desc">Application Windows Forms organisée en onglets pour gérer plusieurs fonctionnalités métier.</div>
+        <div class="project-desc">Application Windows Forms pour gérer une médiathèque.</div>
         <div class="project-tags"><span>C#</span><span>Windows Forms</span></div>
         <a class="project-link" href="#articles" data-open-article="mediateq-csharp">Lire le projet →</a>
       </div>
       <div class="project-card">
-        <div class="project-icon" style="background:var(--indigo-soft);"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M8 21h8M12 18v3"/></svg></div>
+        <img class="project-cover" src="images/articles/laravel-stage/cover.webp" alt="" loading="lazy">
         <div class="project-title">Gestion des conventions de stage</div>
-        <div class="project-desc">Application web avec des espaces et des droits adaptés aux étudiants, enseignants et membres du secrétariat.</div>
+        <div class="project-desc">Espaces et droits pour étudiants, enseignants et secrétariat.</div>
         <div class="project-tags"><span>Laravel 12</span><span>PHP</span><span>Gestion des accès</span></div>
         <a class="project-link" href="#articles" data-open-article="laravel-stage">Lire la mission →</a>
       </div>
       <div class="project-card">
-        <div class="project-icon" style="background:var(--coral-soft);"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#f28b82" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 010 18 14 14 0 010-18z"/></svg></div>
+        <img class="project-cover" src="images/articles/react-native-stage/cover.webp" alt="" loading="lazy">
         <div class="project-title">Application mobile connectée à une API</div>
-        <div class="project-desc">Mission de développement mobile réalisée pendant la formation.</div>
+        <div class="project-desc">Application mobile reliée à une API REST.</div>
         <div class="project-tags"><span>React Native</span><span>API</span></div>
         <a class="project-link" href="#articles" data-open-article="react-native-stage">Lire la mission →</a>
       </div>
       <div class="project-card">
-        <div class="project-icon" style="background:var(--mint-soft);"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#a5b4fc" stroke-width="2" stroke-linecap="round"><path d="M13 2L3 14h7l-1 8 10-12h-7l1-8z"/></svg></div>
+        <img class="project-cover" src="images/articles/glpi-inventory/cover.webp" alt="" loading="lazy">
         <div class="project-title">Gestion de parc informatique</div>
-        <div class="project-desc">Travail pratique consacré à la gestion du patrimoine informatique avec GLPI.</div>
+        <div class="project-desc">Inventaire du parc informatique avec GLPI.</div>
         <div class="project-tags"><span>GLPI</span><span>Support IT</span></div>
         <a class="project-link" href="#articles" data-open-article="glpi-inventory">Lire le TP →</a>
       </div>
       <div class="project-card">
-        <div class="project-icon" style="background:var(--mint-soft);"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#a5b4fc" stroke-width="2" stroke-linecap="round"><path d="M12 2l9 5v10l-9 5-9-5V7l9-5z"/><path d="M3 7l9 5 9-5M12 12v10"/></svg></div>
+        <img class="project-cover" src="images/articles/kadviser-model3d/cover.webp" alt="" loading="lazy">
         <div class="project-title">K-Advisor et modélisation 3D</div>
-        <div class="project-desc">Mission de stage de deuxième année autour d'une application et de la modélisation 3D.</div>
+        <div class="project-desc">Application et modélisation 3D en stage.</div>
         <div class="project-tags"><span>K-Advisor</span><span>Modélisation 3D</span></div>
         <a class="project-link" href="#articles" data-open-article="kadviser-model3d">Lire la mission →</a>
       </div>
@@ -677,7 +601,7 @@ foreach ($synthRealisations as $period => $rows) {
       <div class="section-icon" style="background:var(--amber-soft);">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#e5b567" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18"/></svg>
       </div>
-      <div><h2>Tableau de synthèse</h2><p>BTS SIO option SLAM · session 2027 · réalisations professionnelles</p></div>
+      <div><h2>Tableau de synthèse</h2><p>Mes réalisations et les compétences du bloc 1</p></div>
     </div>
 
     <div class="synth-tools">
@@ -763,23 +687,9 @@ foreach ($articlesJson as $item) {
       </table>
     </div>
 
-    <div class="synth-skills">
-<?php foreach ($synthCompetences as $i => [$label, $skills]): ?>
-      <details>
-        <summary><span class="synth-num">C<?= $i + 1 ?></span><?= e($label) ?></summary>
-        <ul>
-<?php foreach ($skills as $skill): ?>
-          <li><?= e($skill) ?></li>
-<?php endforeach; ?>
-        </ul>
-      </details>
-<?php endforeach; ?>
-    </div>
-
-    <p class="synth-hint">Choisissez une compétence ou cliquez sur une colonne pour voir les réalisations qui la prouvent. En présentation : touches <kbd>1</kbd> à <kbd>6</kbd>, <kbd>0</kbd> pour tout afficher.</p>
+    <p class="synth-hint">Cliquez sur une compétence pour voir ses réalisations.</p>
     <div class="synth-actions">
-      <a class="btn-outline" href="tableau-synthese-bts-sio.pdf" target="_blank" rel="noopener">Ouvrir le tableau officiel (PDF)</a>
-      <a class="btn-outline" href="tableau-synthese-bts-sio.pdf" download>Télécharger le PDF</a>
+      <a class="btn-outline" href="tableau-synthese-bts-sio.pdf" target="_blank" rel="noopener">Tableau officiel · PDF</a>
     </div>
   </div>
 </section>
@@ -987,7 +897,7 @@ foreach (array_values($synthRealisations) as $p => $rows) {
       <div class="section-icon" style="background:var(--mint-soft);">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#a5b4fc" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3 2.7 5.5 6.1.9-4.4 4.3 1 6.1-5.4-2.9-5.4 2.9 1-6.1-4.4-4.3 6.1-.9L12 3z"/></svg>
       </div>
-      <div><h2>Atouts</h2><p>Qualités, langues et certifications</p></div>
+      <div><h2>Atouts</h2><p>Qualités, langues, certificats</p></div>
     </div>
     <div class="atouts-grid">
       <article class="atout-card">
@@ -1001,11 +911,6 @@ foreach (array_values($synthRealisations) as $p => $rows) {
         <div class="project-tags"><span>Anglais · bilingue</span></div>
       </article>
       <article class="atout-card">
-        <span class="atout-icon" style="background:var(--amber-soft);" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#e5b567" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9" r="6"/><path d="M8.5 13.8 7 22l5-3 5 3-1.5-8.2"/></svg></span>
-        <h3>Certifications</h3>
-        <div class="project-tags"><span>MOOC ANSSI</span><span>CNIL · RGPD</span><span>Cyber Awareness</span><span>Pix</span></div>
-      </article>
-      <article class="atout-card">
         <span class="atout-icon" style="background:var(--coral-soft);" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#f28b82" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7.5-4.6-9.3-9.2C1.4 8.4 3.6 5 7 5c2 0 3.3 1 5 3 1.7-2 3-3 5-3 3.4 0 5.6 3.4 4.3 6.8C19.5 16.4 12 21 12 21z"/></svg></span>
         <h3>Centres d’intérêt</h3>
         <div class="project-tags"><span>Boxe anglaise</span><span>Guitare électrique</span></div>
@@ -1014,40 +919,39 @@ foreach (array_values($synthRealisations) as $p => $rows) {
 
     <div class="cert-head">
       <h3 class="cert-heading">Mes certificats</h3>
-      <p class="cert-hint"><?= count($certificats) ?> attestations · cliquez sur un certificat pour voir le document et son explication</p>
+      <p class="cert-hint"><?= array_sum(array_map(fn($c) => count($c['docs']), $certificats)) ?> attestations · cliquez pour voir</p>
     </div>
     <div class="cert-slider" aria-roledescription="carrousel" aria-label="Mes certificats">
       <div class="cert-grid" tabindex="0">
-<?php foreach ($certificats as $c):
-  $src = 'images/certifications/' . $c['file'];
-  $meta = $c['org'] . ' · ' . $c['date'] . (isset($c['score']) ? ' · ' . $c['score'] : ''); ?>
-        <a class="cert-card" href="<?= htmlspecialchars($src) ?>" target="_blank" rel="noopener" data-badge="<?= htmlspecialchars($c['badge']) ?>">
-          <span class="cert-thumb"><img src="<?= htmlspecialchars($src) ?>" alt="<?= htmlspecialchars($c['alt']) ?>" loading="lazy" width="<?= $c['w'] ?>" height="<?= $c['h'] ?>"><span class="cert-zoom" aria-hidden="true">Voir le détail</span></span>
-          <span class="cert-info"><span class="cert-badge"><?= htmlspecialchars($c['badge']) ?></span><strong><?= htmlspecialchars($c['title']) ?></strong><span class="cert-meta"><?= str_replace(' %', '&nbsp;%', htmlspecialchars($meta)) ?></span></span>
-          <template class="cert-details">
-            <p class="cd-about"><?= htmlspecialchars($c['about']) ?></p>
-            <p class="cd-result"><?= htmlspecialchars($c['result']) ?></p>
-            <h4>Détail</h4>
-            <dl class="cd-facts">
-<?php foreach ($c['facts'] as [$label, $value]): ?>
-              <div><dt><?= htmlspecialchars($label) ?></dt><dd><?= str_replace(' %', '&nbsp;%', htmlspecialchars($value)) ?></dd></div>
-<?php endforeach; ?>
-            </dl>
-            <h4>Ce que j’ai appris</h4>
-            <ul class="cd-learned">
-<?php foreach ($c['learned'] as $item): ?>
-              <li><?= htmlspecialchars($item) ?></li>
-<?php endforeach; ?>
-            </ul>
-            <h4>Compétences BTS SIO mobilisées</h4>
-            <ul class="cd-skills">
-<?php foreach ($c['skills'] as $skill): ?>
-              <li><?= htmlspecialchars($skill) ?></li>
-<?php endforeach; ?>
-            </ul>
-          </template>
+<?php $certDoc = 0; foreach ($certificats as $c):
+  $first = $c['docs'][0];
+  $src = 'images/certifications/' . $first['file']; ?>
+        <a class="cert-card" href="<?= e($src) ?>" target="_blank" rel="noopener" data-doc="<?= $certDoc ?>">
+          <span class="cert-thumb"><img src="<?= e($src) ?>" alt="<?= e($first['alt']) ?>" loading="lazy" width="<?= $first['w'] ?>" height="<?= $first['h'] ?>"><span class="cert-zoom" aria-hidden="true">Voir</span></span>
+          <span class="cert-info"><span class="cert-badge"><?= e($c['badge']) ?></span><strong><?= e($c['title']) ?></strong><span class="cert-meta"><?= str_replace(' %', '&nbsp;%', e($c['meta'])) ?></span></span>
         </a>
+<?php $certDoc += count($c['docs']); endforeach; ?>
+      </div>
+      <!-- documents of the viewer (certificats.js): one per attestation, a card opens the first of its group -->
+      <div class="cert-docs" hidden>
+<?php foreach ($certificats as $c): foreach ($c['docs'] as $d): ?>
+        <template data-src="images/certifications/<?= e($d['file']) ?>" data-alt="<?= e($d['alt']) ?>" data-title="<?= e($d['title']) ?>" data-badge="<?= e($d['badge']) ?>">
+          <p class="cd-about"><?= e($d['about']) ?></p>
+          <p class="cd-result"><?= str_replace(' %', '&nbsp;%', e($d['result'])) ?></p>
+          <h4>L’essentiel</h4>
+          <ul class="cd-learned">
+<?php foreach ($d['points'] as $point): ?>
+            <li><?= e($point) ?></li>
 <?php endforeach; ?>
+          </ul>
+          <h4>Compétences E5</h4>
+          <ul class="cd-skills">
+<?php foreach ($d['skills'] as $n): ?>
+            <li><b>C<?= $n ?></b> <?= e($synthCompetences[$n - 1][2]) ?></li>
+<?php endforeach; ?>
+          </ul>
+        </template>
+<?php endforeach; endforeach; ?>
       </div>
       <div class="cert-controls">
         <button class="cert-nav" type="button" data-dir="-1" aria-label="Certificat précédent">‹</button>
@@ -1064,29 +968,105 @@ foreach (array_values($synthRealisations) as $p => $rows) {
       <div class="section-icon" style="background:var(--amber-soft);">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#e5b567" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4M11 7v4l3 2"/></svg>
       </div>
-      <div><h2>Veille technologique</h2><p>Développement, réseaux et cybersécurité</p></div>
+      <div><h2>Veille technologique</h2><p>Sujet : IA et cybersécurité</p></div>
       <div class="cube-scene" aria-hidden="true"><div class="cube"><span></span><span></span><span></span><span></span><span></span><span></span></div></div>
     </div>
-    <div class="veille-grid">
-      <div class="veille-copy">
-        <h3>Rester curieux, rester à jour</h3>
-        <p>Je suis les évolutions des technologies et des pratiques informatiques à l'aide d'Inoreader. Ma veille porte notamment sur le développement, les réseaux et la cybersécurité.</p>
-        <a class="veille-tool" href="https://www.inoreader.com/" target="_blank" rel="noopener">
+
+    <div class="vt-top">
+      <article class="vt-subject">
+        <span class="vt-k">Mon sujet de veille</span>
+        <h3>IA et cybersécurité</h3>
+        <p>L’IA sert de plus en plus à <strong>trouver les failles avant les attaquants</strong>. Je suis comment elle change la sécurité des logiciels.</p>
+        <ul class="vt-themes" aria-label="Thèmes suivis">
+          <li>Détection de failles</li><li>IA appliquée au code</li><li>Sécurité des logiciels</li>
+        </ul>
+        <span class="vt-comp"><b>C6</b> Outils et stratégies de veille informationnelle</span>
+      </article>
+
+      <article class="vt-case">
+        <div class="vt-case-head">
+          <span class="vt-k">Article analysé · mars 2026</span>
+          <a class="vt-source" href="https://thehackernews.com/2026/03/anthropic-finds-22-firefox.html" target="_blank" rel="noopener" data-veille="hackernews">The Hacker News · résumé</a>
+        </div>
+        <h3>Une IA audite le code de Firefox</h3>
+        <p class="vt-case-sub">Anthropic et Mozilla : le modèle Claude Opus 4.6 analyse le navigateur pour trouver des failles.</p>
+        <ul class="vt-nums">
+          <li><strong>22</strong><span>vulnérabilités trouvées</span></li>
+          <li><strong>14</strong><span>critiques</span></li>
+          <li><strong>6 000</strong><span>fichiers C++ analysés</span></li>
+          <li><strong>20 min</strong><span>pour la 1<sup>re</sup> faille</span></li>
+        </ul>
+        <div class="vt-takeaway">
+          <span class="vt-k">Ce que j’en retiens</span>
+          <p>L’IA détecte vite les failles, mais <strong>une validation humaine reste nécessaire</strong>. La plupart sont corrigées dans Firefox 148.</p>
+        </div>
+        <a class="btn-outline vt-pdf" href="veille-technologique.pdf" target="_blank" rel="noopener" data-veille="pdf">Voir ma fiche de veille · PDF</a>
+      </article>
+    </div>
+
+    <div class="vt-method">
+      <p class="vt-method-k">Ma méthode de veille</p>
+      <ol class="vt-steps">
+        <li><span class="vt-step-n">1</span><strong>Collecter</strong><span>Flux RSS dans Inoreader</span></li>
+        <li><span class="vt-step-n">2</span><strong>Trier</strong><span>Un dossier par thème</span></li>
+        <li><span class="vt-step-n">3</span><strong>Analyser</strong><span>Vérifier la source, résumer</span></li>
+        <li><span class="vt-step-n">4</span><strong>Exploiter</strong><span>Fiche de synthèse, projets</span></li>
+      </ol>
+      <div class="vt-tools">
+        <a class="veille-tool" href="https://www.inoreader.com/" target="_blank" rel="noopener" data-veille="inoreader">
           <img class="veille-tool-icon" src="images/logo-inoreader-icon.svg" alt="" width="32" height="32">
           <span class="veille-tool-text">
-            <span class="veille-tool-k">Mon outil de veille</span>
+            <span class="veille-tool-k">Mon outil</span>
             <strong class="veille-tool-name">Inoreader</strong>
-            <span class="veille-tool-v">Agrégateur de flux RSS · développement, réseaux, cybersécurité</span>
+            <span class="veille-tool-v">Agrégateur de flux RSS</span>
           </span>
           <span class="veille-tool-arrow" aria-hidden="true">↗</span>
         </a>
       </div>
-      <ul class="veille-links">
-        <li><a href="https://thehackernews.com/2026/03/anthropic-finds-22-firefox.html" target="_blank" rel="noopener">Sécurité de Firefox <span>The Hacker News ↗</span></a></li>
-        <li><a href="https://www.freecodecamp.org/news/how-to-use-docker-compose-for-production-workloads/" target="_blank" rel="noopener">Docker Compose en production <span>freeCodeCamp ↗</span></a></li>
-        <li><a href="https://4d540f49-3025-4bac-87d5-74f740d12e4d.filesusr.com/ugd/f4edf3_02d5633a5eac46c7a41dccbc82e0c321.pdf" target="_blank" rel="noopener">Consulter ma veille technologique <span>PDF ↗</span></a></li>
-      </ul>
     </div>
+
+    <!-- veille links open in a modal inside the portfolio (veille.js); the sites themselves refuse to be embedded -->
+    <template id="vt-modal-pdf" data-title="Ma fiche de veille · IA et cybersécurité" data-kind="pdf" data-src="veille-technologique.pdf">
+      <!-- text of the fiche, shown where the browser cannot display a PDF inside the page (Android) -->
+      <h4>Sujet de veille</h4>
+      <p>IA et cybersécurité</p>
+      <h4>Contexte</h4>
+      <p>Dans la cybersécurité, l’intelligence artificielle est de plus en plus utilisée pour détecter des vulnérabilités dans les logiciels. Anthropic a collaboré avec Mozilla pour analyser la sécurité de Firefox avec son modèle Claude Opus 4.6, afin d’identifier les failles avant qu’elles ne soient exploitées.</p>
+      <h4>Résumé de l’article</h4>
+      <ul>
+        <li>Claude Opus 4.6 a découvert <strong>22 vulnérabilités</strong>, dont <strong>14 critiques</strong>.</li>
+        <li>Première faille trouvée <strong>20 minutes</strong> après le début : un bug <em>use-after-free</em> dans le moteur JavaScript.</li>
+        <li>Près de <strong>6 000 fichiers C++</strong> examinés, <strong>112 rapports</strong> de bugs envoyés à Mozilla.</li>
+        <li>La plupart des failles corrigées dans <strong>Firefox 148</strong>, les autres dans les versions suivantes.</li>
+        <li>L’IA reste moins performante pour créer des exploits fonctionnels.</li>
+      </ul>
+      <h4>Conclusion</h4>
+      <p>L’IA peut devenir un outil puissant pour renforcer la sécurité des logiciels, mais <strong>une validation humaine reste nécessaire</strong>. À l’avenir, elle pourrait permettre de détecter les failles plus vite que les attaquants.</p>
+    </template>
+    <template id="vt-modal-hackernews" data-title="Une IA audite le code de Firefox" data-source="The Hacker News · mars 2026" data-url="https://thehackernews.com/2026/03/anthropic-finds-22-firefox.html">
+      <h4>Contexte</h4>
+      <p>L’intelligence artificielle est de plus en plus utilisée pour détecter des vulnérabilités. Anthropic a collaboré avec Mozilla pour analyser la sécurité de Firefox avec son modèle Claude Opus 4.6, afin de trouver les failles avant les cybercriminels.</p>
+      <h4>Résumé</h4>
+      <ul>
+        <li><strong>22 vulnérabilités</strong> découvertes, dont <strong>14 critiques</strong>.</li>
+        <li>La première faille trouvée en <strong>20 minutes</strong> : un bug <em>use-after-free</em> dans le moteur JavaScript.</li>
+        <li>Près de <strong>6 000 fichiers C++</strong> analysés et <strong>112 rapports</strong> de bugs envoyés à Mozilla.</li>
+        <li>La plupart des failles sont corrigées dans <strong>Firefox 148</strong>.</li>
+        <li>L’IA est moins performante pour créer des exploits fonctionnels.</li>
+      </ul>
+      <h4>Ce que j’en retiens</h4>
+      <p>L’IA peut renforcer la sécurité des logiciels en détectant vite des failles complexes, mais <strong>une validation humaine reste nécessaire</strong>.</p>
+    </template>
+    <template id="vt-modal-inoreader" data-title="Inoreader · mon outil de veille" data-source="Agrégateur de flux RSS" data-url="https://www.inoreader.com/">
+      <h4>À quoi il sert</h4>
+      <p>Inoreader rassemble au même endroit les nouveaux articles des sites que je suis, grâce à leurs flux RSS. Je n’ai pas besoin de visiter chaque site.</p>
+      <h4>Comment je l’utilise</h4>
+      <ul>
+        <li>Je m’abonne aux flux de sites spécialisés (cybersécurité, développement, DevOps).</li>
+        <li>Je classe les flux dans un dossier par thème.</li>
+        <li>Je garde les articles utiles pour ma fiche de veille.</li>
+      </ul>
+    </template>
   </div>
 </section>
 
@@ -1100,52 +1080,60 @@ foreach (array_values($synthRealisations) as $p => $rows) {
     </h2>
 
 
-    <div class="conclu-path" aria-label="Étapes de mon parcours" role="group">
-      <span class="conclu-path-line" aria-hidden="true"><span class="conclu-comet"></span></span>
-      <ol>
-        <li style="--d:0"><span class="conclu-dot" aria-hidden="true"></span><strong>2024</strong><span>Premier stage · programmation web</span></li>
-        <li style="--d:1"><span class="conclu-dot" aria-hidden="true"></span><strong>2025</strong><span>Stages BTS · Laravel, React Native, 3D</span></li>
-        <li style="--d:2"><span class="conclu-dot" aria-hidden="true"></span><strong>2026–2027</strong><span>2<sup>e</sup> année de BTS SIO SLAM à l’AFIP</span></li>
-        <li style="--d:3"><span class="conclu-dot conclu-dot-goal" aria-hidden="true"></span><strong>Objectif</strong><span>BTS SIO en 2027, puis bac+3 à Lyon 1</span></li>
-      </ol>
-    </div>
-
-    <div class="conclu-main">
+    <div class="conclu-main conclu-main-single">
       <figure class="conclu-speech">
         <p class="conclu-speech-k">Mon message au jury</p>
         <blockquote>
-          <p>Mon parcours n’a pas été linéaire, mais chaque étape m’a fait progresser : de l’ICOF à l’AFIP, j’ai mené <strong><?= $e5Total ?> réalisations</strong> qui couvrent <strong>les six compétences du bloc 1</strong>.</p>
-          <p>Ce qui me motive : créer des services utiles et fiables, <strong>un pas après l’autre</strong>.</p>
-          <p>Mon objectif : obtenir mon BTS SIO en 2027, puis <strong>poursuivre en bac+3 à l’Université Lyon 1</strong>, spécialisé en <strong>cybersécurité et automatisation</strong>.</p>
+          <p><strong><?= $e5Total ?> réalisations</strong>, <strong>6 compétences sur 6</strong>, de l’ICOF à l’AFIP.</p>
+          <p>Objectif : BTS SIO en 2027, puis <strong>bac+3</strong> en <strong>automatisation et cybersécurité</strong>.</p>
         </blockquote>
         <figcaption>Jamar Carty</figcaption>
       </figure>
-      <ul class="conclu-stats">
-        <li style="--d:0"><strong><span data-conclu-count="<?= $e5Total ?>"><?= $e5Total ?></span></strong><span>réalisations professionnelles</span></li>
-        <li style="--d:1"><strong><span data-conclu-count="<?= $e5Covered ?>"><?= $e5Covered ?></span>/<?= count($synthCompetences) ?></strong><span>compétences du bloc 1 couvertes</span></li>
-        <li style="--d:2"><strong><span data-conclu-count="3">3</span></strong><span>stages en entreprise</span></li>
-      </ul>
     </div>
 
     <div class="conclu-after">
-      <p class="conclu-after-k">Après le BTS · Université Lyon 1</p>
-      <div class="conclu-cards">
-        <article class="conclu-card" style="--d:0">
-          <span class="conclu-card-k">Poursuite d’études · bac+3</span>
-          <h3>Licence MIAGE</h3>
-          <p>Développement, systèmes d’information et gestion de projet.</p>
-        </article>
-        <article class="conclu-card" style="--d:1">
-          <span class="conclu-card-k">Ou · bac+3</span>
-          <h3>Licence pro DevOps</h3>
-          <p>CI/CD, conteneurs et infrastructure : du code à la production.</p>
-        </article>
-        <article class="conclu-card" style="--d:2">
-          <span class="conclu-card-k">Ma spécialisation</span>
-          <h3>Cybersécurité et automatisation</h3>
-          <p>Sécuriser les services, automatiser tests et déploiements.</p>
-        </article>
+      <p class="conclu-after-k">Après mon BTS · Université Lyon 1</p>
+      <div class="road" role="group" aria-label="Mon projet après le BTS">
+        <svg class="road-curves" viewBox="0 0 1000 300" preserveAspectRatio="none" aria-hidden="true">
+          <defs>
+            <linearGradient id="roadGrad" x1="0" x2="1" y1="0" y2="0">
+              <stop offset="0" stop-color="#60a5fa"/><stop offset=".5" stop-color="#a5b4fc"/><stop offset="1" stop-color="#e5b567"/>
+            </linearGradient>
+          </defs>
+          <path class="road-path" pathLength="1" d="M125 150 C 250 150, 250 62, 375 62"/>
+          <path class="road-path" pathLength="1" d="M125 150 C 250 150, 250 238, 375 238"/>
+          <path class="road-path road-path-2" pathLength="1" d="M375 62 C 500 62, 500 150, 625 150"/>
+          <path class="road-path road-path-2" pathLength="1" d="M375 238 C 500 238, 500 150, 625 150"/>
+          <path class="road-path road-path-3 road-future" pathLength="1" d="M625 150 L 875 150"/>
+        </svg>
+        <div class="road-node road-start" style="--d:0">
+          <span class="road-year">2027</span>
+          <strong>BTS SIO SLAM</strong>
+          <span>Diplôme · AFIP</span>
+        </div>
+        <div class="road-node road-up" style="--d:1">
+          <span class="road-year">2027 – 2028</span>
+          <strong>Licence MIAGE</strong>
+          <span>Développement et systèmes d’information</span>
+        </div>
+        <span class="road-or" aria-hidden="true">ou</span>
+        <div class="road-node road-down" style="--d:1">
+          <span class="road-year">2027 – 2028</span>
+          <strong>Licence pro DevOps</strong>
+          <span>CI/CD, conteneurs, mise en production</span>
+        </div>
+        <div class="road-node road-spec" style="--d:2">
+          <span class="road-year">Spécialisation</span>
+          <strong>Automatisation et cybersécurité</strong>
+          <span>Sécuriser et automatiser les services</span>
+        </div>
+        <div class="road-node road-goal" style="--d:3">
+          <span class="road-year">Plus tard</span>
+          <strong>Ma propre entreprise</strong>
+          <span>Services web et sécurité</span>
+        </div>
       </div>
+      <blockquote class="road-quote">« Plus tard, j’aimerais <strong>créer ma propre entreprise</strong> : proposer des services web sûrs et automatisés, avec tout ce que j’ai appris. »</blockquote>
     </div>
 
     <div class="conclu-end">
@@ -1251,6 +1239,7 @@ foreach (array_values($synthRealisations) as $p => $rows) {
 <script src="background.js"></script>
 <script src="cursor.js"></script>
 <script src="certificats.js"></script>
+<script src="veille.js"></script>
 <script src="motion.js"></script>
 <script src="hero-motion.js"></script>
 <script src="presentation.js"></script>
