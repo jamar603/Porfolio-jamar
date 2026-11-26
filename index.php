@@ -1002,57 +1002,59 @@ foreach (array_values($synthRealisations) as $p => $rows) {
       <div class="cube-scene" aria-hidden="true"><div class="cube"><span></span><span></span><span></span><span></span><span></span><span></span></div></div>
     </div>
 
-    <div class="vt-top">
-      <article class="vt-subject">
-        <span class="vt-k">Mon sujet de veille</span>
+    <div class="vx">
+      <article class="vx-col vx-subject" style="--d:0">
+        <header class="vx-head"><span class="vx-n">1</span><span class="vx-k">Mon sujet</span></header>
         <h3>IA et cybersécurité</h3>
         <p>L’IA sert de plus en plus à <strong>trouver les failles avant les attaquants</strong>. Je suis comment elle change la sécurité des logiciels.</p>
-        <ul class="vt-themes" aria-label="Thèmes suivis">
+        <ul class="vx-themes" aria-label="Thèmes suivis">
           <li>Détection de failles</li><li>IA appliquée au code</li><li>Sécurité des logiciels</li>
         </ul>
-        <span class="vt-comp"><b>C6</b> Outils et stratégies de veille informationnelle</span>
+        <span class="vx-comp"><b>C6</b> Outils et stratégies de veille</span>
       </article>
 
-      <article class="vt-case">
-        <div class="vt-case-head">
-          <span class="vt-k">Article analysé · mars 2026</span>
-          <a class="vt-source" href="https://thehackernews.com/2026/03/anthropic-finds-22-firefox.html" target="_blank" rel="noopener" data-veille="hackernews">The Hacker News · résumé</a>
-        </div>
-        <h3>Une IA audite le code de Firefox</h3>
-        <p class="vt-case-sub">Anthropic et Mozilla : le modèle Claude Opus 4.6 analyse le navigateur pour trouver des failles.</p>
-        <ul class="vt-nums">
-          <li><strong>22</strong><span>vulnérabilités trouvées</span></li>
-          <li><strong>14</strong><span>critiques</span></li>
-          <li><strong>6 000</strong><span>fichiers C++ analysés</span></li>
-          <li><strong>20 min</strong><span>pour la 1<sup>re</sup> faille</span></li>
-        </ul>
-        <div class="vt-takeaway">
-          <span class="vt-k">Ce que j’en retiens</span>
-          <p>L’IA détecte vite les failles, mais <strong>une validation humaine reste nécessaire</strong>. La plupart sont corrigées dans Firefox 148.</p>
-        </div>
-        <a class="btn-outline vt-pdf" href="veille-technologique.pdf" target="_blank" rel="noopener" data-veille="pdf">Voir ma fiche de veille · PDF</a>
-      </article>
-    </div>
+      <span class="vx-arrow" aria-hidden="true"></span>
 
-    <div class="vt-method">
-      <p class="vt-method-k">Ma méthode de veille</p>
-      <ol class="vt-steps">
-        <li><span class="vt-step-n">1</span><strong>Collecter</strong><span>Flux RSS dans Inoreader</span></li>
-        <li><span class="vt-step-n">2</span><strong>Trier</strong><span>Un dossier par thème</span></li>
-        <li><span class="vt-step-n">3</span><strong>Analyser</strong><span>Vérifier la source, résumer</span></li>
-        <li><span class="vt-step-n">4</span><strong>Exploiter</strong><span>Fiche de synthèse, projets</span></li>
-      </ol>
-      <div class="vt-tools">
-        <a class="veille-tool" href="https://www.inoreader.com/" target="_blank" rel="noopener" data-veille="inoreader">
-          <img class="veille-tool-icon" src="images/logo-inoreader-icon.svg" alt="" width="32" height="32">
-          <span class="veille-tool-text">
-            <span class="veille-tool-k">Mon outil</span>
-            <strong class="veille-tool-name">Inoreader</strong>
-            <span class="veille-tool-v">Agrégateur de flux RSS</span>
-          </span>
-          <span class="veille-tool-arrow" aria-hidden="true">↗</span>
+      <article class="vx-col vx-tool" style="--d:1">
+        <header class="vx-head"><span class="vx-n">2</span><span class="vx-k">Mon outil et ma méthode</span></header>
+        <a class="vx-ino" href="https://www.inoreader.com/" target="_blank" rel="noopener" data-veille="inoreader">
+          <img src="images/logo-inoreader-icon.svg" alt="" width="56" height="56">
+          <span class="vx-ino-text"><strong>Inoreader</strong><span>Agrégateur de flux RSS</span></span>
+          <span class="vx-ino-go" aria-hidden="true">↗</span>
         </a>
-      </div>
+        <ol class="vx-steps">
+          <li><b>1</b><span><strong>Collecter</strong> les flux RSS dans Inoreader</span></li>
+          <li><b>2</b><span><strong>Trier</strong> : un dossier par thème</span></li>
+          <li><b>3</b><span><strong>Analyser</strong> : vérifier la source, résumer</span></li>
+          <li><b>4</b><span><strong>Exploiter</strong> : fiche de synthèse, projets</span></li>
+        </ol>
+        <div class="vx-feeds">
+          <span class="vx-k">Flux suivis</span>
+          <ul><li>Cybersécurité</li><li>Développement</li><li>DevOps</li></ul>
+        </div>
+      </article>
+
+      <span class="vx-arrow" aria-hidden="true"></span>
+
+      <article class="vx-col vx-case" style="--d:2">
+        <header class="vx-head"><span class="vx-n">3</span><span class="vx-k">Article analysé · mars 2026</span></header>
+        <h3>Une IA audite le code de Firefox</h3>
+        <p>Anthropic et Mozilla : Claude Opus 4.6 analyse le navigateur pour trouver des failles.</p>
+        <ul class="vx-nums">
+          <li><strong>22</strong><span>failles trouvées</span></li>
+          <li><strong>14</strong><span>critiques</span></li>
+          <li><strong>6 000</strong><span>fichiers C++</span></li>
+          <li><strong>20 min</strong><span>pour la 1<sup>re</sup></span></li>
+        </ul>
+        <div class="vx-take">
+          <span class="vx-k">Ce que j’en retiens</span>
+          <p>L’IA trouve vite les failles, mais <strong>un humain doit valider</strong>.</p>
+        </div>
+        <div class="vx-actions">
+          <a class="btn-primary" href="veille-technologique.pdf" target="_blank" rel="noopener" data-veille="pdf">Ma fiche de veille · PDF</a>
+          <a class="vx-source" href="https://thehackernews.com/2026/03/anthropic-finds-22-firefox.html" target="_blank" rel="noopener" data-veille="hackernews">Résumé de l’article</a>
+        </div>
+      </article>
     </div>
 
     <!-- veille links open in a modal inside the portfolio (veille.js); the sites themselves refuse to be embedded -->
