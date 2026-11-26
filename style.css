@@ -2716,3 +2716,46 @@ html[data-theme="light"] .vx-n{ color:#fff; }
 .vx-feeds ul{ display:flex; flex-wrap:wrap; gap:8px; list-style:none; margin:0; padding:0; }
 .vx-feeds li{ padding:6px 12px; border:1px solid rgba(24,117,243,.4); border-radius:999px; background:rgba(24,117,243,.1); color:var(--ink); font-size:14px; }
 .vx-themes{ flex-direction:row; }
+
+/* ===== Conclusion: larger, easier to read blocks on the "Après mon BTS" curve ===== */
+@media (min-width:901px){
+  .conclu-after{ margin-bottom:0; }
+  .fit-sections .conclu-after{ margin-bottom:0; }
+  .conclu-after-k{ margin-bottom:14px; font-size:15px; }
+  .road{ grid-template-rows:repeat(3,minmax(96px,auto)); min-height:340px; column-gap:44px; row-gap:10px; }
+  .road-node{ gap:6px; padding:18px 22px; border-width:1.5px; border-radius:16px; }
+  .road-node strong{ font-size:clamp(20px,1.7vw,25px); }
+  .road-node > span:last-child{ font-size:16.5px; line-height:1.4; color:var(--ink-soft); }
+  .road-year{ font-size:13.5px; }
+  .road-or{ font-size:14px; padding:5px 14px; }
+  .road-path{ stroke-width:4; opacity:.95; }
+  .road-future{ opacity:.6; }
+  .road-goal strong{ color:var(--amber); }
+  .conclu-speech blockquote p{ font-size:clamp(19px,1.7vw,24px); }
+  .conclu-speech{ padding:24px 30px; }
+}
+/* quote and thanks on one row under the curve */
+@media (min-width:1100px){
+  #conclusion .container > .conclu-after{ display:grid; grid-template-columns:minmax(0,1fr); }
+  .road-quote{ max-width:none; margin:22px 0 0; padding:16px 22px; border-left:3px solid var(--amber); border-radius:0 12px 12px 0; background:rgba(229,181,103,.08); text-align:left; font-size:clamp(18px,1.5vw,21px); }
+  .conclu-end{ margin-top:22px; }
+  .fit-sections .conclu-end{ margin-top:22px; }
+  .conclu-thanks{ font-size:clamp(28px,2.6vw,38px); }
+}
+/* computer: the quote and the thanks share the last row, the road gets the full width above */
+@media (min-width:1100px){
+  #conclusion .container > .conclu-after{ display:contents; }
+  #conclusion .conclu-after-k{ grid-column:1 / -1; margin-top:30px; }
+  #conclusion .road{ grid-column:1 / -1; }
+  #conclusion .road-quote{ grid-column:1; align-self:stretch; display:flex; align-items:center; margin-top:24px; }
+  #conclusion .container > .conclu-end{ grid-column:2; margin-top:24px; align-self:center; }
+  #conclusion .conclu-thanks{ font-size:clamp(28px,2.4vw,36px); }
+  .fit-sections .conclu{ padding:36px 0; }
+}
+@media (min-width:1100px){
+  #conclusion .road-quote{ display:block; align-self:center; }
+  #conclusion .road-node{ justify-self:stretch; max-width:none; }
+}
+/* same draw-in fix as Formation / Expérience: dash longer than the stretched path */
+.conclu-anim .road-path{ stroke-dasharray:4 4; stroke-dashoffset:4; }
+.conclu-anim.is-in .road-path{ stroke-dashoffset:0; }

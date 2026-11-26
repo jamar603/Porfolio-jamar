@@ -1128,7 +1128,7 @@ foreach (array_values($synthRealisations) as $p => $rows) {
       <div class="road" role="group" aria-label="Mon projet après le BTS">
         <svg class="road-curves" viewBox="0 0 1000 300" preserveAspectRatio="none" aria-hidden="true">
           <defs>
-            <linearGradient id="roadGrad" x1="0" x2="1" y1="0" y2="0">
+            <linearGradient id="roadGrad" gradientUnits="userSpaceOnUse" x1="0" x2="1000" y1="0" y2="0">
               <stop offset="0" stop-color="#60a5fa"/><stop offset=".5" stop-color="#a5b4fc"/><stop offset="1" stop-color="#e5b567"/>
             </linearGradient>
           </defs>
