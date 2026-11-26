@@ -2567,3 +2567,88 @@ nav .container{ max-width:1520px; }
 .fpath-node{ background-color:var(--bg); }
 .fpath-afip{ background:radial-gradient(120% 120% at 100% 0%,rgba(96,165,250,.16),transparent 60%),var(--bg); }
 @media (min-width:901px){ .fpath-grid{ min-height:clamp(330px,40vh,460px); } }
+
+/* ===== Expérience: four cards in time order hanging from a curved rail =====
+   The rail and the cards share the same 4-column grid; the SVG (viewBox 1000 x 100, stretched)
+   joins the dots (column centres 125 / 375 / 625 / 875, heights 70 / 30) and drops a stem to each card. */
+.xpath{ --xgap:22px; }
+.xpath-rail{ position:relative; display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); column-gap:var(--xgap); height:100px; }
+.xpath-curves{ position:absolute; inset:0; width:100%; height:100%; overflow:visible; pointer-events:none; }
+.xpath-track{ fill:none; stroke:rgba(var(--border-rgb),.9); stroke-width:10; stroke-linecap:round; vector-effect:non-scaling-stroke; opacity:.35; }
+.xpath-line{ fill:none; stroke:url(#xpathGrad); stroke-width:3; stroke-linecap:round; vector-effect:non-scaling-stroke; filter:drop-shadow(0 0 6px rgba(229,181,103,.4)); }
+.xpath-stem{ fill:none; stroke:rgba(165,180,252,.45); stroke-width:2; stroke-dasharray:.06 .06; vector-effect:non-scaling-stroke; }
+.xpath-comet{ fill:none; stroke:#fff7e6; stroke-width:4; stroke-linecap:round; vector-effect:non-scaling-stroke; stroke-dasharray:.05 .95; stroke-dashoffset:.05; opacity:0; filter:drop-shadow(0 0 8px rgba(229,181,103,.95)); }
+.xpath-dot{ position:relative; z-index:1; justify-self:center; width:18px; height:18px; border:3px solid var(--amber); border-radius:50%; background:var(--bg); box-shadow:0 0 14px rgba(229,181,103,.45); }
+.xpath-low{ margin-top:61px; }
+.xpath-high{ margin-top:21px; }
+.xpath-dot:nth-child(2){ border-color:#64748b; box-shadow:none; }
+.xpath-now{ border-color:var(--indigo); box-shadow:0 0 16px rgba(96,165,250,.7); }
+.xpath-now::after{ content:''; position:absolute; inset:-8px; border:2px solid rgba(96,165,250,.55); border-radius:50%; animation:fpath-pulse 2.2s ease-out infinite; }
+.xpath-cards{ list-style:none; display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:var(--xgap); align-items:start; margin:0; padding:0; }
+.xpath-card{ position:relative; display:flex; flex-direction:column; gap:6px; padding:18px 20px 20px; border:1px solid var(--border); border-top:3px solid var(--amber); border-radius:14px; background:linear-gradient(180deg,rgba(var(--hi-rgb),.03),transparent 50%),var(--panel); box-shadow:0 16px 38px -22px rgba(var(--shadow-rgb),.85); transition:border-color 220ms var(--ease-out),translate 220ms var(--ease-out); }
+.xpath-card:first-child{ border-top-color:#64748b; }
+.xpath-card-now{ border-color:rgba(96,165,250,.5); border-top-color:var(--indigo); background:radial-gradient(120% 90% at 100% 0%,rgba(96,165,250,.12),transparent 60%),var(--panel); }
+.xpath-year{ font-size:12.5px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--amber); }
+.xpath-card:first-child .xpath-year{ color:var(--dim); }
+.xpath-card-now .xpath-year{ color:var(--indigo); }
+.xpath-title{ font-family:'Space Grotesk',sans-serif; font-size:clamp(17px,1.35vw,20px); line-height:1.25; color:var(--ink); }
+.xpath-org{ color:var(--dim); font-size:14.5px; }
+.xpath-card .experience-points{ margin-top:4px; gap:6px; font-size:14.5px; line-height:1.5; }
+.xpath-card .exp-shot{ margin-top:auto; padding-top:0; }
+.xpath-card .exp-shot{ margin-top:10px; }
+.xpath-card .exp-shot img{ aspect-ratio:16/7; }
+@media (hover:hover) and (pointer:fine){ .xpath-card:hover{ translate:0 -4px; border-color:rgba(229,181,103,.5); } .xpath-card-now:hover{ border-color:rgba(96,165,250,.7); } }
+
+/* entry (section-motion.js): rail draws, dots pop, cards drop in left to right */
+.xpath.sx-item{ opacity:1 !important; translate:none !important; scale:none !important; }
+#experience.sx .xpath-line,#experience.sx .xpath-stem{ stroke-dasharray:1 1; stroke-dashoffset:1; }
+#experience.sx .xpath-dot{ opacity:0; scale:.3; }
+#experience.sx .xpath-card{ opacity:0; translate:0 22px; }
+#experience.sx.is-in .xpath-line{ stroke-dashoffset:0; transition:stroke-dashoffset 650ms var(--ease-in-out); }
+#experience.sx.is-in .xpath-l1{ transition-delay:800ms; } #experience.sx.is-in .xpath-l2{ transition-delay:1250ms; } #experience.sx.is-in .xpath-l3{ transition-delay:1700ms; }
+#experience.sx.is-in .xpath-stem{ stroke-dashoffset:0; stroke-dasharray:.06 .06; transition:stroke-dashoffset 500ms ease 2200ms; }
+#experience.sx.is-in .xpath-dot{ opacity:1; scale:1; transition:opacity 300ms ease,scale 500ms cubic-bezier(.34,1.56,.64,1); transition-delay:calc(650ms + var(--d) * 450ms); }
+#experience.sx.is-in .xpath-card{ opacity:1; translate:0 0; transition:opacity 500ms ease,translate 600ms var(--ease-out),border-color 220ms var(--ease-out); transition-delay:calc(750ms + var(--d) * 450ms),calc(750ms + var(--d) * 450ms),0ms; }
+#experience.sx.is-in .xpath-comet{ opacity:1; animation:fpath-comet 3s var(--ease-in-out) 2.6s infinite; }
+
+/* below 1100 px: vertical list with a line on the left */
+@media (max-width:1099px){
+  .xpath-rail{ display:none; }
+  .xpath-cards{ grid-template-columns:1fr; gap:14px; padding-left:30px; position:relative; }
+  .xpath-cards::before{ content:''; position:absolute; top:14px; bottom:14px; left:9px; width:3px; border-radius:3px; background:linear-gradient(180deg,#64748b,#e5b567 35%,#a5b4fc 70%,#60a5fa); }
+  .xpath-card::before{ content:''; position:absolute; left:-27px; top:20px; width:11px; height:11px; border-radius:50%; background:var(--bg); border:3px solid var(--amber); }
+  .xpath-card-now::before{ border-color:var(--indigo); }
+}
+@media (min-width:700px) and (max-width:1099px){ .xpath-card .exp-shot img{ aspect-ratio:16/5; } }
+@media (prefers-reduced-motion:reduce){ .xpath-comet{ display:none; } .xpath-now::after{ animation:none; } }
+
+/* ===== Curves, simpler and easier to read (Formation + Expérience) =====
+   one clear line, no blurred track, softer glow, bigger dots, the year written on each dot */
+.fpath-track,.xpath-track{ display:none; }
+.fpath-line,.xpath-line{ stroke-width:4; filter:none; opacity:.95; }
+.fpath-comet,.xpath-comet{ stroke-width:3; stroke-dasharray:.03 .97; filter:drop-shadow(0 0 4px rgba(255,255,255,.7)); }
+#formation.sx.is-in .fpath-comet,#experience.sx.is-in .xpath-comet{ animation-duration:4.5s; }
+.fpath-future{ opacity:.55; }
+.fpath-node,.xpath-card{ box-shadow:0 10px 26px -18px rgba(var(--shadow-rgb),.8); }
+.fpath-node strong{ font-size:clamp(19px,1.6vw,23px); }
+.fpath-org{ font-size:15.5px; }
+.fpath-year,.xpath-year{ font-size:13px; }
+
+.xpath-rail{ height:110px; }
+.xpath-stem{ stroke:rgba(165,180,252,.5); stroke-dasharray:none; }
+#experience.sx.is-in .xpath-stem{ stroke-dasharray:1 1; }
+.xpath-dot{ width:22px; height:22px; border-width:4px; box-shadow:none; }
+.xpath-low{ margin-top:calc(110px * .75 - 11px); }
+.xpath-high{ margin-top:calc(110px * .45 - 11px); }
+.xpath-dot b{ position:absolute; left:50%; bottom:calc(100% + 6px); translate:-50% 0; padding:2px 10px; border-radius:999px; background:var(--bg); border:1px solid var(--border); font-family:'Space Grotesk',sans-serif; font-size:14px; font-weight:700; line-height:1.5; color:var(--ink); white-space:nowrap; }
+.xpath-now b{ border-color:rgba(96,165,250,.6); color:var(--indigo); }
+.xpath-now{ box-shadow:0 0 0 4px rgba(96,165,250,.18); }
+.xpath-title{ font-size:clamp(18px,1.4vw,21px); }
+.xpath-card .experience-points{ font-size:15px; }
+/* draw-in dash longer than the path: a stretched SVG with non-scaling stroke measures dashes
+   in screen units, so a 1-unit dash stopped short of the dots */
+#formation.sx .fpath-line,#experience.sx .xpath-line,#experience.sx .xpath-stem{ stroke-dasharray:4 4; stroke-dashoffset:4; }
+#formation.sx.is-in .fpath-line,#experience.sx.is-in .xpath-line,#experience.sx.is-in .xpath-stem{ stroke-dashoffset:0; }
+#formation.sx .fpath-future{ stroke-dasharray:4 4; }
+/* diploma marker: the dot sits on the end of the curve (row middle), its labels under it */
+@media (min-width:901px){ .fpath-goal{ padding-top:62px; } }

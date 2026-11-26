@@ -518,43 +518,56 @@ foreach ($synthRealisations as $period => $rows) {
       <div><h2>Expérience</h2><p>Développement web, applications et 3D</p></div>
     </div>
 
-    <div class="timeline">
-      <div class="t-row">
-        <div class="t-node"><div class="t-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="2.4" stroke-linecap="round"><rect x="4" y="4" width="16" height="16" rx="3"/></svg></div><div class="t-line"></div></div>
-        <div class="t-content">
-          <div class="t-yr">10 novembre – 19 décembre 2025</div>
-          <div class="t-title">Stage · Développement d’applications et web</div>
-          <div class="t-org">COF</div>
-          <ul class="experience-points"><li>Application 3D d’un chargeur (Kadviser)</li><li>Nouvelles fonctionnalités du site Kadviser</li><li>Tests et corrections</li></ul>
-          <button type="button" class="exp-shot" data-open-article="kadviser-model3d" aria-label="Ouvrir la mission : application 3D Kadviser"><img src="images/articles/kadviser-model3d/cover.webp" alt="" loading="lazy"><span>Voir la mission</span></button>
-        </div>
+    <div class="xpath">
+      <div class="xpath-rail" aria-hidden="true">
+        <svg class="xpath-curves" viewBox="0 0 1000 100" preserveAspectRatio="none">
+          <defs>
+            <linearGradient id="xpathGrad" x1="0" x2="1" y1="0" y2="0">
+              <stop offset="0" stop-color="#64748b"/><stop offset=".35" stop-color="#e5b567"/><stop offset=".7" stop-color="#a5b4fc"/><stop offset="1" stop-color="#60a5fa"/>
+            </linearGradient>
+          </defs>
+          <path class="xpath-track" d="M125 75 C 250 75, 250 45, 375 45 S 500 75, 625 75 S 750 45, 875 45"/>
+          <path class="xpath-stem" pathLength="1" d="M125 75 V 100"/>
+          <path class="xpath-stem" pathLength="1" d="M375 45 V 100"/>
+          <path class="xpath-stem" pathLength="1" d="M625 75 V 100"/>
+          <path class="xpath-stem" pathLength="1" d="M875 45 V 100"/>
+          <path class="xpath-line xpath-l1" pathLength="1" d="M125 75 C 250 75, 250 45, 375 45"/>
+          <path class="xpath-line xpath-l2" pathLength="1" d="M375 45 C 500 45, 500 75, 625 75"/>
+          <path class="xpath-line xpath-l3" pathLength="1" d="M625 75 C 750 75, 750 45, 875 45"/>
+          <path class="xpath-comet" pathLength="1" d="M125 75 C 250 75, 250 45, 375 45 S 500 75, 625 75 S 750 45, 875 45"/>
+        </svg>
+        <span class="xpath-dot xpath-low" style="--d:0"><b>2023</b></span>
+        <span class="xpath-dot xpath-high" style="--d:1"><b>2024</b></span>
+        <span class="xpath-dot xpath-low" style="--d:2"><b>2025</b></span>
+        <span class="xpath-dot xpath-high xpath-now" style="--d:3"><b>2025</b></span>
       </div>
-      <div class="t-row">
-        <div class="t-node"><div class="t-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="2.4" stroke-linecap="round"><rect x="4" y="4" width="16" height="16" rx="3"/></svg></div><div class="t-line"></div></div>
-        <div class="t-content">
-          <div class="t-yr">12 mai – 20 juin 2025</div>
-          <div class="t-title">Stage · Développement web et API REST</div>
+
+      <ol class="xpath-cards" aria-label="Mes expériences, de la plus ancienne à la plus récente">
+        <li class="xpath-card" style="--d:0">
+          <span class="xpath-year">2023</span>
+          <h3 class="xpath-title">Développement de sites web · Indépendant</h3>
+          <ul class="experience-points"><li>Site e-commerce WordPress pour un photographe</li></ul>
+        </li>
+        <li class="xpath-card" style="--d:1">
+          <span class="xpath-year">2024</span>
+          <h3 class="xpath-title">Stage · Programmation web</h3>
+          <span class="xpath-org">AAB Fabrication · Saint-Martin</span>
+          <ul class="experience-points"><li>Site web dynamique pour la vente en ligne</li><li>HTML, CSS et JavaScript</li></ul>
+        </li>
+        <li class="xpath-card" style="--d:2">
+          <span class="xpath-year">12 mai – 20 juin 2025</span>
+          <h3 class="xpath-title">Stage · Développement web et API REST</h3>
           <ul class="experience-points"><li>Gestion des conventions avec Laravel 12</li><li>API REST pour une application React Native</li><li>Git/GitHub et revues de code</li></ul>
           <button type="button" class="exp-shot" data-open-article="laravel-stage" aria-label="Ouvrir la mission : gestion des conventions Laravel"><img src="images/articles/laravel-stage/cover.webp" alt="" loading="lazy"><span>Voir la mission</span></button>
-        </div>
-      </div>
-      <div class="t-row">
-        <div class="t-node"><div class="t-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="2.4" stroke-linecap="round"><rect x="4" y="4" width="16" height="16" rx="3"/></svg></div><div class="t-line"></div></div>
-        <div class="t-content">
-          <div class="t-yr">2024</div>
-          <div class="t-title">Stage · Programmation web</div>
-          <div class="t-org">AAB Fabrication · Saint-Martin</div>
-          <ul class="experience-points"><li>Site web dynamique pour la vente en ligne</li><li>HTML, CSS et JavaScript</li></ul>
-        </div>
-      </div>
-      <div class="t-row">
-        <div class="t-node"><div class="t-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2.4" stroke-linecap="round"><circle cx="12" cy="12" r="1"/></svg></div></div>
-        <div class="t-content">
-          <div class="t-yr">2023</div>
-          <div class="t-title">Développement de sites web · Indépendant</div>
-          <ul class="experience-points"><li>Site e-commerce WordPress pour un photographe</li></ul>
-        </div>
-      </div>
+        </li>
+        <li class="xpath-card xpath-card-now" style="--d:3">
+          <span class="xpath-year">10 novembre – 19 décembre 2025</span>
+          <h3 class="xpath-title">Stage · Développement d’applications et web</h3>
+          <span class="xpath-org">COF</span>
+          <ul class="experience-points"><li>Application 3D d’un chargeur (Kadviser)</li><li>Nouvelles fonctionnalités du site Kadviser</li><li>Tests et corrections</li></ul>
+          <button type="button" class="exp-shot" data-open-article="kadviser-model3d" aria-label="Ouvrir la mission : application 3D Kadviser"><img src="images/articles/kadviser-model3d/cover.webp" alt="" loading="lazy"><span>Voir la mission</span></button>
+        </li>
+      </ol>
     </div>
   </div>
 </section>
