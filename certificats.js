@@ -109,10 +109,13 @@
       <a class="cert-viewer-open" target="_blank" rel="noopener">Ouvrir l’original</a>
       <button type="button" class="cert-viewer-close" aria-label="Fermer">×</button>
     </header>
-    <div class="cert-viewer-stage">
-      <button type="button" class="cert-viewer-arrow" data-dir="-1" aria-label="Certificat précédent">‹</button>
-      <img class="cert-viewer-img" alt="">
-      <button type="button" class="cert-viewer-arrow" data-dir="1" aria-label="Certificat suivant">›</button>
+    <div class="cert-viewer-body">
+      <div class="cert-viewer-stage">
+        <button type="button" class="cert-viewer-arrow" data-dir="-1" aria-label="Certificat précédent">‹</button>
+        <img class="cert-viewer-img" alt="">
+        <button type="button" class="cert-viewer-arrow" data-dir="1" aria-label="Certificat suivant">›</button>
+      </div>
+      <aside class="cert-viewer-panel" aria-label="Explication du certificat"></aside>
     </div>
     <nav class="cert-viewer-strip" aria-label="Tous les certificats"></nav>`;
   document.body.append(viewer);
@@ -124,6 +127,8 @@
   const viewerCount = viewer.querySelector('.cert-viewer-count');
   const viewerOpen = viewer.querySelector('.cert-viewer-open');
   const strip = viewer.querySelector('.cert-viewer-strip');
+  const panel = viewer.querySelector('.cert-viewer-panel');
+  const body = viewer.querySelector('.cert-viewer-body');
   let viewerIndex = 0;
 
   const docs = cards.map(card => ({
@@ -132,6 +137,7 @@
     title: card.querySelector('.cert-info strong')?.textContent || '',
     badge: card.dataset.badge || '',
     meta: card.querySelector('.cert-meta')?.textContent || '',
+    details: card.querySelector('template.cert-details'),
   }));
 
   const thumbs = docs.map((doc, index) => {
@@ -159,6 +165,10 @@
     viewerMeta.textContent = doc.meta;
     viewerCount.textContent = `${viewerIndex + 1} / ${docs.length}`;
     viewerOpen.href = doc.src;
+    // explanation of this certificate (template written in index.php)
+    panel.replaceChildren(...(doc.details ? [doc.details.content.cloneNode(true)] : []));
+    panel.scrollTop = 0;
+    body.scrollTop = 0;
     thumbs.forEach((thumb, i) => thumb.setAttribute('aria-current', String(i === viewerIndex)));
     thumbs[viewerIndex].scrollIntoView({ block: 'nearest', inline: 'center', behavior: reducedMotion.matches ? 'auto' : 'smooth' });
     preload(viewerIndex + 1);
@@ -180,7 +190,7 @@
   });
   // click on the dark background closes; click on the document itself does nothing
   viewer.addEventListener('click', event => {
-    if (event.target === viewer || event.target.classList.contains('cert-viewer-stage')) viewer.close();
+    if (event.target === viewer || event.target.classList.contains('cert-viewer-stage') || event.target.classList.contains('cert-viewer-body')) viewer.close();
   });
   viewer.addEventListener('keydown', event => {
     if (event.key === 'ArrowRight' || event.key === 'PageDown') { event.preventDefault(); show(viewerIndex + 1); }

@@ -23,6 +23,138 @@ if (is_admin()) {
     }
 }
 
+// certificats (section Atouts): card + explanation shown in the certificate viewer (certificats.js)
+// each one: what the document is, the result, the details, what it taught, the BTS SIO competences it supports
+$certificats = [
+  [
+    'file' => 'anssi.jpg', 'w' => 1754, 'h' => 1241, 'badge' => 'MOOC',
+    'title' => 'SecNumacadémie', 'org' => 'ANSSI', 'date' => 'Octobre 2023',
+    'alt' => "Attestation de suivi SecNumacadémie de l'ANSSI délivrée à Jamar Carty",
+    'about' => 'MOOC officiel de l’ANSSI (Agence nationale de la sécurité des systèmes d’information) pour acquérir les bases de la cybersécurité.',
+    'result' => '4 modules validés · 26 octobre 2023',
+    'facts' => [
+      ['Panorama de la SSI', '82 %'],
+      ['Sécurité de l’authentification', '86 %'],
+      ['Sécurité sur Internet', '96 %'],
+      ['Sécurité du poste de travail et nomadisme', '90 %'],
+    ],
+    'learned' => [
+      'Les menaces courantes et les acteurs de la cybersécurité',
+      'Mots de passe robustes et authentification à plusieurs facteurs',
+      'Navigation sûre et repérage de l’hameçonnage',
+      'Mises à jour, sauvegardes et sécurité en mobilité',
+    ],
+    'skills' => ['Gérer le patrimoine informatique', 'Répondre aux incidents et aux demandes d’assistance et d’évolution'],
+  ],
+  [
+    'file' => 'cyber-awareness.jpg', 'w' => 1754, 'h' => 1241, 'badge' => 'Certificat',
+    'title' => 'Cyber Awareness Challenge 2025', 'org' => 'DoD Cyber Exchange', 'date' => 'Novembre 2024',
+    'alt' => 'Certificat Cyber Awareness Challenge 2025 délivré à Jamar Carty',
+    'about' => 'Formation de sensibilisation à la cybersécurité du Département de la Défense des États-Unis, suivie entièrement en anglais.',
+    'result' => 'Formation terminée · 22 novembre 2024',
+    'facts' => [
+      ['Organisme', 'DoD Cyber Exchange'],
+      ['Langue', 'Anglais'],
+      ['Code de vérification', 'FOH30U1QHE'],
+    ],
+    'learned' => [
+      'Ingénierie sociale et hameçonnage (phishing)',
+      'Protection des informations sensibles',
+      'Sécurité des appareils mobiles et du télétravail',
+      'Bonnes pratiques sur les réseaux sociaux',
+    ],
+    'skills' => ['Gérer le patrimoine informatique', 'Organiser son développement professionnel'],
+  ],
+  [
+    'file' => 'pix.jpg', 'w' => 1754, 'h' => 1241, 'badge' => 'Certification',
+    'title' => 'Pix · 434 pix', 'org' => 'Pix', 'date' => 'Février 2026',
+    'alt' => 'Certification Pix, niveau Indépendant 2, délivrée à Jamar Carty',
+    'about' => 'Certification nationale des compétences numériques, reconnue par l’État, passée en centre agréé (Lycée ICOF).',
+    'result' => 'Niveau global Indépendant 2 · 2 février 2026',
+    'facts' => [
+      ['Score', '434 / 895 pix'],
+      ['Niveau global', 'Indépendant 2'],
+      ['Code de vérification', 'P-9WQRM66F'],
+    ],
+    'learned' => [
+      'Rechercher l’information et vérifier sa fiabilité',
+      'Outils collaboratifs et création de documents (texte, tableur, diaporama, images)',
+      'Protection des données personnelles et des appareils',
+      'Usage responsable du numérique (environnement, santé)',
+    ],
+    'skills' => ['Organiser son développement professionnel', 'Développer la présence en ligne de l’organisation'],
+  ],
+  [
+    'file' => 'cnil-1.jpg', 'w' => 1754, 'h' => 1241, 'badge' => 'Module 1',
+    'title' => 'Le RGPD et ses notions clés', 'org' => 'CNIL · L’atelier RGPD', 'date' => 'Octobre 2023', 'score' => '90 %',
+    'alt' => "Attestation CNIL, L'atelier RGPD, Module 1 · Le RGPD et ses notions clés, délivrée à Jamar Carty",
+    'about' => 'Premier module du MOOC de la CNIL sur le Règlement général sur la protection des données (RGPD).',
+    'result' => 'Score de 90 % · 28 octobre 2023',
+    'facts' => [['Organisme', 'CNIL'], ['Score', '90 %']],
+    'learned' => [
+      'Ce qu’est une donnée personnelle et un traitement',
+      'Les rôles de responsable de traitement et de sous-traitant',
+      'Le champ d’application du RGPD',
+    ],
+    'skills' => ['Développer la présence en ligne de l’organisation', 'Gérer le patrimoine informatique'],
+  ],
+  [
+    'file' => 'cnil-2.jpg', 'w' => 1754, 'h' => 1241, 'badge' => 'Module 2',
+    'title' => 'Les principes de la protection des données', 'org' => 'CNIL · L’atelier RGPD', 'date' => 'Octobre 2023', 'score' => '100 %',
+    'alt' => "Attestation CNIL, L'atelier RGPD, Module 2 · Les principes de la protection des données, délivrée à Jamar Carty",
+    'about' => 'Deuxième module du MOOC de la CNIL : les règles à respecter pour chaque traitement de données.',
+    'result' => 'Score de 100 % · 29 octobre 2023',
+    'facts' => [['Organisme', 'CNIL'], ['Score', '100 %']],
+    'learned' => [
+      'Bases légales et finalité d’un traitement',
+      'Minimisation et durée de conservation des données',
+      'Sécurité des données et droits des personnes',
+    ],
+    'skills' => ['Développer la présence en ligne de l’organisation', 'Gérer le patrimoine informatique'],
+  ],
+  [
+    'file' => 'cnil-3.jpg', 'w' => 1754, 'h' => 1241, 'badge' => 'Module 3',
+    'title' => 'Les responsabilités des acteurs', 'org' => 'CNIL · L’atelier RGPD', 'date' => 'Octobre 2023', 'score' => '100 %',
+    'alt' => "Attestation CNIL, L'atelier RGPD, Module 3 · Les responsabilités des acteurs, délivrée à Jamar Carty",
+    'about' => 'Troisième module du MOOC de la CNIL : qui est responsable de quoi dans la conformité au RGPD.',
+    'result' => 'Score de 100 % · 29 octobre 2023',
+    'facts' => [['Organisme', 'CNIL'], ['Score', '100 %']],
+    'learned' => [
+      'Le principe de responsabilité (accountability)',
+      'Les obligations du responsable de traitement et du sous-traitant',
+      'La gestion d’une violation de données',
+    ],
+    'skills' => ['Gérer le patrimoine informatique', 'Travailler en mode projet'],
+  ],
+  [
+    'file' => 'cnil-4.jpg', 'w' => 1754, 'h' => 1241, 'badge' => 'Module 4',
+    'title' => 'Le DPO et les outils de la conformité', 'org' => 'CNIL · L’atelier RGPD', 'date' => 'Octobre 2023', 'score' => '93 %',
+    'alt' => "Attestation CNIL, L'atelier RGPD, Module 4 · Le DPO et les outils de la conformité, délivrée à Jamar Carty",
+    'about' => 'Quatrième module du MOOC de la CNIL : le délégué à la protection des données et les outils pour prouver la conformité.',
+    'result' => 'Score de 93 % · 29 octobre 2023',
+    'facts' => [['Organisme', 'CNIL'], ['Score', '93 %']],
+    'learned' => [
+      'Le rôle et les missions du DPO',
+      'Le registre des activités de traitement',
+      'L’analyse d’impact (AIPD)',
+    ],
+    'skills' => ['Gérer le patrimoine informatique', 'Travailler en mode projet'],
+  ],
+  [
+    'file' => 'cnil-5.png', 'w' => 1523, 'h' => 1523, 'badge' => 'Module 5',
+    'title' => 'Les collectivités territoriales', 'org' => 'CNIL · L’atelier RGPD', 'date' => 'Octobre 2023', 'score' => '96 %',
+    'alt' => "Attestation CNIL, L'atelier RGPD, Module 5 · Les collectivités territoriales, délivrée à Jamar Carty",
+    'about' => 'Cinquième module du MOOC de la CNIL : l’application du RGPD dans les mairies et les collectivités.',
+    'result' => 'Score de 96 % · 29 octobre 2023',
+    'facts' => [['Organisme', 'CNIL'], ['Score', '96 %']],
+    'learned' => [
+      'Les traitements de données propres aux collectivités',
+      'Les obligations RGPD d’un service public local',
+    ],
+    'skills' => ['Gérer le patrimoine informatique', 'Mettre à disposition des utilisateurs un service informatique'],
+  ],
+];
+
 // tableau de synthèse (bloc 1, épreuve E5): used by the E5 section, the table and the article filters
 // each competence: full title, its skills, short label for the mobile chips
 $synthCompetences = [
@@ -403,7 +535,7 @@ foreach ($synthRealisations as $period => $rows) {
       <div class="t-row">
         <div class="t-node"><div class="t-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2.4" stroke-linecap="round"><circle cx="12" cy="12" r="1"/></svg></div><div class="t-line"></div></div>
         <div class="t-content">
-          <div class="t-yr">2019 – 2020</div>
+          <div class="t-yr">2020 – 2021</div>
           <div class="t-title">BUT MMI</div>
           <div class="t-org">IUT de Nantes · Nantes Université</div>
         </div>
@@ -411,7 +543,7 @@ foreach ($synthRealisations as $period => $rows) {
       <div class="t-row">
         <div class="t-node"><div class="t-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2.4" stroke-linecap="round"><circle cx="12" cy="12" r="1"/></svg></div></div>
         <div class="t-content">
-          <div class="t-yr">2017 – 2019</div>
+          <div class="t-yr">2018 – 2020</div>
           <div class="t-title">Baccalauréat STI2D</div>
           <div class="t-org">Lycée Robert Weinum</div>
         </div>
@@ -882,42 +1014,40 @@ foreach (array_values($synthRealisations) as $p => $rows) {
 
     <div class="cert-head">
       <h3 class="cert-heading">Mes certificats</h3>
-      <p class="cert-hint">8 attestations · cliquez sur un certificat pour voir le document entier</p>
+      <p class="cert-hint"><?= count($certificats) ?> attestations · cliquez sur un certificat pour voir le document et son explication</p>
     </div>
     <div class="cert-slider" aria-roledescription="carrousel" aria-label="Mes certificats">
       <div class="cert-grid" tabindex="0">
-        <a class="cert-card" href="images/certifications/anssi.jpg" target="_blank" rel="noopener" data-org="ANSSI" data-date="Octobre 2023" data-badge="MOOC">
-          <span class="cert-thumb"><img src="images/certifications/anssi.jpg" alt="Attestation de suivi SecNumacadémie de l'ANSSI délivrée à Jamar Carty" loading="lazy" width="1754" height="1241"><span class="cert-zoom" aria-hidden="true">Agrandir</span></span>
-          <span class="cert-info"><span class="cert-badge">MOOC</span><strong>SecNumacadémie</strong><span class="cert-meta">ANSSI · Octobre 2023</span></span>
+<?php foreach ($certificats as $c):
+  $src = 'images/certifications/' . $c['file'];
+  $meta = $c['org'] . ' · ' . $c['date'] . (isset($c['score']) ? ' · ' . $c['score'] : ''); ?>
+        <a class="cert-card" href="<?= htmlspecialchars($src) ?>" target="_blank" rel="noopener" data-badge="<?= htmlspecialchars($c['badge']) ?>">
+          <span class="cert-thumb"><img src="<?= htmlspecialchars($src) ?>" alt="<?= htmlspecialchars($c['alt']) ?>" loading="lazy" width="<?= $c['w'] ?>" height="<?= $c['h'] ?>"><span class="cert-zoom" aria-hidden="true">Voir le détail</span></span>
+          <span class="cert-info"><span class="cert-badge"><?= htmlspecialchars($c['badge']) ?></span><strong><?= htmlspecialchars($c['title']) ?></strong><span class="cert-meta"><?= str_replace(' %', '&nbsp;%', htmlspecialchars($meta)) ?></span></span>
+          <template class="cert-details">
+            <p class="cd-about"><?= htmlspecialchars($c['about']) ?></p>
+            <p class="cd-result"><?= htmlspecialchars($c['result']) ?></p>
+            <h4>Détail</h4>
+            <dl class="cd-facts">
+<?php foreach ($c['facts'] as [$label, $value]): ?>
+              <div><dt><?= htmlspecialchars($label) ?></dt><dd><?= str_replace(' %', '&nbsp;%', htmlspecialchars($value)) ?></dd></div>
+<?php endforeach; ?>
+            </dl>
+            <h4>Ce que j’ai appris</h4>
+            <ul class="cd-learned">
+<?php foreach ($c['learned'] as $item): ?>
+              <li><?= htmlspecialchars($item) ?></li>
+<?php endforeach; ?>
+            </ul>
+            <h4>Compétences BTS SIO mobilisées</h4>
+            <ul class="cd-skills">
+<?php foreach ($c['skills'] as $skill): ?>
+              <li><?= htmlspecialchars($skill) ?></li>
+<?php endforeach; ?>
+            </ul>
+          </template>
         </a>
-        <a class="cert-card" href="images/certifications/cyber-awareness.jpg" target="_blank" rel="noopener" data-org="DoD Cyber Exchange" data-date="Novembre 2024" data-badge="Certificat">
-          <span class="cert-thumb"><img src="images/certifications/cyber-awareness.jpg" alt="Certificat Cyber Awareness Challenge 2025 délivré à Jamar Carty" loading="lazy" width="1754" height="1241"><span class="cert-zoom" aria-hidden="true">Agrandir</span></span>
-          <span class="cert-info"><span class="cert-badge">Certificat</span><strong>Cyber Awareness Challenge 2025</strong><span class="cert-meta">DoD Cyber Exchange · Novembre 2024</span></span>
-        </a>
-        <a class="cert-card" href="images/certifications/pix.jpg" target="_blank" rel="noopener" data-org="Pix" data-date="Février 2026" data-badge="Certification">
-          <span class="cert-thumb"><img src="images/certifications/pix.jpg" alt="Certification Pix, niveau Indépendant 2, délivrée à Jamar Carty" loading="lazy" width="1754" height="1241"><span class="cert-zoom" aria-hidden="true">Agrandir</span></span>
-          <span class="cert-info"><span class="cert-badge">Certification</span><strong>Pix · 434 pix</strong><span class="cert-meta">Pix · Février 2026</span></span>
-        </a>
-        <a class="cert-card" href="images/certifications/cnil-1.jpg" target="_blank" rel="noopener" data-org="CNIL · L’atelier RGPD" data-date="Octobre 2023 · 90&nbsp;%" data-badge="Module 1">
-          <span class="cert-thumb"><img src="images/certifications/cnil-1.jpg" alt="Attestation CNIL, L'atelier RGPD, Module 1 · Le RGPD et ses notions clés, délivrée à Jamar Carty" loading="lazy" width="1754" height="1241"><span class="cert-zoom" aria-hidden="true">Agrandir</span></span>
-          <span class="cert-info"><span class="cert-badge">Module 1</span><strong>Le RGPD et ses notions clés</strong><span class="cert-meta">CNIL · L’atelier RGPD · Octobre 2023 · 90&nbsp;%</span></span>
-        </a>
-        <a class="cert-card" href="images/certifications/cnil-2.jpg" target="_blank" rel="noopener" data-org="CNIL · L’atelier RGPD" data-date="Octobre 2023 · 100&nbsp;%" data-badge="Module 2">
-          <span class="cert-thumb"><img src="images/certifications/cnil-2.jpg" alt="Attestation CNIL, L'atelier RGPD, Module 2 · Les principes de la protection des données, délivrée à Jamar Carty" loading="lazy" width="1754" height="1241"><span class="cert-zoom" aria-hidden="true">Agrandir</span></span>
-          <span class="cert-info"><span class="cert-badge">Module 2</span><strong>Les principes de la protection des données</strong><span class="cert-meta">CNIL · L’atelier RGPD · Octobre 2023 · 100&nbsp;%</span></span>
-        </a>
-        <a class="cert-card" href="images/certifications/cnil-3.jpg" target="_blank" rel="noopener" data-org="CNIL · L’atelier RGPD" data-date="Octobre 2023 · 100&nbsp;%" data-badge="Module 3">
-          <span class="cert-thumb"><img src="images/certifications/cnil-3.jpg" alt="Attestation CNIL, L'atelier RGPD, Module 3 · Les responsabilités des acteurs, délivrée à Jamar Carty" loading="lazy" width="1754" height="1241"><span class="cert-zoom" aria-hidden="true">Agrandir</span></span>
-          <span class="cert-info"><span class="cert-badge">Module 3</span><strong>Les responsabilités des acteurs</strong><span class="cert-meta">CNIL · L’atelier RGPD · Octobre 2023 · 100&nbsp;%</span></span>
-        </a>
-        <a class="cert-card" href="images/certifications/cnil-4.jpg" target="_blank" rel="noopener" data-org="CNIL · L’atelier RGPD" data-date="Octobre 2023 · 93&nbsp;%" data-badge="Module 4">
-          <span class="cert-thumb"><img src="images/certifications/cnil-4.jpg" alt="Attestation CNIL, L'atelier RGPD, Module 4 · Le DPO et les outils de la conformité, délivrée à Jamar Carty" loading="lazy" width="1754" height="1241"><span class="cert-zoom" aria-hidden="true">Agrandir</span></span>
-          <span class="cert-info"><span class="cert-badge">Module 4</span><strong>Le DPO et les outils de la conformité</strong><span class="cert-meta">CNIL · L’atelier RGPD · Octobre 2023 · 93&nbsp;%</span></span>
-        </a>
-        <a class="cert-card" href="images/certifications/cnil-5.png" target="_blank" rel="noopener" data-org="CNIL · L’atelier RGPD" data-date="Octobre 2023 · 96&nbsp;%" data-badge="Module 5">
-          <span class="cert-thumb"><img src="images/certifications/cnil-5.png" alt="Attestation CNIL, L'atelier RGPD, Module 5 · Les collectivités territoriales, délivrée à Jamar Carty" loading="lazy" width="1523" height="1523"><span class="cert-zoom" aria-hidden="true">Agrandir</span></span>
-          <span class="cert-info"><span class="cert-badge">Module 5</span><strong>Les collectivités territoriales</strong><span class="cert-meta">CNIL · L’atelier RGPD · Octobre 2023 · 96&nbsp;%</span></span>
-        </a>
+<?php endforeach; ?>
       </div>
       <div class="cert-controls">
         <button class="cert-nav" type="button" data-dir="-1" aria-label="Certificat précédent">‹</button>
