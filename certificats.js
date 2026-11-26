@@ -93,17 +93,120 @@
 
   setActive(0);
 
-  // a certificate opens full size in the site's photo viewer (articles.js) instead of a new tab;
-  // previous / next go through all the certificates
-  const photos = cards.map(card => ({
+  // certificate viewer: the whole document, full screen, with previous / next,
+  // a strip of thumbnails to jump to any other certificate, keyboard and swipe
+  const viewer = document.createElement('dialog');
+  viewer.className = 'cert-viewer';
+  viewer.setAttribute('aria-label', 'Certificat agrandi');
+  viewer.innerHTML = `
+    <header class="cert-viewer-bar">
+      <div class="cert-viewer-text">
+        <span class="cert-viewer-badge"></span>
+        <strong class="cert-viewer-title"></strong>
+        <span class="cert-viewer-meta"></span>
+      </div>
+      <span class="cert-viewer-count" aria-live="polite"></span>
+      <a class="cert-viewer-open" target="_blank" rel="noopener">Ouvrir l’original</a>
+      <button type="button" class="cert-viewer-close" aria-label="Fermer">×</button>
+    </header>
+    <div class="cert-viewer-stage">
+      <button type="button" class="cert-viewer-arrow" data-dir="-1" aria-label="Certificat précédent">‹</button>
+      <img class="cert-viewer-img" alt="">
+      <button type="button" class="cert-viewer-arrow" data-dir="1" aria-label="Certificat suivant">›</button>
+    </div>
+    <nav class="cert-viewer-strip" aria-label="Tous les certificats"></nav>`;
+  document.body.append(viewer);
+
+  const viewerImg = viewer.querySelector('.cert-viewer-img');
+  const viewerBadge = viewer.querySelector('.cert-viewer-badge');
+  const viewerTitle = viewer.querySelector('.cert-viewer-title');
+  const viewerMeta = viewer.querySelector('.cert-viewer-meta');
+  const viewerCount = viewer.querySelector('.cert-viewer-count');
+  const viewerOpen = viewer.querySelector('.cert-viewer-open');
+  const strip = viewer.querySelector('.cert-viewer-strip');
+  let viewerIndex = 0;
+
+  const docs = cards.map(card => ({
     src: card.getAttribute('href'),
-    caption: [card.querySelector('.cert-info strong')?.textContent, card.querySelector('.cert-info span')?.textContent].filter(Boolean).join(' · '),
+    alt: card.querySelector('img')?.alt || '',
+    title: card.querySelector('.cert-info strong')?.textContent || '',
+    badge: card.dataset.badge || '',
+    meta: card.querySelector('.cert-meta')?.textContent || '',
   }));
+
+  const thumbs = docs.map((doc, index) => {
+    const thumb = document.createElement('button');
+    thumb.type = 'button';
+    thumb.className = 'cert-viewer-thumb';
+    thumb.setAttribute('aria-label', `${doc.badge} · ${doc.title}`);
+    thumb.innerHTML = `<img src="${doc.src}" alt="" loading="lazy">`;
+    thumb.addEventListener('click', () => show(index));
+    strip.append(thumb);
+    return thumb;
+  });
+
+  // warm the cache so previous / next appear without delay
+  const preload = index => { const img = new Image(); img.src = docs[(index + docs.length) % docs.length].src; };
+
+  function show(index){
+    viewerIndex = (index + docs.length) % docs.length;
+    const doc = docs[viewerIndex];
+    viewerImg.classList.remove('is-in');
+    viewerImg.src = doc.src;
+    viewerImg.alt = doc.alt;
+    viewerBadge.textContent = doc.badge;
+    viewerTitle.textContent = doc.title;
+    viewerMeta.textContent = doc.meta;
+    viewerCount.textContent = `${viewerIndex + 1} / ${docs.length}`;
+    viewerOpen.href = doc.src;
+    thumbs.forEach((thumb, i) => thumb.setAttribute('aria-current', String(i === viewerIndex)));
+    thumbs[viewerIndex].scrollIntoView({ block: 'nearest', inline: 'center', behavior: reducedMotion.matches ? 'auto' : 'smooth' });
+    preload(viewerIndex + 1);
+    preload(viewerIndex - 1);
+  }
+  const reveal = () => requestAnimationFrame(() => viewerImg.classList.add('is-in'));
+  viewerImg.addEventListener('load', reveal);
+
+  function openViewer(index){
+    stop();
+    show(index);
+    viewer.showModal();
+    viewer.querySelector('.cert-viewer-close').focus({ preventScroll: true });
+  }
+
+  viewer.querySelector('.cert-viewer-close').addEventListener('click', () => viewer.close());
+  viewer.querySelectorAll('.cert-viewer-arrow').forEach(button => {
+    button.addEventListener('click', () => show(viewerIndex + Number(button.dataset.dir)));
+  });
+  // click on the dark background closes; click on the document itself does nothing
+  viewer.addEventListener('click', event => {
+    if (event.target === viewer || event.target.classList.contains('cert-viewer-stage')) viewer.close();
+  });
+  viewer.addEventListener('keydown', event => {
+    if (event.key === 'ArrowRight' || event.key === 'PageDown') { event.preventDefault(); show(viewerIndex + 1); }
+    if (event.key === 'ArrowLeft' || event.key === 'PageUp') { event.preventDefault(); show(viewerIndex - 1); }
+    if (event.key === 'Home') { event.preventDefault(); show(0); }
+    if (event.key === 'End') { event.preventDefault(); show(docs.length - 1); }
+  });
+  let touchX = null;
+  viewer.addEventListener('touchstart', event => { touchX = event.touches[0].clientX; }, { passive: true });
+  viewer.addEventListener('touchend', event => {
+    if (touchX === null) return;
+    const distance = event.changedTouches[0].clientX - touchX;
+    touchX = null;
+    if (Math.abs(distance) > 50) show(viewerIndex + (distance < 0 ? 1 : -1));
+  }, { passive: true });
+  // back in the page: the slideshow follows the last certificate seen
+  viewer.addEventListener('close', () => {
+    if (!isWall()) goTo(viewerIndex);
+    cards[viewerIndex].focus({ preventScroll: true });
+  });
+
   cards.forEach((card, index) => {
     card.addEventListener('click', event => {
-      if (typeof openLightbox !== 'function' || event.ctrlKey || event.metaKey || event.shiftKey) return;
+      if (event.ctrlKey || event.metaKey || event.shiftKey || event.button === 1) return;
       event.preventDefault();
-      openLightbox(photos, index);
+      openViewer(index);
     });
   });
 })();

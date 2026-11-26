@@ -882,41 +882,41 @@ foreach (array_values($synthRealisations) as $p => $rows) {
 
     <div class="cert-head">
       <h3 class="cert-heading">Mes certificats</h3>
-      <p class="cert-hint">8 attestations · cliquez sur un certificat pour l’agrandir</p>
+      <p class="cert-hint">8 attestations · cliquez sur un certificat pour voir le document entier</p>
     </div>
     <div class="cert-slider" aria-roledescription="carrousel" aria-label="Mes certificats">
       <div class="cert-grid" tabindex="0">
-        <a class="cert-card" href="images/certifications/anssi.jpg" target="_blank" rel="noopener">
-          <img src="images/certifications/anssi.jpg" alt="Attestation de suivi SecNumacadémie de l'ANSSI délivrée à Jamar Carty" loading="lazy" width="1754" height="1241">
-          <span class="cert-info"><strong>MOOC SecNumacadémie</strong><span>ANSSI · octobre 2023</span></span>
+        <a class="cert-card" href="images/certifications/anssi.jpg" target="_blank" rel="noopener" data-org="ANSSI" data-date="Octobre 2023" data-badge="MOOC">
+          <span class="cert-thumb"><img src="images/certifications/anssi.jpg" alt="Attestation de suivi SecNumacadémie de l'ANSSI délivrée à Jamar Carty" loading="lazy" width="1754" height="1241"><span class="cert-zoom" aria-hidden="true">Agrandir</span></span>
+          <span class="cert-info"><span class="cert-badge">MOOC</span><strong>SecNumacadémie</strong><span class="cert-meta">ANSSI · Octobre 2023</span></span>
         </a>
-        <a class="cert-card" href="images/certifications/cyber-awareness.jpg" target="_blank" rel="noopener">
-          <img src="images/certifications/cyber-awareness.jpg" alt="Certificat Cyber Awareness Challenge 2025 délivré à Jamar Carty" loading="lazy" width="1754" height="1241">
-          <span class="cert-info"><strong>Cyber Awareness Challenge 2025</strong><span>DoD Cyber Exchange · novembre 2024</span></span>
+        <a class="cert-card" href="images/certifications/cyber-awareness.jpg" target="_blank" rel="noopener" data-org="DoD Cyber Exchange" data-date="Novembre 2024" data-badge="Certificat">
+          <span class="cert-thumb"><img src="images/certifications/cyber-awareness.jpg" alt="Certificat Cyber Awareness Challenge 2025 délivré à Jamar Carty" loading="lazy" width="1754" height="1241"><span class="cert-zoom" aria-hidden="true">Agrandir</span></span>
+          <span class="cert-info"><span class="cert-badge">Certificat</span><strong>Cyber Awareness Challenge 2025</strong><span class="cert-meta">DoD Cyber Exchange · Novembre 2024</span></span>
         </a>
-        <a class="cert-card" href="images/certifications/pix.jpg" target="_blank" rel="noopener">
-          <img src="images/certifications/pix.jpg" alt="Certification Pix, niveau Indépendant 2, délivrée à Jamar Carty" loading="lazy" width="1754" height="1241">
-          <span class="cert-info"><strong>Certification Pix · 434 pix</strong><span>Pix · février 2026</span></span>
+        <a class="cert-card" href="images/certifications/pix.jpg" target="_blank" rel="noopener" data-org="Pix" data-date="Février 2026" data-badge="Certification">
+          <span class="cert-thumb"><img src="images/certifications/pix.jpg" alt="Certification Pix, niveau Indépendant 2, délivrée à Jamar Carty" loading="lazy" width="1754" height="1241"><span class="cert-zoom" aria-hidden="true">Agrandir</span></span>
+          <span class="cert-info"><span class="cert-badge">Certification</span><strong>Pix · 434 pix</strong><span class="cert-meta">Pix · Février 2026</span></span>
         </a>
-        <a class="cert-card" href="images/certifications/cnil-1.jpg" target="_blank" rel="noopener">
-          <img src="images/certifications/cnil-1.jpg" alt="Attestation CNIL, L'atelier RGPD, Module 1 · Le RGPD et ses notions clés, délivrée à Jamar Carty" loading="lazy" width="1754" height="1241">
-          <span class="cert-info"><strong>CNIL · Module 1 · Le RGPD et ses notions clés</strong><span>L'atelier RGPD · 90 % · 28 octobre 2023</span></span>
+        <a class="cert-card" href="images/certifications/cnil-1.jpg" target="_blank" rel="noopener" data-org="CNIL · L’atelier RGPD" data-date="Octobre 2023 · 90&nbsp;%" data-badge="Module 1">
+          <span class="cert-thumb"><img src="images/certifications/cnil-1.jpg" alt="Attestation CNIL, L'atelier RGPD, Module 1 · Le RGPD et ses notions clés, délivrée à Jamar Carty" loading="lazy" width="1754" height="1241"><span class="cert-zoom" aria-hidden="true">Agrandir</span></span>
+          <span class="cert-info"><span class="cert-badge">Module 1</span><strong>Le RGPD et ses notions clés</strong><span class="cert-meta">CNIL · L’atelier RGPD · Octobre 2023 · 90&nbsp;%</span></span>
         </a>
-        <a class="cert-card" href="images/certifications/cnil-2.jpg" target="_blank" rel="noopener">
-          <img src="images/certifications/cnil-2.jpg" alt="Attestation CNIL, L'atelier RGPD, Module 2 · Les principes de la protection des données, délivrée à Jamar Carty" loading="lazy" width="1754" height="1241">
-          <span class="cert-info"><strong>CNIL · Module 2 · Les principes de la protection des données</strong><span>L'atelier RGPD · 100 % · 29 octobre 2023</span></span>
+        <a class="cert-card" href="images/certifications/cnil-2.jpg" target="_blank" rel="noopener" data-org="CNIL · L’atelier RGPD" data-date="Octobre 2023 · 100&nbsp;%" data-badge="Module 2">
+          <span class="cert-thumb"><img src="images/certifications/cnil-2.jpg" alt="Attestation CNIL, L'atelier RGPD, Module 2 · Les principes de la protection des données, délivrée à Jamar Carty" loading="lazy" width="1754" height="1241"><span class="cert-zoom" aria-hidden="true">Agrandir</span></span>
+          <span class="cert-info"><span class="cert-badge">Module 2</span><strong>Les principes de la protection des données</strong><span class="cert-meta">CNIL · L’atelier RGPD · Octobre 2023 · 100&nbsp;%</span></span>
         </a>
-        <a class="cert-card" href="images/certifications/cnil-3.jpg" target="_blank" rel="noopener">
-          <img src="images/certifications/cnil-3.jpg" alt="Attestation CNIL, L'atelier RGPD, Module 3 · Les responsabilités des acteurs, délivrée à Jamar Carty" loading="lazy" width="1754" height="1241">
-          <span class="cert-info"><strong>CNIL · Module 3 · Les responsabilités des acteurs</strong><span>L'atelier RGPD · 100 % · 29 octobre 2023</span></span>
+        <a class="cert-card" href="images/certifications/cnil-3.jpg" target="_blank" rel="noopener" data-org="CNIL · L’atelier RGPD" data-date="Octobre 2023 · 100&nbsp;%" data-badge="Module 3">
+          <span class="cert-thumb"><img src="images/certifications/cnil-3.jpg" alt="Attestation CNIL, L'atelier RGPD, Module 3 · Les responsabilités des acteurs, délivrée à Jamar Carty" loading="lazy" width="1754" height="1241"><span class="cert-zoom" aria-hidden="true">Agrandir</span></span>
+          <span class="cert-info"><span class="cert-badge">Module 3</span><strong>Les responsabilités des acteurs</strong><span class="cert-meta">CNIL · L’atelier RGPD · Octobre 2023 · 100&nbsp;%</span></span>
         </a>
-        <a class="cert-card" href="images/certifications/cnil-4.jpg" target="_blank" rel="noopener">
-          <img src="images/certifications/cnil-4.jpg" alt="Attestation CNIL, L'atelier RGPD, Module 4 · Le DPO et les outils de la conformité, délivrée à Jamar Carty" loading="lazy" width="1754" height="1241">
-          <span class="cert-info"><strong>CNIL · Module 4 · Le DPO et les outils de la conformité</strong><span>L'atelier RGPD · 93 % · 29 octobre 2023</span></span>
+        <a class="cert-card" href="images/certifications/cnil-4.jpg" target="_blank" rel="noopener" data-org="CNIL · L’atelier RGPD" data-date="Octobre 2023 · 93&nbsp;%" data-badge="Module 4">
+          <span class="cert-thumb"><img src="images/certifications/cnil-4.jpg" alt="Attestation CNIL, L'atelier RGPD, Module 4 · Le DPO et les outils de la conformité, délivrée à Jamar Carty" loading="lazy" width="1754" height="1241"><span class="cert-zoom" aria-hidden="true">Agrandir</span></span>
+          <span class="cert-info"><span class="cert-badge">Module 4</span><strong>Le DPO et les outils de la conformité</strong><span class="cert-meta">CNIL · L’atelier RGPD · Octobre 2023 · 93&nbsp;%</span></span>
         </a>
-        <a class="cert-card" href="images/certifications/cnil-5.png" target="_blank" rel="noopener">
-          <img src="images/certifications/cnil-5.png" alt="Attestation CNIL, L'atelier RGPD, Module 5 · Les collectivités territoriales, délivrée à Jamar Carty" loading="lazy" width="1523" height="1523">
-          <span class="cert-info"><strong>CNIL · Module 5 · Les collectivités territoriales</strong><span>L'atelier RGPD · 96 % · 29 octobre 2023</span></span>
+        <a class="cert-card" href="images/certifications/cnil-5.png" target="_blank" rel="noopener" data-org="CNIL · L’atelier RGPD" data-date="Octobre 2023 · 96&nbsp;%" data-badge="Module 5">
+          <span class="cert-thumb"><img src="images/certifications/cnil-5.png" alt="Attestation CNIL, L'atelier RGPD, Module 5 · Les collectivités territoriales, délivrée à Jamar Carty" loading="lazy" width="1523" height="1523"><span class="cert-zoom" aria-hidden="true">Agrandir</span></span>
+          <span class="cert-info"><span class="cert-badge">Module 5</span><strong>Les collectivités territoriales</strong><span class="cert-meta">CNIL · L’atelier RGPD · Octobre 2023 · 96&nbsp;%</span></span>
         </a>
       </div>
       <div class="cert-controls">
