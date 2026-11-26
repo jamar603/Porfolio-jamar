@@ -70,8 +70,24 @@ try {
 
   // phones also run the satin background: a smaller buffer keeps both under budget
   const coarse = window.matchMedia('(pointer: coarse)').matches;
-  const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true, powerPreference: 'high-performance' });
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, coarse ? 1.25 : 1.75));
+  // antialiasing only where pixels are big (dpr < 1.5); dense screens are sharp enough without it.
+  // The pixel ratio starts at a sensible cap and drops further while frames run long (see adapt()).
+  const dpr = window.devicePixelRatio || 1;
+  // integrated / mobile GPUs also draw the full-screen satin background: there the laptop drops
+  // antialiasing and renders at 30 fps (its motion is slow, the difference does not show)
+  const weakGpu = (() => {
+    try {
+      const probe = document.createElement('canvas').getContext('webgl');
+      const info = probe && probe.getExtension('WEBGL_debug_renderer_info');
+      const name = info ? probe.getParameter(info.UNMASKED_RENDERER_WEBGL) : '';
+      probe?.getExtension('WEBGL_lose_context')?.loseContext();
+      return coarse || /intel|swiftshader|llvmpipe|mali|adreno|powervr|microsoft basic/i.test(name);
+    } catch { return true; }
+  })();
+  const FRAME_GAP = weakGpu ? 1000 / 30 - 2 : 0;
+  const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: dpr < 1.5 && !weakGpu, powerPreference: 'high-performance' });
+  let pixelRatio = Math.min(dpr, coarse ? 1.25 : 1.5);
+  renderer.setPixelRatio(pixelRatio);
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.15;
@@ -264,7 +280,10 @@ try {
 
   const screenTexture = new THREE.CanvasTexture(screenCanvas);
   screenTexture.colorSpace = THREE.SRGBColorSpace;
-  screenTexture.anisotropy = renderer.capabilities.getMaxAnisotropy();
+  // redrawn on every typed character: no mipmaps to rebuild on each upload
+  screenTexture.generateMipmaps = false;
+  screenTexture.minFilter = THREE.LinearFilter;
+  screenTexture.anisotropy = Math.min(4, renderer.capabilities.getMaxAnisotropy());
   const screenMaterial = new THREE.MeshBasicMaterial({ map: screenTexture, toneMapped: false, color: 0x000000 });
   const screen = new THREE.Mesh(new THREE.PlaneGeometry(4.12, 2.66), screenMaterial);
   screen.position.set(0, 1.43, 0.081);
@@ -346,9 +365,15 @@ try {
   const pointer = { x: 0, y: 0, inside: false };
   const drag = { active: false, lastX: 0, offset: 0, velocity: 0 };
 
+  // container box cached (refreshed on resize and scroll) so pointer moves never force a layout
+  let bounds = container.getBoundingClientRect();
+  let heroHeight = container.offsetHeight || 1;
+  let boundsDirty = false;
+  let inView = true;
+  window.addEventListener('scroll', () => { boundsDirty = true; }, { passive: true });
   window.addEventListener('pointermove', event => {
-    if (event.pointerType !== 'mouse' || reducedMotion.matches) return;
-    const bounds = container.getBoundingClientRect();
+    if (event.pointerType !== 'mouse' || reducedMotion.matches || !inView) return;
+    if (boundsDirty) { bounds = container.getBoundingClientRect(); boundsDirty = false; }
     pointer.x = clamp((event.clientX - (bounds.left + bounds.width / 2)) / (window.innerWidth / 2), -1, 1);
     pointer.y = clamp((event.clientY - (bounds.top + bounds.height / 2)) / (window.innerHeight / 2), -1, 1);
   }, { passive: true });
@@ -380,7 +405,8 @@ try {
 
   /* ---------- sizing & visibility ---------- */
   const resize = () => {
-    const bounds = container.getBoundingClientRect();
+    bounds = container.getBoundingClientRect();
+    heroHeight = container.offsetHeight || 1;
     if (!bounds.width || !bounds.height) return;
     renderer.setSize(bounds.width, bounds.height, false);
     camera.aspect = bounds.width / bounds.height;
@@ -390,7 +416,6 @@ try {
   };
   new ResizeObserver(resize).observe(container);
 
-  let inView = true;
   new IntersectionObserver(([entry]) => {
     inView = entry.isIntersecting;
     updateAnimation();
@@ -408,7 +433,13 @@ try {
   let previousTime = 0;
   let animationFrame = 0;
 
+  let lastRender = 0;
   const render = time => {
+    if (FRAME_GAP && lastRender && time - lastRender < FRAME_GAP) {
+      animationFrame = document.hidden || !inView ? 0 : requestAnimationFrame(render);
+      return;
+    }
+    lastRender = time;
     if (!startTime) startTime = time;
     const dt = previousTime ? Math.min((time - previousTime) / 1000, 0.05) : 1 / 60;
     previousTime = time;
@@ -445,7 +476,7 @@ try {
     }
 
     // scroll: tilt away as the hero leaves the viewport
-    const scrollProgress = clamp(window.scrollY / Math.max(container.offsetHeight, 1));
+    const scrollProgress = clamp(window.scrollY / heroHeight);
 
     const idle = still ? 0 : t;
     rig.position.y = lerp(-1.4, 0, enter) + Math.sin(idle * 0.9) * 0.08 + hover.value * 0.18 - scrollProgress * 0.8;
@@ -521,12 +552,26 @@ try {
     keyboardKeys.instanceColor.needsUpdate = true;
 
     renderer.render(scene, camera);
+    if (!still) adapt(dt);
     animationFrame = still || document.hidden || !inView ? 0 : requestAnimationFrame(render);
   };
+
+  // lower the resolution step by step while frames keep running long (weak GPUs, two WebGL scenes at once)
+  let slowFrames = 0;
+  function adapt(dt) {
+    slowFrames = dt > (FRAME_GAP ? 0.045 : 0.024) ? slowFrames + 1 : Math.max(0, slowFrames - 1);
+    if (slowFrames > 40 && pixelRatio > 0.75) {
+      slowFrames = 0;
+      pixelRatio = Math.max(0.75, pixelRatio * 0.8);
+      renderer.setPixelRatio(pixelRatio);
+      renderer.setSize(bounds.width, bounds.height, false);
+    }
+  }
 
   function updateAnimation() {
     if (animationFrame) cancelAnimationFrame(animationFrame);
     previousTime = 0;
+    lastRender = 0;
     animationFrame = requestAnimationFrame(render);
   }
 

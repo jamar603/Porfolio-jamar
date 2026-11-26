@@ -98,8 +98,8 @@
     }, 3200);
   }
 
-  // hero facts: numbers count up once when the bento row first shows
-  const counters = document.querySelectorAll('.hero-bento [data-count]');
+  // hero facts and profile stats: numbers count up once when they first show
+  const counters = document.querySelectorAll('.hero-bento [data-count], .profile-stats [data-count]');
   if (counters.length && !reducedMotion.matches && 'IntersectionObserver' in window) {
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {

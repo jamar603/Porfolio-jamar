@@ -124,6 +124,7 @@ void main() {
   const pointer = { x: 0, y: 0, tx: 0, ty: 0 };
   const scroll = { current: window.scrollY, swirl: 0 };
   let anchors = [0]; // page offsets where each form takes over: top of page, then every section
+  let pageHeight = 0; // cached with the anchors: reading scrollHeight every frame would force a layout
   let anchorsDirty = true;
   let form = 0;      // smoothed position in FORMS, fractional while morphing
   let program = null;
@@ -180,6 +181,7 @@ void main() {
   const measureAnchors = () => {
     const sections = [...document.querySelectorAll('section[id]')]; // the hero has no id, it keeps the first form
     anchors = [0, ...sections.map(s => s.getBoundingClientRect().top + window.scrollY)].sort((a, b) => a - b);
+    pageHeight = document.documentElement.scrollHeight;
     anchorsDirty = false;
   };
   // re-measure only when the page height changes, not on a timer (a forced layout every second stutters phones)
@@ -191,7 +193,7 @@ void main() {
     const mid = window.scrollY + window.innerHeight * 0.5;
     let k = 0;
     while (k < anchors.length - 1 && anchors[k + 1] <= mid) k += 1;
-    const end = anchors[k + 1] ?? document.documentElement.scrollHeight;
+    const end = anchors[k + 1] ?? pageHeight;
     const f = Math.min(1, Math.max(0, (mid - anchors[k]) / Math.max(1, end - anchors[k])));
     const g = f < 0.66 ? 0 : (f - 0.66) / 0.34;
     return k + g * g * (3 - 2 * g);

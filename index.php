@@ -37,7 +37,7 @@ $synthCompetences = [
 $synthRealisations = [
   'Réalisations en cours de formation' => [
     ['AP C#', 'ap-csharp-slam', [4]],
-    ['AP M2L : installation du serveur LAMP', 'm2l-infrastructure', [5]],
+    ['AP M2L : installation du serveur LAMP', 'm2l-infrastructure', [1, 5]],
     ['TP GLPI', 'glpi-inventory', [1]],
     ['TP Gestion des incidents et des demandes', 'glpi-tickets', [2]],
     ['AP Electronitech', 'electronitech-web', [3, 5]],
@@ -48,11 +48,11 @@ $synthRealisations = [
   ],
   'Réalisations en cours de stage de première année' => [
     ['Mission 1 : React Native et API', 'react-native-stage', [4, 6]],
-    ['Mission 2 : Laravel 12', 'laravel-stage', [3, 4, 5, 6]],
+    ['Mission 2 : Laravel 12', 'laravel-stage', [1, 3, 4, 5, 6]],
   ],
   'Réalisations en cours de stage de seconde année' => [
     ['Mission 1 : Kadviser, modélisation 3D', 'kadviser-model3d', [4]],
-    ['Mission 2 : amélioration du site web Kadviser', 'kadviser-themes', [4]],
+    ['Mission 2 : amélioration du site web Kadviser', 'kadviser-themes', [3, 4, 5]],
   ],
 ];
 ?>
@@ -168,7 +168,7 @@ $synthRealisations = [
       <li>
         <span class="hb-k">Formation</span>
         <strong>BTS SIO · SLAM · 2<sup>e</sup> année</strong>
-        <span class="hb-v">AFIP · session 2026</span>
+        <span class="hb-v">AFIP · session 2027</span>
       </li>
       <li>
         <span class="hb-k">Alternance</span>
@@ -306,7 +306,7 @@ $e5Plan = [
       <div class="section-icon" style="background:var(--indigo-soft);">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.5-7 8-7s8 3 8 7"/></svg>
       </div>
-      <div><h2>Profil</h2><p>Qui je suis, en quelques lignes</p></div>
+      <div><h2>Profil</h2><p>Présentation du candidat · ouverture de la phase 1 de l’épreuve E5</p></div>
     </div>
     <div class="profile-grid">
 <?php
@@ -315,57 +315,64 @@ $profilePhoto = null;
 foreach (['webp', 'jpg', 'jpeg', 'png'] as $ext) {
   if (is_file(__DIR__ . "/images/profil.$ext")) { $profilePhoto = "images/profil.$ext"; break; }
 }
+// stage missions = every réalisation outside the "formation" period
+$profileStageMissions = 0;
+foreach ($synthRealisations as $period => $rows) {
+  if (str_contains($period, 'stage')) $profileStageMissions += count($rows);
+}
 ?>
-      <div class="profile-intro">
-        <div class="profile-id">
+      <div class="pf-layout">
+        <aside class="pf-id pf-anim" style="--i:0" aria-label="Carte d’identité du candidat">
           <figure class="profile-photo">
   <?php if ($profilePhoto): ?>
             <img src="<?= e($profilePhoto) ?>?v=<?= filemtime(__DIR__ . '/' . $profilePhoto) ?>" alt="Photo de Jamar Carty" width="400" height="400">
   <?php else: ?>
             <span class="profile-photo-initials" aria-hidden="true">JC</span>
   <?php endif; ?>
-            <a class="profile-photo-badge" href="https://www.linkedin.com/in/jamar-carty" target="_blank" rel="noopener noreferrer" aria-label="Profil LinkedIn de Jamar Carty"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.35V9h3.414v1.561h.049c.476-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 1 1 0-4.124 2.062 2.062 0 0 1 0 4.124zM7.119 20.452H3.555V9h3.564v11.452z"/></svg></a>
           </figure>
-          <a class="profile-github" href="https://github.com/jamar603" target="_blank" rel="noopener noreferrer" aria-label="GitHub de Jamar Carty : github.com/jamar603">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .5A11.5 11.5 0 0 0 8.36 22.91c.58.1.79-.25.79-.56v-2.02c-3.2.7-3.87-1.36-3.87-1.36-.52-1.33-1.28-1.69-1.28-1.69-1.04-.71.08-.7.08-.7 1.15.08 1.75 1.18 1.75 1.18 1.02 1.74 2.68 1.24 3.33.95.1-.74.4-1.24.73-1.53-2.55-.29-5.23-1.28-5.23-5.68 0-1.26.45-2.28 1.18-3.08-.12-.29-.51-1.46.11-3.04 0 0 .96-.31 3.15 1.17a10.9 10.9 0 0 1 5.74 0c2.19-1.48 3.15-1.17 3.15-1.17.62 1.58.23 2.75.11 3.04.73.8 1.18 1.82 1.18 3.08 0 4.41-2.68 5.38-5.24 5.67.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5z"/></svg>
-            <span><strong>GitHub</strong><small>github.com/jamar603</small></span>
-          </a>
-        </div>
-        <div class="profile-intro-main">
-          <div class="profile-school">
-            <img src="images/logo-afip.svg" alt="AFIP" width="153" height="102">
-            <div><strong>BTS SIO · option SLAM · 2<sup>e</sup> année</strong><span>AFIP · 2026–2027 · épreuve E5, bloc 1</span></div>
+          <div class="pf-id-main">
+          <h3 class="pf-name">Jamar Carty</h3>
+          <p class="pf-role">Développeur web et applicatif</p>
+          <blockquote class="pf-quote">« Je suis Jamar Carty, étudiant en 2<sup>e</sup> année de BTS SIO option SLAM. Développeur web et applicatif, je vais vous montrer comment mes stages et mes projets m’ont permis d’acquérir les 6 compétences du bloc 1. »</blockquote>
           </div>
-          <blockquote>« Ce portfolio retrace mon parcours de professionnalisation : chaque réalisation montre comment j’ai acquis les compétences du bloc 1. »</blockquote>
-        </div>
-      </div>
-      <div class="profile-facts">
-        <article class="profile-fact">
-          <h3 class="profile-fact-k">Mon parcours</h3>
-          <ol class="profile-steps">
-            <li><span class="profile-step-y">2024 – 2026</span><span><strong>BTS SIO SLAM à l’ICOF</strong> · plusieurs épreuves validées</span></li>
-            <li class="is-now"><span class="profile-step-y">2026 – 2027</span><span><strong>2<sup>e</sup> année à l’AFIP</strong> · épreuves restantes</span></li>
-            <li><span class="profile-step-y">2027</span><span><strong>Obtention du BTS SIO</strong></span></li>
-          </ol>
-        </article>
-        <article class="profile-fact">
-          <h3 class="profile-fact-k">Compétences du bloc 1</h3>
-          <p class="profile-fact-lead">Les <strong>6 compétences</strong> sont couvertes par mes réalisations.</p>
-          <ul class="profile-comps">
-<?php foreach ($synthCompetences as $i => [$label, $skills, $short]): ?>
-            <li><a href="#synthese" title="<?= e($label) ?>"><span class="synth-num">C<?= $i + 1 ?></span><?= e($short) ?></a></li>
-<?php endforeach; ?>
+          <div class="pf-id-side">
+          <div class="pf-school">
+            <img src="images/logo-afip.svg" alt="AFIP" width="153" height="102">
+            <div><strong>BTS SIO · option SLAM</strong><span>2<sup>e</sup> année · AFIP · 2026–2027</span></div>
+          </div>
+          <ul class="pf-badges" aria-label="Repères">
+            <li>Épreuve E5</li><li>Bloc 1</li><li>Session 2027</li><li class="is-goal">Objectif : alternance</li>
           </ul>
-        </article>
-        <article class="profile-fact">
-          <h3 class="profile-fact-k">Technologies utilisées</h3>
-          <div class="project-tags profile-tech"><span>Laravel</span><span>PHP</span><span>React Native</span><span>API REST</span><span>C#</span><span>SQL</span><span>GLPI</span><span>Modélisation 3D</span></div>
-        </article>
-        <article class="profile-fact">
-          <h3 class="profile-fact-k">Mon objectif</h3>
-          <p class="profile-fact-lead"><strong>Alternance en développement informatique</strong></p>
-          <p>Rythme : deux semaines en entreprise, deux semaines en formation.</p>
-        </article>
+          <div class="pf-links">
+            <a class="pf-link" href="https://www.linkedin.com/in/jamar-carty" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.35V9h3.414v1.561h.049c.476-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 1 1 0-4.124 2.062 2.062 0 0 1 0 4.124zM7.119 20.452H3.555V9h3.564v11.452z"/></svg>LinkedIn</a>
+            <a class="pf-link" href="https://github.com/jamar603" target="_blank" rel="noopener noreferrer" aria-label="GitHub : github.com/jamar603"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .5A11.5 11.5 0 0 0 8.36 22.91c.58.1.79-.25.79-.56v-2.02c-3.2.7-3.87-1.36-3.87-1.36-.52-1.33-1.28-1.69-1.28-1.69-1.04-.71.08-.7.08-.7 1.15.08 1.75 1.18 1.75 1.18 1.02 1.74 2.68 1.24 3.33.95.1-.74.4-1.24.73-1.53-2.55-.29-5.23-1.28-5.23-5.68 0-1.26.45-2.28 1.18-3.08-.12-.29-.51-1.46.11-3.04 0 0 .96-.31 3.15 1.17a10.9 10.9 0 0 1 5.74 0c2.19-1.48 3.15-1.17 3.15-1.17.62 1.58.23 2.75.11 3.04.73.8 1.18 1.82 1.18 3.08 0 4.41-2.68 5.38-5.24 5.67.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5z"/></svg>GitHub</a>
+            <a class="pf-link pf-link-cv" href="CVJAMAR-C.pdf" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M12 18v-6M9 15l3 3 3-3"/></svg>Mon CV</a>
+          </div>
+          </div>
+        </aside>
+
+        <div class="pf-main">
+          <ul class="profile-stats pf-anim" style="--i:2" aria-label="Mon parcours en chiffres">
+            <li><strong><span data-count="<?= $e5Total ?>"><?= $e5Total ?></span></strong><span>réalisations professionnelles</span></li>
+            <li><strong><span data-count="<?= $profileStageMissions ?>"><?= $profileStageMissions ?></span></strong><span>missions en stage</span></li>
+            <li><strong><span data-count="3">3</span></strong><span>stages en entreprise</span></li>
+            <li class="is-key"><strong><span data-count="<?= $e5Covered ?>"><?= $e5Covered ?></span>/<?= count($synthCompetences) ?></strong><span>compétences du bloc 1 couvertes</span></li>
+          </ul>
+
+          <article class="profile-pitch pf-anim" style="--i:3">
+            <div class="profile-pitch-head">
+              <h3 class="profile-fact-k">Ma présentation devant la commission</h3>
+              <span class="profile-pitch-time"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Phase 1 · ≈ 1 min 30</span>
+              <div class="profile-pitch-actions"><a class="btn-outline" href="#experience">Mon parcours de stage</a><a class="btn-outline" href="#synthese">Tableau de synthèse</a></div>
+            </div>
+            <ol class="profile-pitch-steps">
+              <li style="--s:0"><div class="pf-step-top"><span class="pf-step-dot" aria-hidden="true">1</span><span class="profile-pitch-n">Qui je suis</span></div><p>Bonjour, je m’appelle <strong>Jamar Carty</strong>. J’ai commencé mon BTS SIO option SLAM à l’ICOF en 2024, où j’ai validé plusieurs épreuves. Je poursuis ma 2<sup>e</sup> année à l’AFIP pour obtenir mon diplôme en 2027.</p></li>
+              <li style="--s:1"><div class="pf-step-top"><span class="pf-step-dot" aria-hidden="true">2</span><span class="profile-pitch-n">Ce que j’ai fait</span></div><p>En stage, j’ai développé un <strong>outil de gestion des conventions avec Laravel 12</strong> et une <strong>API REST pour une application React Native</strong>. J’ai ensuite conçu une <strong>application 3D</strong> et fait évoluer le <strong>site web Kadviser</strong>.</p></li>
+              <li style="--s:2"><div class="pf-step-top"><span class="pf-step-dot" aria-hidden="true">3</span><span class="profile-pitch-n">Ce que je prouve</span></div><p>Ce portfolio regroupe <strong><?= $e5Total ?> réalisations</strong>, dont <?= $profileStageMissions ?> missions de stage. Ensemble, elles couvrent <strong><?= $e5Covered ?> compétences sur <?= count($synthCompetences) ?></strong> du bloc 1. Pour chacune, je présente le contexte, ma démarche, mes preuves et ma contribution personnelle.</p></li>
+              <li style="--s:3"><div class="pf-step-top"><span class="pf-step-dot" aria-hidden="true">4</span><span class="profile-pitch-n">Où je vais</span></div><p>Mon objectif est de poursuivre en <strong>alternance en développement informatique</strong>, pour continuer à progresser sur des projets réels.</p></li>
+            </ol>
+          </article>
+        </div>
       </div>
     </div>
   </div>
@@ -538,7 +545,7 @@ foreach (['webp', 'jpg', 'jpeg', 'png'] as $ext) {
       <div class="section-icon" style="background:var(--amber-soft);">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#e5b567" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18"/></svg>
       </div>
-      <div><h2>Tableau de synthèse</h2><p>BTS SIO option SLAM · session 2026 · réalisations professionnelles</p></div>
+      <div><h2>Tableau de synthèse</h2><p>BTS SIO option SLAM · session 2027 · réalisations professionnelles</p></div>
     </div>
 
     <div class="synth-tools">
@@ -828,7 +835,7 @@ foreach (array_values($synthRealisations) as $p => $rows) {
       <div class="section-icon" style="background:var(--indigo-soft);">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18M7 15l4-5 3 3 5-7"/></svg>
       </div>
-      <div><h2>Compétences</h2><p>Bloc B1</p></div>
+      <div><h2>Compétences techniques</h2><p>Langages, frameworks et outils mobilisés dans les réalisations</p></div>
       <div class="cube-scene" aria-hidden="true"><div class="cube"><span></span><span></span><span></span><span></span><span></span><span></span></div></div>
     </div>
 
@@ -969,7 +976,7 @@ foreach (array_values($synthRealisations) as $p => $rows) {
         <li style="--d:0"><span class="conclu-dot" aria-hidden="true"></span><strong>2024</strong><span>Premier stage · programmation web</span></li>
         <li style="--d:1"><span class="conclu-dot" aria-hidden="true"></span><strong>2025</strong><span>Stages BTS · Laravel, React Native, 3D</span></li>
         <li style="--d:2"><span class="conclu-dot" aria-hidden="true"></span><strong>2026–2027</strong><span>2<sup>e</sup> année de BTS SIO SLAM à l’AFIP</span></li>
-        <li style="--d:3"><span class="conclu-dot conclu-dot-goal" aria-hidden="true"></span><strong>Objectif</strong><span>BTS SIO en 2027 et alternance</span></li>
+        <li style="--d:3"><span class="conclu-dot conclu-dot-goal" aria-hidden="true"></span><strong>Objectif</strong><span>BTS SIO en 2027, puis bac+3 à Lyon 1</span></li>
       </ol>
     </div>
 
@@ -979,7 +986,7 @@ foreach (array_values($synthRealisations) as $p => $rows) {
         <blockquote>
           <p>Mon parcours n’a pas été linéaire, mais chaque étape m’a fait progresser : de l’ICOF à l’AFIP, j’ai mené <strong><?= $e5Total ?> réalisations</strong> qui couvrent <strong>les six compétences du bloc 1</strong>.</p>
           <p>Ce qui me motive : créer des services utiles et fiables, <strong>un pas après l’autre</strong>.</p>
-          <p>Mon objectif : obtenir mon BTS SIO en 2027, puis poursuivre en alternance dans le développement.</p>
+          <p>Mon objectif : obtenir mon BTS SIO en 2027, puis <strong>poursuivre en bac+3 à l’Université Lyon 1</strong>, spécialisé en <strong>cybersécurité et automatisation</strong>.</p>
         </blockquote>
         <figcaption>Jamar Carty</figcaption>
       </figure>
@@ -988,6 +995,27 @@ foreach (array_values($synthRealisations) as $p => $rows) {
         <li style="--d:1"><strong><span data-conclu-count="<?= $e5Covered ?>"><?= $e5Covered ?></span>/<?= count($synthCompetences) ?></strong><span>compétences du bloc 1 couvertes</span></li>
         <li style="--d:2"><strong><span data-conclu-count="3">3</span></strong><span>stages en entreprise</span></li>
       </ul>
+    </div>
+
+    <div class="conclu-after">
+      <p class="conclu-after-k">Après le BTS · Université Lyon 1</p>
+      <div class="conclu-cards">
+        <article class="conclu-card" style="--d:0">
+          <span class="conclu-card-k">Poursuite d’études · bac+3</span>
+          <h3>Licence MIAGE</h3>
+          <p>Développement, systèmes d’information et gestion de projet.</p>
+        </article>
+        <article class="conclu-card" style="--d:1">
+          <span class="conclu-card-k">Ou · bac+3</span>
+          <h3>Licence pro DevOps</h3>
+          <p>CI/CD, conteneurs et infrastructure : du code à la production.</p>
+        </article>
+        <article class="conclu-card" style="--d:2">
+          <span class="conclu-card-k">Ma spécialisation</span>
+          <h3>Cybersécurité et automatisation</h3>
+          <p>Sécuriser les services, automatiser tests et déploiements.</p>
+        </article>
+      </div>
     </div>
 
     <div class="conclu-end">
@@ -1097,6 +1125,7 @@ foreach (array_values($synthRealisations) as $p => $rows) {
 <script src="hero-motion.js"></script>
 <script src="presentation.js"></script>
 <script src="conclusion.js"></script>
+<script src="section-motion.js?v=<?= md5_file(__DIR__ . '/section-motion.js') ?>"></script>
 <script src="synthese.js"></script>
 <script src="article-reader.js"></script>
 <script type="module" src="hero-3d.js"></script>

@@ -5,6 +5,8 @@
   const e5Sections = ['accueil', 'epreuve-e5', 'criteres-e5', 'profil', 'formation', 'experience', 'projets', 'synthese', 'articles', 'atouts', 'veille', 'conclusion'];
   const steps = [...document.querySelectorAll('body > section[id]')].filter(s => e5Sections.includes(s.id));
   if (!steps.length) return;
+  // presentation mode hides every other section (motivation, compétences, contact…) until it ends
+  document.querySelectorAll('body > section').forEach(s => { if (!steps.includes(s)) s.classList.add('present-skip'); });
 
   const labelOf = section => section.dataset.stepLabel
     || section.querySelector('.section-head h2')?.textContent.trim()
@@ -186,8 +188,12 @@
   // while a navigation scroll is running, the step it goes to stays the current one,
   // so quick presses on a clicker never repeat a step
   let lockedUntil = 0;
+  let rendered = '';
   const render = () => {
     if (performance.now() > lockedUntil) [current, currentPage] = findCurrent();
+    const key = `${presenting()}|${current}|${currentPage}|${pages[current]}`;
+    if (key === rendered) return;
+    rendered = key;
     steps.forEach((section, i) => section.classList.toggle('is-current', presenting() && i === current));
     railLinks.forEach((a, i) => {
       if (i === current) a.setAttribute('aria-current', 'true');

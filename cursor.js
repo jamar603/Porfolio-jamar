@@ -19,9 +19,11 @@
   const trail = { x: pointer.x, y: pointer.y };
   let visible = false;
 
+  let frame = 0;
   window.addEventListener('pointermove', (event) => {
     pointer.x = event.clientX;
     pointer.y = event.clientY;
+    if (!frame) frame = requestAnimationFrame(tick);
     // `translate` (not `transform`) so the CSS `scale` of hover/press states scales in place
     dot.style.translate = `${pointer.x}px ${pointer.y}px`;
     if (!visible) {
@@ -46,12 +48,11 @@
   window.addEventListener('pointerdown', () => document.documentElement.classList.add('cursor-down'));
   window.addEventListener('pointerup', () => document.documentElement.classList.remove('cursor-down'));
 
-  const tick = () => {
-    // ease the ring toward the pointer so it lags slightly behind
+  function tick() {
+    // ease the ring toward the pointer so it lags slightly behind; idle once it has caught up
     trail.x += (pointer.x - trail.x) * 0.18;
     trail.y += (pointer.y - trail.y) * 0.18;
     ring.style.translate = `${trail.x}px ${trail.y}px`;
-    requestAnimationFrame(tick);
-  };
-  requestAnimationFrame(tick);
+    frame = Math.abs(pointer.x - trail.x) + Math.abs(pointer.y - trail.y) > 0.1 ? requestAnimationFrame(tick) : 0;
+  }
 })();
