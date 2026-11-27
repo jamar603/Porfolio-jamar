@@ -3132,3 +3132,63 @@ html[data-theme="light"] .fpath-node.is-dim,html[data-theme="light"] .xpath-card
   .synth-layout{ grid-template-columns:minmax(0,1fr) 340px; }
 }
 @media (min-width:1440px){ .synth-layout{ grid-template-columns:minmax(0,1fr) 360px; } }
+
+/* ===== Tableau de synthèse: sober professional design, wide and compact (seen whole on a computer) =====
+   One accent colour (blue), hairlines, quiet ticks, periods marked by a dot, totals with a thin bar.
+   Rows on one line and short paddings so the whole table fits the screen at a readable size. */
+@media (min-width:961px){
+  #synthese .container{ max-width:min(1480px,calc(100vw - 96px)); }
+  #synthese .section-head{ margin-bottom:12px; }
+  .synth-ready .synth-tools{ margin-bottom:10px; }
+  .synth-ready .synth-hint{ display:none; }
+  #synthese .synth-wrap{ border-radius:14px; border-color:rgba(var(--hi-rgb),.1); background:rgba(var(--panel-rgb),.92); box-shadow:0 1px 0 rgba(var(--hi-rgb),.04) inset,0 24px 48px -32px rgba(var(--shadow-rgb),.9); }
+  #synthese .synth-table{ font-size:15px; line-height:1.3; font-variant-numeric:tabular-nums; }
+  #synthese .synth-table th,#synthese .synth-table td{ padding:7px 12px; border-bottom:1px solid rgba(var(--hi-rgb),.06); }
+  /* header: C number above a short label */
+  #synthese .synth-table thead th{ padding:12px 8px 10px; vertical-align:top; border-bottom:1px solid rgba(var(--hi-rgb),.12); background:transparent; font-size:12.5px; font-weight:500; line-height:1.25; color:var(--dim); }
+  #synthese .synth-table thead th .synth-num{ display:block; margin:0 0 3px; padding:0; background:none; box-shadow:none; font-family:'Space Grotesk',sans-serif; font-size:14px; font-weight:700; letter-spacing:.04em; color:var(--amber); }
+  #synthese .synth-table thead th[data-col] > span[aria-hidden]{ display:block; }
+  #synthese .synth-table thead .synth-corner{ width:38%; padding-left:20px; vertical-align:bottom; font-family:inherit; font-size:11.5px; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:var(--dim); }
+  #synthese .synth-table th:first-child{ background:rgba(var(--panel-rgb),.99); }
+  /* periods */
+  #synthese .synth-period th{ padding:10px 20px 6px; border-bottom:1px solid rgba(var(--hi-rgb),.06); background:rgba(var(--panel-rgb),.99); box-shadow:none; font-size:11px; font-weight:600; letter-spacing:.12em; color:var(--dim); }
+  #synthese .synth-period th::before{ content:''; display:inline-block; width:8px; height:8px; margin-right:10px; border-radius:50%; background:rgb(var(--period-rgb,96,165,250)); vertical-align:1px; }
+  #synthese .synth-table tbody:nth-of-type(1){ --period-rgb:96,165,250; }
+  #synthese .synth-table tbody:nth-of-type(2){ --period-rgb:248,113,113; }
+  #synthese .synth-table tbody:nth-of-type(3){ --period-rgb:229,181,103; }
+  #synthese .synth-period-count{ margin-left:8px; padding:1px 7px; background:rgba(var(--hi-rgb),.07); color:var(--dim); font-weight:600; }
+  /* rows: title on one line */
+  #synthese .synth-table tbody th[scope="row"]{ padding-left:20px; font-size:15px; font-weight:500; white-space:nowrap; }
+  #synthese .synth-table tbody th a{ color:var(--ink); }
+  #synthese .synth-table tbody tr[data-article]:hover{ background:rgba(var(--hi-rgb),.035); }
+  #synthese .synth-table tbody tr.is-loupe{ background:rgba(96,165,250,.08); }
+  #synthese .synth-table tbody tr.is-loupe th[scope="row"]{ box-shadow:inset 2px 0 0 var(--indigo); }
+  #synthese .synth-table .is-col-hover{ background:rgba(var(--hi-rgb),.03); }
+  /* totals */
+  #synthese .synth-table tfoot th,#synthese .synth-table tfoot td{ padding:9px 10px 10px; border-top:1px solid rgba(var(--hi-rgb),.12); border-bottom:0; background:rgba(var(--bg-rgb),.3); }
+  #synthese .synth-table tfoot th{ padding-left:20px; font-size:11.5px; font-weight:600; letter-spacing:.1em; color:var(--dim); }
+  #synthese .synth-table tfoot th:first-child{ background:rgba(var(--bg-rgb),.5); }
+  #synthese .synth-total{ display:block; font-size:17px; line-height:1; color:var(--ink); }
+  #synthese .synth-bar{ display:block; width:48px; height:3px; margin:7px auto 0; border-radius:3px; background:rgba(var(--hi-rgb),.08); overflow:hidden; }
+  #synthese .synth-bar::before{ content:''; display:block; width:100%; height:100%; background:var(--green); transform:scaleX(calc(var(--share,0) * 1.6)); transform-origin:left; }
+}
+@media (min-width:1440px){ .synth-layout{ grid-template-columns:minmax(0,1fr) 360px; gap:24px; } }
+@media (min-width:1700px){ .synth-layout{ grid-template-columns:minmax(0,1fr) 400px; } }
+/* tighter rows so the whole table fits a laptop screen; titles may wrap rather than overflow */
+@media (min-width:961px){
+  #synthese .synth-table th,#synthese .synth-table td{ padding-top:5px; padding-bottom:5px; }
+  #synthese .synth-table tbody th[scope="row"]{ white-space:normal; font-size:14.5px; }
+  #synthese .synth-table thead .synth-corner{ width:40%; }
+  #synthese .synth-table thead th{ padding:10px 6px 8px; }
+  #synthese .synth-period th{ padding:8px 20px 4px; }
+  #synthese .synth-check{ width:22px; height:22px; border-radius:6px; font-size:12.5px; }
+  #synthese .synth-table tfoot th,#synthese .synth-table tfoot td{ padding:7px 10px 8px; }
+  #synthese .section-head h2{ font-size:28px; }
+}
+.fit-sections body > section#synthese{ padding:16px 0 18px; }
+@media (min-width:961px){ #synthese .section-head{ margin-bottom:8px; } #synthese .section-head p{ margin-top:2px; } }
+@media (min-width:961px){ #synthese .synth-table tfoot .is-col-focus .synth-bar::before{ background:var(--amber); } }
+/* original highlights: matching rows in amber, the row shown in the panel in blue */
+#synthese .synth-table tr.is-match th a{ color:var(--amber); }
+#synthese .synth-table tbody tr.is-loupe th a{ color:var(--indigo); }
+.synth-loupe-cta[hidden]{ display:none; }

@@ -129,7 +129,8 @@
       let z = 1;
       // presenting: a section that fits at 72 % or more stays on one page (no split for a small overflow);
       // a really long one keeps 85 % and is split into pages
-      if (h > room) z = on ? (room / h >= ONE_PAGE_ZOOM ? room / h : MIN_ZOOM_PRESENTING) : Math.max(MIN_ZOOM, room / h);
+      // browsing: the tableau de synthèse fits the screen but never below 75 % (it stays readable)
+      if (h > room) z = on ? (room / h >= ONE_PAGE_ZOOM ? room / h : MIN_ZOOM_PRESENTING) : Math.max(s.id === 'synthese' ? 0.75 : MIN_ZOOM, room / h);
       else if (on) {
         const width = s.querySelector('.container')?.offsetWidth || s.offsetWidth;
         z = Math.max(1, Math.min(MAX_ZOOM_PRESENTING, room / h, (window.innerWidth - 170) / width));

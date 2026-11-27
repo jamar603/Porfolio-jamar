@@ -774,7 +774,7 @@ foreach ($articlesJson as $item) {
           <tr>
             <th scope="row">Réalisations par compétence</th>
 <?php foreach ($synthCompetences as $i => $competence): ?>
-            <td data-col="<?= $i + 1 ?>"><span class="synth-total"><?= count($e5Coverage[$i + 1]) ?></span></td>
+            <td data-col="<?= $i + 1 ?>" style="--share:<?= round(count($e5Coverage[$i + 1]) / max(1, $e5Total), 3) ?>"><span class="synth-total"><?= count($e5Coverage[$i + 1]) ?></span><span class="synth-bar" aria-hidden="true"></span></td>
 <?php endforeach; ?>
           </tr>
         </tfoot>
