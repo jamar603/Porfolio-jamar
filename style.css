@@ -2326,43 +2326,6 @@ html.has-custom-cursor :fullscreen:not(html) :is(input,textarea,select){ cursor:
 .is-presenting .bg-canvas{ opacity:.32; }
 body::after{ opacity:.45; }
 
-/* ===== Light theme (projector): html[data-theme="light"], toggled by the sun / moon button ===== */
-html[data-theme="light"]{
-  color-scheme:light;
-  --bg:#f5f7fb; --panel:#ffffff; --ink:#0f172a; --ink-soft:#334155; --dim:#475569; --border:#d7dee8;
-  --indigo:#1d4ed8; --mint:#2563eb; --amber:#b45309; --coral:#c2410c; --green:#047857;
-  --indigo-soft:#e3edff; --mint-soft:#e6eeff; --amber-soft:#fdf0dc; --coral-soft:#fde9e3; --green-soft:#dcf3ea;
-  --panel-rgb:255,255,255; --bg-rgb:245,247,251; --border-rgb:215,222,232; --hi-rgb:15,23,42; --shadow-rgb:100,116,139;
-}
-html[data-theme="light"] .bg-canvas,html[data-theme="light"] body::after{ display:none; }
-html[data-theme="light"] body::before{ opacity:.35; }
-html[data-theme="light"] :is(.hero-sub,.section-head p,.veille-copy p,.e5-intro,.synth-hint,.conclu-next,.profile-grid > p,.conclu-eyebrow){ text-shadow:none; }
-/* inline icon strokes written for the dark theme: darker versions on the light background */
-html[data-theme="light"] svg[stroke="#60a5fa"]{ stroke:#1d4ed8; }
-html[data-theme="light"] svg[stroke="#a5b4fc"]{ stroke:#2563eb; }
-html[data-theme="light"] svg[stroke="#e5b567"]{ stroke:#b45309; }
-html[data-theme="light"] svg[stroke="#f28b82"]{ stroke:#c2410c; }
-html[data-theme="light"] svg[stroke="#6ee7b7"]{ stroke:#047857; }
-html[data-theme="light"] svg[stroke="#64748b"]{ stroke:#475569; }
-/* glowing name and neon effects: plain strong colour on light */
-html[data-theme="light"] .neon-name{ text-shadow:none; }
-html[data-theme="light"] nav{ background:rgba(255,255,255,.88); }
-html[data-theme="light"] .btn-primary{ color:#fff; }
-html[data-theme="light"] .cursor-dot{ background:#1d4ed8; box-shadow:none; }
-html[data-theme="light"] .cursor-ring{ border-color:rgba(29,78,216,.6); box-shadow:none; }
-/* dark viewers (photos, certificates, PDF) keep a dark stage in both themes */
-html[data-theme="light"] :is(.cert-viewer,.photo-lightbox){ --ink:#e5e7eb; --dim:#b6c0cf; --border:#1f2937; --panel:#111827; --panel-rgb:17,24,39; --bg-rgb:11,17,32; --ink-soft:#d9dee7; --indigo:#60a5fa; --mint:#93c5fd; --indigo-soft:#15243d; --mint-soft:#1c1f3a; color:#e5e7eb; }
-
-/* theme button in the menu bar */
-.theme-toggle{ display:grid; place-items:center; width:40px; height:40px; padding:0; border:1px solid var(--border); border-radius:50%; background:rgba(var(--panel-rgb),.6); color:var(--ink); cursor:pointer; transition:border-color 160ms ease,color 160ms ease,transform 160ms var(--ease-out); }
-.theme-toggle:hover{ border-color:var(--indigo); color:var(--indigo); }
-.theme-toggle:active{ transform:scale(.94); }
-.theme-toggle svg{ width:19px; height:19px; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
-.theme-toggle .ico-moon{ display:none; }
-html[data-theme="light"] .theme-toggle .ico-moon{ display:block; }
-html[data-theme="light"] .theme-toggle .ico-sun{ display:none; }
-html[data-theme="light"] .synth-period th:first-child{ background:#e8eefa; }
-html[data-theme="light"] .synth-table tfoot th:first-child{ background:#e8eefa; }
 
 /* ===== wider, more readable sections =====
    Wider containers make each section shorter, so presentation.js shrinks it less
@@ -2680,8 +2643,6 @@ nav .container{ max-width:1520px; }
   .vx-arrow{ display:none; }
 }
 @media (max-width:640px){ .vx-col{ padding:20px 18px; } .vx-nums li{ flex-direction:column; gap:4px; } }
-html[data-theme="light"] .vx-ino-text span{ color:#334155; }
-html[data-theme="light"] .vx-n{ color:#fff; }
 .vx-nums li{ flex-direction:column; align-items:flex-start; gap:6px; }
 .vx-feeds{ display:flex; flex-direction:column; gap:10px; margin-top:auto; padding-top:14px; border-top:1px dashed rgba(var(--border-rgb),.9); }
 .vx-feeds ul{ display:flex; flex-wrap:wrap; gap:8px; list-style:none; margin:0; padding:0; }
@@ -2871,7 +2832,6 @@ html[data-theme="light"] .vx-n{ color:#fff; }
   .tl-ico,.tl-chips span,.xpath-dot b,.fpath-goal-dot{ transition:none; }
   .is-hot .tl-ico{ transform:none; }
 }
-html[data-theme="light"] .fpath-node.is-dim,html[data-theme="light"] .xpath-card.is-dim{ filter:saturate(.6) opacity(.7); }
 
 /* Tableau de synthèse: column cross-highlight on hover (timeline-fun.js) */
 .synth-table .is-cross{ background:rgba(96,165,250,.07); }
@@ -3192,3 +3152,4 @@ html[data-theme="light"] .fpath-node.is-dim,html[data-theme="light"] .xpath-card
 #synthese .synth-table tr.is-match th a{ color:var(--amber); }
 #synthese .synth-table tbody tr.is-loupe th a{ color:var(--indigo); }
 .synth-loupe-cta[hidden]{ display:none; }
+.menu-social img{ display:block; width:18px; height:18px; }

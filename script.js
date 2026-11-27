@@ -230,22 +230,3 @@ if (window.matchMedia('(hover: hover) and (pointer: fine)').matches){
   });
 })();
 
-// light / dark theme button: light reads better on a projector; the choice is remembered
-(() => {
-  const button = document.querySelector('[data-theme-toggle]');
-  if (!button) return;
-  const root = document.documentElement;
-  const meta = document.querySelector('meta[name="theme-color"]');
-  const sync = () => {
-    const light = root.dataset.theme === 'light';
-    button.setAttribute('aria-pressed', String(light));
-    button.setAttribute('aria-label', light ? 'Passer en thème sombre' : 'Passer en thème clair');
-    meta?.setAttribute('content', light ? '#f5f7fb' : '#0b1120');
-  };
-  button.addEventListener('click', () => {
-    if (root.dataset.theme === 'light') delete root.dataset.theme; else root.dataset.theme = 'light';
-    try { localStorage.setItem('theme', root.dataset.theme || 'dark'); } catch {}
-    sync();
-  });
-  sync();
-})();

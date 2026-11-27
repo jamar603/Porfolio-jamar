@@ -103,10 +103,6 @@
       about: 'ouvrir mon CV (PDF)',
       run: () => { window.open('CVJAMAR-C.pdf', '_blank', 'noopener'); return ['Ouverture de CVJAMAR-C.pdf…']; },
     },
-    theme: {
-      about: 'thème clair / sombre',
-      run: () => { document.querySelector('[data-theme-toggle]')?.click(); return ['Thème changé.']; },
-    },
     clear: {
       about: 'effacer l’écran',
       run: () => { out.innerHTML = ''; return []; },

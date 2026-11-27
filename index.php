@@ -148,8 +148,8 @@ function synthLabel(string $article): string {
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#0b1120">
 <script>
-  // theme chosen by the visitor (light for a projector), applied before the page paints
-  try { if (localStorage.getItem('theme') === 'light') document.documentElement.dataset.theme = 'light'; } catch (e) {}
+  // the light theme was removed: forget a choice saved before
+  try { localStorage.removeItem('theme'); } catch (e) {}
 </script>
 <title>Jamar Carty — Portfolio épreuve E5 · BTS SIO SLAM</title>
 <meta name="description" content="Portfolio de Jamar Carty pour l’épreuve E5 du BTS SIO option SLAM à l’AFIP : parcours de professionnalisation, tableau de synthèse et réalisations couvrant les compétences du bloc 1.">
@@ -210,12 +210,9 @@ function synthLabel(string $article): string {
         </li>
       </ul>
       <div class="menu-end">
-        <button class="theme-toggle" type="button" data-theme-toggle aria-pressed="false" aria-label="Passer en thème clair" title="Thème clair / sombre">
-          <svg class="ico-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
-          <svg class="ico-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
-        </button>
         <a class="menu-social" href="https://www.linkedin.com/in/jamar-carty" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn de Jamar Carty" title="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.35V9h3.414v1.561h.049c.476-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 1 1 0-4.124 2.062 2.062 0 0 1 0 4.124zM7.119 20.452H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.225 0z"/></svg><span>LinkedIn</span></a>
         <a class="menu-social" href="https://github.com/jamar603" target="_blank" rel="noopener noreferrer" aria-label="GitHub de Jamar Carty" title="GitHub"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .5A11.5 11.5 0 0 0 8.36 22.91c.58.1.79-.25.79-.56v-2.02c-3.2.7-3.87-1.36-3.87-1.36-.52-1.33-1.28-1.69-1.28-1.69-1.04-.71.08-.7.08-.7 1.15.08 1.75 1.18 1.75 1.18 1.02 1.74 2.68 1.24 3.33.95.1-.74.4-1.24.73-1.53-2.55-.29-5.23-1.28-5.23-5.68 0-1.26.45-2.28 1.18-3.08-.12-.29-.51-1.46.11-3.04 0 0 .96-.31 3.15 1.17a10.9 10.9 0 0 1 5.74 0c2.19-1.48 3.15-1.17 3.15-1.17.62 1.58.23 2.75.11 3.04.73.8 1.18 1.82 1.18 3.08 0 4.41-2.68 5.38-5.24 5.67.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5z"/></svg><span>GitHub</span></a>
+        <a class="menu-social menu-social-ino" href="https://www.inoreader.com/" target="_blank" rel="noopener" data-veille="inoreader" aria-label="Inoreader : mon outil de veille" title="Inoreader · ma veille"><img src="images/logo-inoreader-icon.svg" alt="" width="18" height="18"><span>Inoreader</span></a>
         <a class="menu-cta" href="#contact" data-t="contact">Contact<span aria-hidden="true">→</span></a>
       </div>
     </div>
@@ -1285,6 +1282,10 @@ foreach ($articlesJson as $item) {
         <div class="row">
           <div class="row-icon" style="background:var(--indigo-soft);"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12h8M12 8l4 4-4 4"/></svg></div>
           <div class="row-text"><div class="k">GitHub</div><a class="v" href="https://github.com/jamar603" target="_blank" rel="noopener">github.com/jamar603</a></div>
+        </div>
+        <div class="row">
+          <div class="row-icon" style="background:var(--amber-soft);"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#e5b567" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11a9 9 0 0 1 9 9"/><path d="M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1"/></svg></div>
+          <div class="row-text"><div class="k">Veille technologique</div><a class="v" href="https://www.inoreader.com/" target="_blank" rel="noopener" data-veille="inoreader">Inoreader · mes flux RSS</a></div>
         </div>
         <div class="row">
           <div class="row-icon" style="background:var(--coral-soft);"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#f28b82" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3h7v7M10 14 21 3"/><path d="M19 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h6"/></svg></div>
