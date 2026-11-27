@@ -59,26 +59,26 @@ function addCompetenceBadges(parent, articleId){
   parent.append(list);
 }
 
-// "Tableau de synthèse" block of a card: the row of the table this article proves,
-// and each ticked competence in words (a click filters the articles on that competence)
+// "Tableau de synthèse" line of a card: the row of the table this article proves, then short
+// C1–C6 badges (full name on hover and in the reader; a click filters the articles on that competence)
 function addSynthBlock(parent, articleId){
   const synth = synthArticles[articleId];
   if (!synth) return;
   const block = document.createElement('div');
   block.className = 'article-synth';
-  addText(block, 'span', 'article-synth-k', 'Tableau de synthèse');
-  addText(block, 'span', 'article-synth-row', synth.row || '');
-  const list = document.createElement('div');
+  const row = addText(block, 'span', 'article-synth-row', synth.row || '');
+  row.title = `Ligne du tableau de synthèse : ${synth.row || ''}`;
+  const list = document.createElement('span');
   list.className = 'article-synth-comps';
   (synth.competences || []).forEach(number => {
     const competence = synthCompetences[number - 1];
-    const chip = document.createElement('button');
+    const chip = addText(list, 'button', '', `C${number}`);
     chip.type = 'button';
     chip.dataset.filterCompetence = String(number);
-    chip.title = competence ? `Voir les articles « ${competence.label} »` : '';
-    addText(chip, 'span', 'chip-num', `C${number}`);
-    chip.append(competence?.short || '');
-    list.append(chip);
+    if (competence){
+      chip.title = `${competence.label} · voir les articles`;
+      chip.setAttribute('aria-label', `C${number} ${competence.label} : filtrer les articles`);
+    }
   });
   block.append(list);
   parent.append(block);

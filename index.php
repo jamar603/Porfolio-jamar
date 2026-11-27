@@ -126,7 +126,8 @@ foreach (array_values($synthRealisations) as $p => $rows) {
     $synthArticleMap[$article] = ['period' => $synthPeriods[$p][0], 'periodLabel' => $synthPeriods[$p][1], 'row' => $title, 'competences' => $covered];
   }
 }
-// "Tableau de synthèse" label shown on the project cards: period, row title and competences
+// "Tableau de synthèse" line of the project cards, same as the article cards:
+// row of the table, then short C1–C6 badges (full competence name on hover)
 function synthLabel(string $article): string {
   global $synthArticleMap, $synthCompetences;
   $info = $synthArticleMap[$article] ?? null;
@@ -135,8 +136,9 @@ function synthLabel(string $article): string {
   foreach ($info['competences'] as $c) {
     $comps .= '<span title="' . e($synthCompetences[$c - 1][0]) . '">C' . $c . '</span>';
   }
-  return '<div class="synth-label" data-period="' . e($info['period']) . '"><span class="synth-label-k">Tableau de synthèse · ' . e($info['periodLabel']) . '</span>'
-    . '<span class="synth-label-row">' . e($info['row']) . '</span><span class="article-comps">' . $comps . '</span></div>';
+  return '<div class="synth-label" data-period="' . e($info['period']) . '">'
+    . '<span class="synth-label-row" title="' . e('Tableau de synthèse · ' . $info['periodLabel'] . ' : ' . $info['row']) . '">' . e($info['row']) . '</span>'
+    . '<span class="article-comps">' . $comps . '</span></div>';
 }
 ?>
 <!DOCTYPE html>
@@ -650,7 +652,6 @@ foreach ($synthRealisations as $period => $rows) {
         <div class="project-title">Application Mediateq</div>
         <div class="project-desc">Application Windows Forms pour gérer une médiathèque.</div>
         <?= synthLabel('mediateq-csharp') ?>
-        <div class="project-tags"><span>C#</span><span>Windows Forms</span></div>
         <a class="project-link" href="#articles" data-open-article="mediateq-csharp">Lire le projet →</a>
       </div>
       <div class="project-card" data-shots="laravel-stage:01,03,05,07">
@@ -658,7 +659,6 @@ foreach ($synthRealisations as $period => $rows) {
         <div class="project-title">Gestion des conventions de stage</div>
         <div class="project-desc">Espaces et droits pour étudiants, enseignants et secrétariat.</div>
         <?= synthLabel('laravel-stage') ?>
-        <div class="project-tags"><span>Laravel 12</span><span>PHP</span><span>Gestion des accès</span></div>
         <a class="project-link" href="#articles" data-open-article="laravel-stage">Lire la mission →</a>
       </div>
       <div class="project-card" data-shots="react-native-stage:01,02">
@@ -666,7 +666,6 @@ foreach ($synthRealisations as $period => $rows) {
         <div class="project-title">Application mobile connectée à une API</div>
         <div class="project-desc">Application mobile reliée à une API REST.</div>
         <?= synthLabel('react-native-stage') ?>
-        <div class="project-tags"><span>React Native</span><span>API</span></div>
         <a class="project-link" href="#articles" data-open-article="react-native-stage">Lire la mission →</a>
       </div>
       <div class="project-card" data-shots="glpi-inventory:01,03,05">
@@ -674,7 +673,6 @@ foreach ($synthRealisations as $period => $rows) {
         <div class="project-title">Gestion de parc informatique</div>
         <div class="project-desc">Inventaire du parc informatique avec GLPI.</div>
         <?= synthLabel('glpi-inventory') ?>
-        <div class="project-tags"><span>GLPI</span><span>Support IT</span></div>
         <a class="project-link" href="#articles" data-open-article="glpi-inventory">Lire le TP →</a>
       </div>
       <div class="project-card" data-shots="kadviser-model3d:01,02,03,04">
@@ -682,7 +680,6 @@ foreach ($synthRealisations as $period => $rows) {
         <div class="project-title">K-Advisor et modélisation 3D</div>
         <div class="project-desc">Application et modélisation 3D en stage.</div>
         <?= synthLabel('kadviser-model3d') ?>
-        <div class="project-tags"><span>K-Advisor</span><span>Modélisation 3D</span></div>
         <a class="project-link" href="#articles" data-open-article="kadviser-model3d">Lire la mission →</a>
       </div>
     </div>
