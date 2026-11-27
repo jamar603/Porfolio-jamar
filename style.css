@@ -2910,3 +2910,24 @@ html[data-theme="light"] .fpath-node.is-dim,html[data-theme="light"] .xpath-card
 .synth-table thead th.is-cross{ color:var(--ink); box-shadow:inset 0 -2px 0 var(--indigo); }
 .synth-table tbody tr:not(.synth-period):hover td.is-cross{ background:rgba(96,165,250,.16); }
 .synth-table tbody tr:not(.synth-period):hover td.is-cross .synth-check{ background:var(--amber); color:var(--bg); transform:scale(1.2); }
+
+/* ===== Each article and project names its row of the tableau de synthèse ===== */
+#articleCompetence.is-shown{ display:flex; }
+.article-synth{ display:flex; flex-direction:column; gap:6px; margin:2px 0 4px; padding:10px 12px; border:1px solid var(--border); border-left:3px solid var(--article-accent,var(--amber)); border-radius:10px; background:rgba(var(--bg-rgb),.45); }
+.article-synth-k,.synth-label-k{ color:var(--dim); font-size:10.5px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; }
+.article-synth-row,.synth-label-row{ color:var(--ink); font-size:13.5px; font-weight:700; line-height:1.35; }
+.article-synth-comps{ display:flex; flex-wrap:wrap; gap:5px; margin-top:2px; }
+.article-synth-comps button{ display:inline-flex; align-items:center; min-height:30px; padding:3px 10px; border:1px solid rgba(229,181,103,.35); border-radius:999px; background:var(--amber-soft); color:var(--ink); font:inherit; font-size:12px; font-weight:600; cursor:pointer; transition:border-color 160ms var(--ease-out),background-color 160ms var(--ease-out); }
+.article-synth-comps .chip-num{ margin-right:5px; }
+@media (hover:hover) and (pointer:fine){ .article-synth-comps button:hover{ border-color:var(--amber); } }
+.article-synth-comps button:focus-visible{ outline:3px solid var(--coral); outline-offset:2px; }
+.synth-label{ display:flex; flex-wrap:wrap; align-items:center; gap:4px 8px; margin:-4px 0 14px; padding:9px 11px; border:1px solid var(--border); border-left:3px solid var(--amber); border-radius:9px; background:rgba(var(--bg-rgb),.4); }
+.synth-label[data-period="formation"]{ border-left-color:var(--indigo); }
+.synth-label[data-period="stage1"]{ border-left-color:var(--coral); }
+.synth-label-k{ flex-basis:100%; }
+.synth-label-row{ flex-basis:100%; font-size:13px; }
+.synth-label .article-comps{ justify-content:flex-start; }
+.reader-synth-row{ display:flex; flex-direction:column; gap:2px; }
+.reader-synth-row strong{ color:var(--ink); font-size:16px; }
+.reader-synth-row span{ color:var(--dim); font-size:13.5px; }
+.reader-synth-row span::first-letter{ text-transform:uppercase; }

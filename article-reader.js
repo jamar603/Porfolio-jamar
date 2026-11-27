@@ -104,6 +104,9 @@
     // fiche: competences in words + technologies
     const fiche = document.createElement('div');
     fiche.className = 'reader-fiche';
+    if (info) {
+      fiche.insertAdjacentHTML('beforeend', `<div class="reader-fiche-block"><p class="reader-fiche-k">Tableau de synthèse</p><p class="reader-synth-row"><strong>${esc(info.title)}</strong><span>${esc(info.period)}</span></p></div>`);
+    }
     if (info?.covers.length) {
       fiche.insertAdjacentHTML('beforeend', `<div class="reader-fiche-block"><p class="reader-fiche-k">Compétences du bloc 1</p><ul class="reader-comps">${info.covers.map(c => `<li><span>C${c}</span>${esc(competenceNames[c - 1] || '')}</li>`).join('')}</ul></div>`);
     }

@@ -59,6 +59,31 @@ function addCompetenceBadges(parent, articleId){
   parent.append(list);
 }
 
+// "Tableau de synthèse" block of a card: the row of the table this article proves,
+// and each ticked competence in words (a click filters the articles on that competence)
+function addSynthBlock(parent, articleId){
+  const synth = synthArticles[articleId];
+  if (!synth) return;
+  const block = document.createElement('div');
+  block.className = 'article-synth';
+  addText(block, 'span', 'article-synth-k', 'Tableau de synthèse');
+  addText(block, 'span', 'article-synth-row', synth.row || '');
+  const list = document.createElement('div');
+  list.className = 'article-synth-comps';
+  (synth.competences || []).forEach(number => {
+    const competence = synthCompetences[number - 1];
+    const chip = document.createElement('button');
+    chip.type = 'button';
+    chip.dataset.filterCompetence = String(number);
+    chip.title = competence ? `Voir les articles « ${competence.label} »` : '';
+    addText(chip, 'span', 'chip-num', `C${number}`);
+    chip.append(competence?.short || '');
+    list.append(chip);
+  });
+  block.append(list);
+  parent.append(block);
+}
+
 function addArticlePlaceholder(media, article){
   media.classList.add('article-media-placeholder');
   media.setAttribute('aria-hidden', 'true');
@@ -98,6 +123,7 @@ function createArticleCard(article, index){
   content.append(meta);
   addText(content, 'h3', '', article.title);
   addText(content, 'p', 'article-summary', article.summary);
+  addSynthBlock(content, article.id);
   addTags(content, article.tags);
 
   const foot = document.createElement('div');
@@ -105,7 +131,6 @@ function createArticleCard(article, index){
   const openButton = addText(foot, 'button', 'article-read', 'Lire l’article');
   openButton.type = 'button';
   openButton.dataset.articleId = article.id;
-  addCompetenceBadges(foot, article.id);
   content.append(foot);
   card.append(content);
   return card;
@@ -270,7 +295,7 @@ function filterArticles(){
       return competence ? `C${number} ${competence.label} ${(competence.skills || []).join(' ')}` : '';
     }).join(' ');
     const sectionText = article ? article.sections.flatMap(section => [section.heading, ...section.paragraphs]).join(' ') : '';
-    const matchesText = normalizeText(`${card.textContent} ${synth?.periodLabel || ''} ${competenceText} ${sectionText}`).includes(query);
+    const matchesText = normalizeText(`${card.textContent} ${synth?.periodLabel || ''} ${synth?.row || ''} ${competenceText} ${sectionText}`).includes(query);
     const matchesPeriod = activePeriod === 'all' || synth?.period === activePeriod;
     const matchesCompetence = activeCompetence === 'all' || (synth?.competences || []).includes(Number(activeCompetence));
     card.hidden = !matchesText || !matchesPeriod || !matchesCompetence;
@@ -315,6 +340,8 @@ function setFilters(period, competence){
   activeCompetence = competence;
   pressChip(periodChips, period);
   pressChip(competenceChips, competence);
+  // the competence row stays hidden until a card chip (or a search link) picks a competence
+  competenceChips.classList.toggle('is-shown', competence !== 'all');
   filterArticles();
 }
 
@@ -381,6 +408,13 @@ function openFallbackDetails(details){
 }
 
 articleGrid.addEventListener('click', event => {
+  // competence chip of a card: filter the articles on that competence
+  const competenceChip = event.target.closest('[data-filter-competence]');
+  if (competenceChip){
+    setFilters(activePeriod, competenceChip.dataset.filterCompetence);
+    competenceChips.scrollIntoView({ behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block:'nearest' });
+    return;
+  }
   const button = event.target.closest('[data-article-id]');
   if (!button) return;
 

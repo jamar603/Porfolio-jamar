@@ -118,6 +118,26 @@ $synthRealisations = [
     ['Mission 2 : amélioration du site web Kadviser', 'kadviser-themes', [3, 4, 5]],
   ],
 ];
+// each article / project belongs to one row of the tableau de synthèse: period (row group), row title, competences
+$synthPeriods = [['formation', 'Formation'], ['stage1', 'Stage 1re année'], ['stage2', 'Stage 2e année']];
+$synthArticleMap = [];
+foreach (array_values($synthRealisations) as $p => $rows) {
+  foreach ($rows as [$title, $article, $covered]) {
+    $synthArticleMap[$article] = ['period' => $synthPeriods[$p][0], 'periodLabel' => $synthPeriods[$p][1], 'row' => $title, 'competences' => $covered];
+  }
+}
+// "Tableau de synthèse" label shown on the project cards: period, row title and competences
+function synthLabel(string $article): string {
+  global $synthArticleMap, $synthCompetences;
+  $info = $synthArticleMap[$article] ?? null;
+  if (!$info) return '';
+  $comps = '';
+  foreach ($info['competences'] as $c) {
+    $comps .= '<span title="' . e($synthCompetences[$c - 1][0]) . '">C' . $c . '</span>';
+  }
+  return '<div class="synth-label" data-period="' . e($info['period']) . '"><span class="synth-label-k">Tableau de synthèse · ' . e($info['periodLabel']) . '</span>'
+    . '<span class="synth-label-row">' . e($info['row']) . '</span><span class="article-comps">' . $comps . '</span></div>';
+}
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -629,6 +649,7 @@ foreach ($synthRealisations as $period => $rows) {
         <img class="project-cover" src="images/articles/mediateq-csharp/cover.webp" alt="" loading="lazy">
         <div class="project-title">Application Mediateq</div>
         <div class="project-desc">Application Windows Forms pour gérer une médiathèque.</div>
+        <?= synthLabel('mediateq-csharp') ?>
         <div class="project-tags"><span>C#</span><span>Windows Forms</span></div>
         <a class="project-link" href="#articles" data-open-article="mediateq-csharp">Lire le projet →</a>
       </div>
@@ -636,6 +657,7 @@ foreach ($synthRealisations as $period => $rows) {
         <img class="project-cover" src="images/articles/laravel-stage/cover.webp" alt="" loading="lazy">
         <div class="project-title">Gestion des conventions de stage</div>
         <div class="project-desc">Espaces et droits pour étudiants, enseignants et secrétariat.</div>
+        <?= synthLabel('laravel-stage') ?>
         <div class="project-tags"><span>Laravel 12</span><span>PHP</span><span>Gestion des accès</span></div>
         <a class="project-link" href="#articles" data-open-article="laravel-stage">Lire la mission →</a>
       </div>
@@ -643,6 +665,7 @@ foreach ($synthRealisations as $period => $rows) {
         <img class="project-cover" src="images/articles/react-native-stage/cover.webp" alt="" loading="lazy">
         <div class="project-title">Application mobile connectée à une API</div>
         <div class="project-desc">Application mobile reliée à une API REST.</div>
+        <?= synthLabel('react-native-stage') ?>
         <div class="project-tags"><span>React Native</span><span>API</span></div>
         <a class="project-link" href="#articles" data-open-article="react-native-stage">Lire la mission →</a>
       </div>
@@ -650,6 +673,7 @@ foreach ($synthRealisations as $period => $rows) {
         <img class="project-cover" src="images/articles/glpi-inventory/cover.webp" alt="" loading="lazy">
         <div class="project-title">Gestion de parc informatique</div>
         <div class="project-desc">Inventaire du parc informatique avec GLPI.</div>
+        <?= synthLabel('glpi-inventory') ?>
         <div class="project-tags"><span>GLPI</span><span>Support IT</span></div>
         <a class="project-link" href="#articles" data-open-article="glpi-inventory">Lire le TP →</a>
       </div>
@@ -657,6 +681,7 @@ foreach ($synthRealisations as $period => $rows) {
         <img class="project-cover" src="images/articles/kadviser-model3d/cover.webp" alt="" loading="lazy">
         <div class="project-title">K-Advisor et modélisation 3D</div>
         <div class="project-desc">Application et modélisation 3D en stage.</div>
+        <?= synthLabel('kadviser-model3d') ?>
         <div class="project-tags"><span>K-Advisor</span><span>Modélisation 3D</span></div>
         <a class="project-link" href="#articles" data-open-article="kadviser-model3d">Lire la mission →</a>
       </div>
@@ -778,18 +803,8 @@ foreach ($articlesJson as $item) {
         <label class="article-search" for="articleSearch">
           <span class="sr-only">Rechercher un article</span>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
-          <input type="search" id="articleSearch" placeholder="Titre, technologie, sujet…" autocomplete="off">
+          <input type="search" id="articleSearch" placeholder="Titre, techno, compétence (C4)…" autocomplete="off">
         </label>
-<?php
-// article filters come from the tableau de synthèse: period = row group, competences = ticked columns
-$synthPeriods = [['formation', 'Formation'], ['stage1', 'Stage 1re année'], ['stage2', 'Stage 2e année']];
-$synthArticleMap = [];
-foreach (array_values($synthRealisations) as $p => $rows) {
-  foreach ($rows as [$title, $article, $covered]) {
-    $synthArticleMap[$article] = ['period' => $synthPeriods[$p][0], 'periodLabel' => $synthPeriods[$p][1], 'competences' => $covered];
-  }
-}
-?>
         <div class="article-chips" id="articlePeriod" role="group" aria-label="Filtrer par période du tableau de synthèse">
           <button type="button" data-filter="all" aria-pressed="true">Toutes</button>
 <?php foreach ($synthPeriods as [$slug, $label]): ?>
