@@ -67,7 +67,18 @@
   const trackFill = rail.querySelector('.reader-track-fill');
   const bubble = rail.querySelector('.reader-bubble');
   const percent = rail.querySelector('.reader-percent');
-  dialog.append(progress, rail);
+  // simple scroll bar: previous part · current part · next part (bottom of the screen, every size)
+  const stepper = document.createElement('div');
+  stepper.className = 'reader-stepper';
+  stepper.innerHTML = `
+    <button type="button" data-step="-1" aria-label="Partie précédente" title="Partie précédente">▲</button>
+    <span class="reader-stepper-label" aria-live="polite"><b></b><span></span></span>
+    <button type="button" data-step="1" aria-label="Partie suivante" title="Partie suivante">▼</button>
+    <i class="reader-stepper-fill" aria-hidden="true"></i>`;
+  const stepperNum = stepper.querySelector('.reader-stepper-label b');
+  const stepperText = stepper.querySelector('.reader-stepper-label span');
+  const stepperFill = stepper.querySelector('.reader-stepper-fill');
+  dialog.append(progress, rail, stepper);
   surface.prepend(toc);
 
   let parts = [];
@@ -110,13 +121,8 @@
     if (info?.covers.length) {
       fiche.insertAdjacentHTML('beforeend', `<div class="reader-fiche-block"><p class="reader-fiche-k">Compétences du bloc 1</p><ul class="reader-comps">${info.covers.map(c => `<li><span>C${c}</span>${esc(competenceNames[c - 1] || '')}</li>`).join('')}</ul></div>`);
     }
-    if (tags) {
-      const block = document.createElement('div');
-      block.className = 'reader-fiche-block';
-      block.innerHTML = '<p class="reader-fiche-k">Technologies et outils</p>';
-      block.append(tags);
-      fiche.append(block);
-    }
+    // technologies are listed in the "Environnement technique" part of the article
+    tags?.remove();
 
     // numbered parts
     sections.forEach((section, i) => {
@@ -229,6 +235,18 @@
     content.querySelectorAll('.reader-side-list [data-part]').forEach(b => b.classList.toggle('is-passed', Number(b.dataset.part) < active));
     const sideBar = content.querySelector('.reader-side-bar span');
     if (sideBar) sideBar.style.transform = `scaleX(${ratio})`;
+    // before the layout is built, parts is empty (activePart() then returns -1)
+    // label: same rule as the ▲ ▼ buttons (last part that starts above the current position)
+    const total = parts.length - 1;
+    let reached = 0;
+    parts.forEach((p, i) => { if (i && Math.max(0, offsetOf(p.el)) <= surface.scrollTop + 8) reached = i; });
+    if (ratio > 0.995 && total > 0) reached = total;
+    const current = reached > 0 ? parts[reached] : null;
+    stepperNum.textContent = current ? `${String(reached).padStart(2, '0')} / ${String(total).padStart(2, '0')}` : 'Début';
+    stepperText.textContent = current ? current.label : (parts[1]?.label ? `puis ${parts[1].label}` : '');
+    stepperFill.style.transform = `scaleX(${ratio})`;
+    stepper.querySelector('[data-step="-1"]').disabled = surface.scrollTop < 4;
+    stepper.querySelector('[data-step="1"]').disabled = ratio > 0.995;
     const activeChip = toc.querySelector('.is-active');
     if (activeChip && toc.scrollWidth > toc.clientWidth) toc.scrollTo({ left: activeChip.offsetLeft - toc.clientWidth / 3 });
   };
@@ -342,6 +360,22 @@
       }
     }, 220);
   };
+
+  // ▼ goes to the first part that starts below the current position, ▲ to the last one above it
+  // (based on the scroll position, so a short part is never skipped)
+  stepper.addEventListener('click', event => {
+    const btn = event.target.closest('[data-step]');
+    if (!btn) return;
+    const top = surface.scrollTop;
+    const starts = parts.map((p, i) => (i === 0 ? 0 : Math.max(0, offsetOf(p.el))));
+    if (btn.dataset.step === '1') {
+      const next = starts.findIndex(y => y > top + 8);
+      if (next > -1) goPart(next); else surface.scrollTo({ top: maxScroll(), behavior: behavior() });
+    } else {
+      const prev = starts.map((y, i) => (y < top - 8 ? i : -1)).filter(i => i > -1).pop();
+      goPart(prev ?? 0);
+    }
+  });
 
   surface.addEventListener('scroll', () => requestAnimationFrame(update), { passive: true });
   window.addEventListener('resize', () => { layoutRail(); update(); });
