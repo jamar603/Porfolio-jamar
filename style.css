@@ -3074,3 +3074,61 @@ html[data-theme="light"] .fpath-node.is-dim,html[data-theme="light"] .xpath-card
 .article-steps{ grid-template-columns:minmax(0,1fr); }
 .article-steps > li{ min-width:0; }
 .gal-thumbs{ scrollbar-width:none; } .gal-thumbs::-webkit-scrollbar{ display:none; }
+
+/* ===== Tableau de synthèse: details panel beside the table (wide screen) or under it, never over it ===== */
+.synth-layout{ display:grid; grid-template-columns:minmax(0,1fr); gap:18px; align-items:start; }
+.synth-layout .synth-wrap{ min-width:0; }
+.synth-layout .synth-loupe{ position:static; z-index:auto; width:auto; box-shadow:0 18px 40px -24px rgba(var(--shadow-rgb),.7); }
+.synth-loupe.is-empty{ border-style:dashed; border-color:var(--border); background:rgba(var(--bg-rgb),.5); }
+.synth-loupe.is-empty .synth-loupe-title{ font-size:17px; }
+.synth-loupe-cta{ display:inline-flex; gap:6px; padding:0; border:0; background:none; font:inherit; font-size:14px; font-weight:700; color:var(--indigo); cursor:pointer; }
+.synth-loupe-cta:hover{ color:var(--coral); }
+.synth-loupe-cta:focus-visible{ outline:3px solid var(--coral); outline-offset:3px; border-radius:4px; }
+@media (min-width:1200px){
+  #synthese .container{ max-width:min(1380px,calc(100vw - 120px)); }
+  .synth-layout{ grid-template-columns:minmax(0,1fr) 300px; }
+  .synth-layout .synth-loupe{ position:sticky; top:96px; }
+  .synth-layout .synth-loupe-cover{ aspect-ratio:16/8; }
+  .synth-layout .synth-loupe-title{ font-size:18px; }
+  .synth-layout .synth-loupe-summary{ -webkit-line-clamp:3; font-size:14px; }
+}
+@media (min-width:700px) and (max-width:1199px){
+  /* under the table: picture on the left, text on the right */
+  .synth-layout .synth-loupe:not(.is-empty){ display:grid; grid-template-columns:220px minmax(0,1fr); }
+  .synth-layout .synth-loupe:not(.is-empty) .synth-loupe-cover{ height:100%; aspect-ratio:auto; border-bottom:0; border-right:1px solid var(--border); }
+}
+@media (hover:none){ .synth-layout .synth-loupe{ display:none; } } /* touch: a tap on a row opens the article directly */
+
+/* ===== Tableau de synthèse panel: larger, smooth (cross-faded cover, texts updated in place) ===== */
+.synth-layout .synth-loupe{ pointer-events:auto; transition:border-color 200ms var(--ease-out); }
+.synth-loupe.is-in{ animation:none; }
+.synth-loupe-media{ position:relative; aspect-ratio:16/9; overflow:hidden; background:var(--panel); border-bottom:1px solid var(--border); }
+.synth-loupe-media[hidden]{ display:none; }
+.synth-loupe-media img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:0; transform:scale(1.03); transition:opacity 260ms var(--ease-out),transform 420ms var(--ease-out); }
+.synth-loupe-media img.is-front{ opacity:1; transform:none; }
+.synth-loupe.is-empty .synth-loupe-media{ display:none; }
+.synth-loupe-body{ will-change:opacity,transform; }
+.synth-loupe-comps li{ transition:background-color 200ms ease,color 200ms ease; }
+.synth-table tbody tr[data-article]{ transition:background-color 140ms ease; }
+.synth-table tbody tr.is-loupe .synth-check{ transition:transform 160ms var(--ease-out); }
+@media (min-width:1200px){
+  .synth-layout{ grid-template-columns:minmax(0,1fr) 350px; gap:22px; }
+  .synth-layout .synth-loupe{ top:88px; border-radius:16px; }
+  .synth-layout .synth-loupe-body{ padding:18px 20px 20px; }
+  .synth-layout .synth-loupe-meta{ font-size:12.5px; }
+  .synth-layout .synth-loupe-title{ margin:6px 0 12px; font-size:21px; }
+  .synth-layout .synth-loupe-comps li{ font-size:13.5px; padding:5px 11px 5px 5px; }
+  .synth-layout .synth-loupe-summary{ -webkit-line-clamp:4; font-size:15px; line-height:1.6; }
+  .synth-layout .synth-loupe-cta{ margin-top:14px; font-size:15px; }
+}
+@media (min-width:1440px){ .synth-layout{ grid-template-columns:minmax(0,1fr) 390px; } }
+@media (min-width:700px) and (max-width:1199px){
+  .synth-layout .synth-loupe:not(.is-empty) .synth-loupe-media{ height:100%; aspect-ratio:auto; border-bottom:0; border-right:1px solid var(--border); }
+}
+@media (prefers-reduced-motion:reduce){ .synth-loupe-media img{ transition:none; transform:none; } }
+/* beside the panel the table may narrow (labels wrap) rather than scroll sideways */
+@media (min-width:1200px){
+  .synth-layout .synth-table{ min-width:0; }
+  .synth-layout{ grid-template-columns:minmax(0,1fr) 340px; }
+}
+@media (min-width:1440px){ .synth-layout{ grid-template-columns:minmax(0,1fr) 360px; } }
