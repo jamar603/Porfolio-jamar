@@ -59,6 +59,31 @@ function addCompetenceBadges(parent, articleId){
   parent.append(list);
 }
 
+// "Tableau de synthèse" line of a card: the row of the table this article proves, then short
+// C1–C6 badges (full name on hover and in the reader; a click filters the articles on that competence)
+function addSynthBlock(parent, articleId){
+  const synth = synthArticles[articleId];
+  if (!synth) return;
+  const block = document.createElement('div');
+  block.className = 'article-synth';
+  const row = addText(block, 'span', 'article-synth-row', synth.row || '');
+  row.title = `Ligne du tableau de synthèse : ${synth.row || ''}`;
+  const list = document.createElement('span');
+  list.className = 'article-synth-comps';
+  (synth.competences || []).forEach(number => {
+    const competence = synthCompetences[number - 1];
+    const chip = addText(list, 'button', '', `C${number}`);
+    chip.type = 'button';
+    chip.dataset.filterCompetence = String(number);
+    if (competence){
+      chip.title = `${competence.label} · voir les articles`;
+      chip.setAttribute('aria-label', `C${number} ${competence.label} : filtrer les articles`);
+    }
+  });
+  block.append(list);
+  parent.append(block);
+}
+
 function addArticlePlaceholder(media, article){
   media.classList.add('article-media-placeholder');
   media.setAttribute('aria-hidden', 'true');
@@ -98,6 +123,7 @@ function createArticleCard(article, index){
   content.append(meta);
   addText(content, 'h3', '', article.title);
   addText(content, 'p', 'article-summary', article.summary);
+  addSynthBlock(content, article.id);
   addTags(content, article.tags);
 
   const foot = document.createElement('div');
@@ -105,7 +131,6 @@ function createArticleCard(article, index){
   const openButton = addText(foot, 'button', 'article-read', 'Lire l’article');
   openButton.type = 'button';
   openButton.dataset.articleId = article.id;
-  addCompetenceBadges(foot, article.id);
   content.append(foot);
   card.append(content);
   return card;
@@ -135,40 +160,184 @@ function renderArticle(article){
   addText(dialogContent, 'h2', '', article.title).id = 'articleDialogTitle';
   addText(dialogContent, 'p', 'article-dialog-summary', article.summary);
 
+  // photos shown inside the part they illustrate (section.photos = indexes in the gallery);
+  // a click opens the viewer on the whole gallery, at that photo
+  const gallery = article.gallery || [];
+  // photos of a part, laid out by count:
+  //   1 photo  → one large framed photo;
+  //   2 photos → side by side, same frame size;
+  //   3 and +  → a viewer: large photo, caption and counter, ‹ › arrows, strip of thumbnails, swipe on touch.
+  // A click on a large photo opens the full-screen viewer on the photos of that part.
+  const makeImage = (photo, eager) => {
+    const image = document.createElement('img');
+    image.src = photo.src;
+    image.alt = photo.caption || '';
+    if (photo.width) image.width = photo.width;
+    if (photo.height) image.height = photo.height;
+    image.loading = eager ? 'eager' : 'lazy';
+    image.decoding = 'async';
+    return image;
+  };
+  const makeZoom = (photos, i) => {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'gal-frame';
+    button.setAttribute('aria-label', `Agrandir : ${photos[i].caption || 'capture'}`);
+    button.addEventListener('click', () => openLightbox(photos, Number(button.dataset.index ?? i)));
+    button.append(makeImage(photos[i]));
+    return button;
+  };
+  const addFigures = (parent, indexes) => {
+    const photos = indexes.map(index => gallery[index]).filter(Boolean);
+    if (!photos.length) return;
+
+    if (photos.length < 3){
+      const grid = document.createElement('div');
+      grid.className = `gal gal-${photos.length}`;
+      photos.forEach((photo, i) => {
+        const figure = document.createElement('figure');
+        figure.append(makeZoom(photos, i));
+        if (photo.caption) addText(figure, 'figcaption', '', photo.caption);
+        grid.append(figure);
+      });
+      parent.append(grid);
+      return;
+    }
+
+    const viewer = document.createElement('div');
+    viewer.className = 'gal gal-viewer';
+    viewer.setAttribute('role', 'group');
+    viewer.setAttribute('aria-roledescription', 'galerie');
+    viewer.setAttribute('aria-label', `Galerie de ${photos.length} captures`);
+    const stage = document.createElement('div');
+    stage.className = 'gal-stage';
+    const frame = makeZoom(photos, 0);
+    frame.dataset.index = '0';
+    const prev = document.createElement('button');
+    prev.type = 'button';
+    prev.className = 'gal-arrow gal-prev';
+    prev.setAttribute('aria-label', 'Capture précédente');
+    prev.textContent = '‹';
+    const next = document.createElement('button');
+    next.type = 'button';
+    next.className = 'gal-arrow gal-next';
+    next.setAttribute('aria-label', 'Capture suivante');
+    next.textContent = '›';
+    const count = addText(stage, 'span', 'gal-count', '');
+    stage.prepend(frame);
+    stage.append(prev, next);
+    const caption = document.createElement('p');
+    caption.className = 'gal-caption';
+    caption.setAttribute('aria-live', 'polite');
+    const thumbs = document.createElement('div');
+    thumbs.className = 'gal-thumbs';
+    const thumbButtons = photos.map((photo, i) => {
+      const thumb = document.createElement('button');
+      thumb.type = 'button';
+      thumb.setAttribute('aria-label', `Capture ${i + 1} : ${photo.caption || ''}`);
+      const image = makeImage(photo);
+      image.alt = '';
+      thumb.append(image);
+      thumb.addEventListener('click', () => show(i));
+      thumbs.append(thumb);
+      return thumb;
+    });
+    viewer.append(stage, caption, thumbs);
+    parent.append(viewer);
+
+    let current = 0;
+    const show = i => {
+      current = (i + photos.length) % photos.length;
+      const photo = photos[current];
+      const image = frame.querySelector('img');
+      image.src = photo.src;
+      image.alt = photo.caption || '';
+      if (photo.width){ image.width = photo.width; image.height = photo.height; }
+      frame.dataset.index = String(current);
+      frame.setAttribute('aria-label', `Agrandir : ${photo.caption || 'capture'}`);
+      caption.textContent = photo.caption || '';
+      count.textContent = `${current + 1} / ${photos.length}`;
+      thumbButtons.forEach((thumb, n) => thumb.setAttribute('aria-current', String(n === current)));
+      const active = thumbButtons[current];
+      if (thumbs.scrollWidth > thumbs.clientWidth) thumbs.scrollTo({ left: active.offsetLeft - (thumbs.clientWidth - active.offsetWidth) / 2, behavior: 'smooth' });
+    };
+    prev.addEventListener('click', () => show(current - 1));
+    next.addEventListener('click', () => show(current + 1));
+    // ← → inside the gallery change the photo (and not the article)
+    viewer.addEventListener('keydown', event => {
+      if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
+      event.preventDefault();
+      event.stopPropagation();
+      show(current + (event.key === 'ArrowRight' ? 1 : -1));
+    });
+    let startX = null;
+    stage.addEventListener('touchstart', event => { startX = event.touches[0].clientX; }, { passive:true });
+    stage.addEventListener('touchend', event => {
+      if (startX === null) return;
+      const distance = event.changedTouches[0].clientX - startX;
+      startX = null;
+      if (Math.abs(distance) > 40) show(current + (distance < 0 ? 1 : -1));
+    }, { passive:true });
+    show(0);
+  };
+
   article.sections.forEach(section => {
     const sectionElement = document.createElement('section');
     sectionElement.className = 'article-dialog-section';
     addText(sectionElement, 'h3', '', section.heading);
     section.paragraphs.forEach(paragraph => addText(sectionElement, 'p', '', paragraph));
+    if (section.list?.length){
+      const list = document.createElement('ul');
+      list.className = 'article-list';
+      section.list.forEach(item => addText(list, 'li', '', item));
+      sectionElement.append(list);
+    }
+    if (section.photos?.length) addFigures(sectionElement, section.photos);
+    // "Réalisation": numbered steps, each with its text, list and photos
+    if (section.steps?.length){
+      const steps = document.createElement('ol');
+      steps.className = 'article-steps';
+      section.steps.forEach(step => {
+        const item = document.createElement('li');
+        addText(item, 'h4', '', step.title);
+        step.paragraphs.forEach(paragraph => addText(item, 'p', '', paragraph));
+        if (step.list?.length){
+          const list = document.createElement('ul');
+          list.className = 'article-list';
+          step.list.forEach(entry => addText(list, 'li', '', entry));
+          item.append(list);
+        }
+        if (step.photos?.length) addFigures(item, step.photos);
+        steps.append(item);
+      });
+      sectionElement.append(steps);
+    }
+    // "Compétences mobilisées": each competence of the tableau de synthèse with its proof
+    if (section.competences){
+      const list = document.createElement('ul');
+      list.className = 'article-proofs';
+      Object.entries(section.competences).forEach(([number, proof]) => {
+        const item = document.createElement('li');
+        addText(item, 'span', 'article-proof-num', `C${number}`);
+        const text = document.createElement('div');
+        addText(text, 'strong', '', synthCompetences[number - 1]?.label || '');
+        addText(text, 'p', '', proof);
+        item.append(text);
+        list.append(item);
+      });
+      sectionElement.append(list);
+    }
     dialogContent.append(sectionElement);
   });
 
-  if (article.gallery?.length){
+  // photos not placed in a part: grouped at the end
+  const placed = new Set(article.sections.flatMap(section => [...(section.photos || []), ...(section.steps || []).flatMap(step => step.photos || [])]));
+  const others = gallery.map((photo, index) => index).filter(index => !placed.has(index));
+  if (others.length){
     const gallerySection = document.createElement('section');
     gallerySection.className = 'article-dialog-section';
-    addText(gallerySection, 'h3', '', 'Captures du projet');
-    const gallery = document.createElement('div');
-    gallery.className = 'article-gallery';
-    article.gallery.forEach((photo, index) => {
-      const figure = document.createElement('figure');
-      const button = document.createElement('button');
-      button.type = 'button';
-      button.className = 'article-gallery-open';
-      button.setAttribute('aria-label', `Agrandir : ${photo.caption || 'capture'}`);
-      button.addEventListener('click', () => openLightbox(article.gallery, index));
-      const image = document.createElement('img');
-      image.src = photo.src;
-      image.alt = photo.caption || '';
-      if (photo.width) image.width = photo.width;
-      if (photo.height) image.height = photo.height;
-      image.loading = 'lazy';
-      image.decoding = 'async';
-      button.append(image);
-      figure.append(button);
-      if (photo.caption) addText(figure, 'figcaption', '', photo.caption);
-      gallery.append(figure);
-    });
-    gallerySection.append(gallery);
+    addText(gallerySection, 'h3', '', placed.size ? 'Autres captures' : 'Captures du projet');
+    addFigures(gallerySection, others);
     dialogContent.append(gallerySection);
   }
 
@@ -269,8 +438,8 @@ function filterArticles(){
       const competence = synthCompetences[number - 1];
       return competence ? `C${number} ${competence.label} ${(competence.skills || []).join(' ')}` : '';
     }).join(' ');
-    const sectionText = article ? article.sections.flatMap(section => [section.heading, ...section.paragraphs]).join(' ') : '';
-    const matchesText = normalizeText(`${card.textContent} ${synth?.periodLabel || ''} ${competenceText} ${sectionText}`).includes(query);
+    const sectionText = article ? article.sections.flatMap(section => [section.heading, ...section.paragraphs, ...(section.list || []), ...Object.values(section.competences || {}), ...(section.steps || []).flatMap(step => [step.title, ...step.paragraphs, ...(step.list || [])])]).join(' ') : '';
+    const matchesText = normalizeText(`${card.textContent} ${synth?.periodLabel || ''} ${synth?.row || ''} ${competenceText} ${sectionText}`).includes(query);
     const matchesPeriod = activePeriod === 'all' || synth?.period === activePeriod;
     const matchesCompetence = activeCompetence === 'all' || (synth?.competences || []).includes(Number(activeCompetence));
     card.hidden = !matchesText || !matchesPeriod || !matchesCompetence;
@@ -315,6 +484,8 @@ function setFilters(period, competence){
   activeCompetence = competence;
   pressChip(periodChips, period);
   pressChip(competenceChips, competence);
+  // the competence row stays hidden until a card chip (or a search link) picks a competence
+  competenceChips.classList.toggle('is-shown', competence !== 'all');
   filterArticles();
 }
 
@@ -381,6 +552,13 @@ function openFallbackDetails(details){
 }
 
 articleGrid.addEventListener('click', event => {
+  // competence chip of a card: filter the articles on that competence
+  const competenceChip = event.target.closest('[data-filter-competence]');
+  if (competenceChip){
+    setFilters(activePeriod, competenceChip.dataset.filterCompetence);
+    competenceChips.scrollIntoView({ behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block:'nearest' });
+    return;
+  }
   const button = event.target.closest('[data-article-id]');
   if (!button) return;
 

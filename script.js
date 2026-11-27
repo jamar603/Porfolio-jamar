@@ -154,7 +154,7 @@ if ('IntersectionObserver' in window){
 // pointer spotlight on cards: write coordinates on the hovered card only
 if (window.matchMedia('(hover: hover) and (pointer: fine)').matches){
   document.addEventListener('pointermove', (event) => {
-    const card = event.target instanceof Element ? event.target.closest('.project-card, .article-card') : null;
+    const card = event.target instanceof Element ? event.target.closest('.project-card, .article-card, .fpath-node, .xpath-card, .offcode-card') : null;
     if (!card) return;
     const rect = card.getBoundingClientRect();
     card.style.setProperty('--mx', `${event.clientX - rect.left}px`);
@@ -168,7 +168,7 @@ if (window.matchMedia('(hover: hover) and (pointer: fine)').matches){
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   if (!finePointer.matches || reducedMotion.matches) return;
 
-  const SELECTOR = '.project-card, .article-card, .branch-card, #experience .t-content';
+  const SELECTOR = '.project-card, .article-card, .branch-card, .fpath-node, .xpath-card';
   const MAX_X = 7;
   const MAX_Y = 9;
   const LIFT = 4;

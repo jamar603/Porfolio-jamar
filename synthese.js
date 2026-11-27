@@ -107,84 +107,89 @@
     });
   });
 
-  const canHover = window.matchMedia('(hover: hover) and (pointer: fine)');
-  const card = document.createElement('div');
+  // the details panel sits beside the table on a wide screen and under it otherwise (synth-layout in
+  // style.css): it never covers the ticks. It shows the hovered or focused row and keeps it until another one.
+  const wrap = section.querySelector('.synth-wrap');
+  const layout = document.createElement('div');
+  layout.className = 'synth-layout';
+  wrap.before(layout);
+  const card = document.createElement('aside');
   card.className = 'synth-loupe';
-  card.setAttribute('aria-hidden', 'true');
-  card.hidden = true;
+  card.setAttribute('aria-live', 'polite');
+  layout.append(wrap, card);
   const competences = preview.competences || [];
-  let shownRow = null, hideTimer = 0;
+  let shownRow = null;
 
   const esc = text => String(text ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
+  // built once, then only its texts and picture change: no flicker when moving from row to row
+  card.innerHTML = `
+    <div class="synth-loupe-media"><img alt=""><img alt=""></div>
+    <div class="synth-loupe-body">
+      <p class="synth-loupe-meta">Détail d’une réalisation</p>
+      <h3 class="synth-loupe-title">Survolez une ligne du tableau</h3>
+      <ul class="synth-loupe-comps"></ul>
+      <p class="synth-loupe-summary">Sa fiche s’affiche ici : image, compétences en toutes lettres et résumé. Un clic sur la ligne ouvre l’article.</p>
+      <button type="button" class="synth-loupe-cta" hidden>Lire l’article <span aria-hidden="true">→</span></button>
+    </div>`;
+  card.classList.add('is-empty');
+  const [imgA, imgB] = card.querySelectorAll('.synth-loupe-media img');
+  const body = card.querySelector('.synth-loupe-body');
+  const meta = card.querySelector('.synth-loupe-meta');
+  const title = card.querySelector('.synth-loupe-title');
+  const comps = card.querySelector('.synth-loupe-comps');
+  const summary = card.querySelector('.synth-loupe-summary');
+  const cta = card.querySelector('.synth-loupe-cta');
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+  let front = imgA;
+
+  // covers are loaded ahead the first time the pointer comes over the table, so the change is instant
+  let preloaded = false;
+  table.addEventListener('pointerenter', () => {
+    if (preloaded) return;
+    preloaded = true;
+    Object.values(preview.articles || {}).forEach(a => { if (a.cover) { const i = new Image(); i.src = a.cover; } });
+  });
+
+  const setCover = src => {
+    const media = card.querySelector('.synth-loupe-media');
+    media.hidden = !src;
+    if (!src || front.getAttribute('src') === src) return;
+    // cross-fade: the hidden picture gets the new cover, then fades in over the current one
+    const back = front === imgA ? imgB : imgA;
+    const swap = () => {
+      back.onload = null;
+      if (back.getAttribute('src') !== src || front === back) return; // a newer cover was asked meanwhile
+      back.classList.add('is-front');
+      front.classList.remove('is-front');
+      front = back;
+    };
+    back.onload = swap;
+    back.src = src;
+    if (back.complete && back.naturalWidth) swap();
+  };
   const fill = row => {
     const data = preview.articles?.[row.dataset.article] || {};
     const covers = row.dataset.covers.split(' ').map(Number);
-    card.innerHTML = `
-      ${data.cover ? `<img class="synth-loupe-cover" src="${esc(data.cover)}" alt="">` : ''}
-      <div class="synth-loupe-body">
-        <p class="synth-loupe-meta">${esc(row.dataset.period.replace(/^Réalisations en cours de /, ''))}${data.date ? ` · ${esc(data.date)}` : ''}</p>
-        <h3 class="synth-loupe-title">${esc(data.title || row.querySelector('th a')?.textContent)}</h3>
-        <ul class="synth-loupe-comps">${covers.map(c => `<li class="${c === focus ? 'is-focus' : ''}"><span>C${c}</span>${esc(competences[c - 1] || '')}</li>`).join('')}</ul>
-        ${data.summary ? `<p class="synth-loupe-summary">${esc(data.summary)}</p>` : ''}
-        <p class="synth-loupe-cta">Cliquer sur la ligne pour lire l’article <span aria-hidden="true">→</span></p>
-      </div>`;
-  };
-  const place = row => {
-    const host = document.fullscreenElement === section ? section : document.body;
-    if (card.parentElement !== host) host.append(card);
-    // inside the scaled section (full screen), undo its zoom so the card keeps its real size
-    const z = host === section ? parseFloat(section.style.zoom) || 1 : 1;
-    card.style.zoom = z !== 1 ? String(1 / z) : '';
-    const r = row.getBoundingClientRect();
-    const t = table.getBoundingClientRect();
-    const w = card.offsetWidth, h = card.offsetHeight, gap = 18;
-    // beside the table when there is room; otherwise above or below the row (never over it),
-    // on the side of the screen with more space, aligned on the right part of the table
-    let left, top;
-    if (t.right + gap + w <= window.innerWidth - 12) {
-      left = t.right + gap;
-      top = r.top + r.height / 2 - h / 2;
-    } else if (t.left - gap - w >= 12) {
-      left = t.left - gap - w;
-      top = r.top + r.height / 2 - h / 2;
-    } else {
-      left = Math.min(window.innerWidth - w - 12, t.right - w);
-      top = r.top > window.innerHeight / 2 ? r.top - gap - h : r.bottom + gap;
-    }
-    top = Math.min(window.innerHeight - h - 12, Math.max(80, top));
-    card.style.left = `${Math.round(left)}px`;
-    card.style.top = `${Math.round(top)}px`;
+    card.classList.remove('is-empty');
+    setCover(data.cover);
+    meta.textContent = `${row.dataset.period.replace(/^Réalisations en cours de /, '')}${data.date ? ` · ${data.date}` : ''}`;
+    title.textContent = data.title || row.querySelector('th a')?.textContent || '';
+    comps.innerHTML = covers.map(c => `<li class="${c === focus ? 'is-focus' : ''}"><span>C${c}</span>${esc(competences[c - 1] || '')}</li>`).join('');
+    summary.textContent = data.summary || '';
+    cta.hidden = false;
+    cta.dataset.openArticle = row.dataset.article;
+    if (!reduce.matches) body.animate([{ opacity: 0.35, transform: 'translateY(4px)' }, { opacity: 1, transform: 'none' }], { duration: 180, easing: 'cubic-bezier(0.23,1,0.32,1)' });
   };
   const show = row => {
-    clearTimeout(hideTimer);
-    if (shownRow === row && !card.hidden) return;
+    if (shownRow === row) return;
     shownRow?.classList.remove('is-loupe');
     shownRow = row;
     row.classList.add('is-loupe');
     fill(row);
-    card.hidden = false;
-    place(row);
-    card.classList.remove('is-in');
-    void card.offsetWidth;
-    card.classList.add('is-in');
-  };
-  const hide = (delay = 120) => {
-    clearTimeout(hideTimer);
-    hideTimer = setTimeout(() => {
-      card.hidden = true;
-      shownRow?.classList.remove('is-loupe');
-      shownRow = null;
-    }, delay);
   };
 
   articleRows.forEach(row => {
-    row.addEventListener('pointerenter', () => { if (canHover.matches) show(row); });
-    row.addEventListener('pointerleave', () => hide());
+    row.addEventListener('pointerenter', () => show(row));
     row.querySelector('th a')?.addEventListener('focus', () => show(row));
-    row.querySelector('th a')?.addEventListener('blur', () => hide(0));
   });
-  document.addEventListener('keydown', event => { if (event.key === 'Escape') hide(0); });
-  window.addEventListener('wheel', () => { if (shownRow) hide(0); }, { passive: true });
-  // the article opens in a dialog: the card goes away
-  table.addEventListener('click', () => hide(0));
 })();

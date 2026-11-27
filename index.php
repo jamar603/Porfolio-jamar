@@ -118,6 +118,28 @@ $synthRealisations = [
     ['Mission 2 : amélioration du site web Kadviser', 'kadviser-themes', [3, 4, 5]],
   ],
 ];
+// each article / project belongs to one row of the tableau de synthèse: period (row group), row title, competences
+$synthPeriods = [['formation', 'Formation'], ['stage1', 'Stage 1re année'], ['stage2', 'Stage 2e année']];
+$synthArticleMap = [];
+foreach (array_values($synthRealisations) as $p => $rows) {
+  foreach ($rows as [$title, $article, $covered]) {
+    $synthArticleMap[$article] = ['period' => $synthPeriods[$p][0], 'periodLabel' => $synthPeriods[$p][1], 'row' => $title, 'competences' => $covered];
+  }
+}
+// "Tableau de synthèse" line of the project cards, same as the article cards:
+// row of the table, then short C1–C6 badges (full competence name on hover)
+function synthLabel(string $article): string {
+  global $synthArticleMap, $synthCompetences;
+  $info = $synthArticleMap[$article] ?? null;
+  if (!$info) return '';
+  $comps = '';
+  foreach ($info['competences'] as $c) {
+    $comps .= '<span title="' . e($synthCompetences[$c - 1][0]) . '">C' . $c . '</span>';
+  }
+  return '<div class="synth-label" data-period="' . e($info['period']) . '">'
+    . '<span class="synth-label-row" title="' . e('Tableau de synthèse · ' . $info['periodLabel'] . ' : ' . $info['row']) . '">' . e($info['row']) . '</span>'
+    . '<span class="article-comps">' . $comps . '</span></div>';
+}
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -429,6 +451,26 @@ foreach ($synthRealisations as $period => $rows) {
           </article>
         </div>
       </div>
+
+      <!-- interactive terminal (terminal.js): the jury types a command or clicks a suggestion -->
+      <div class="pf-term pf-anim" style="--i:4" data-term>
+        <div class="pf-term-bar"><i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i><span>jamar@portfolio: ~</span><span class="pf-term-hint">Terminal interactif · tapez une commande</span></div>
+        <div class="pf-term-out" data-term-out role="log" aria-live="polite" aria-label="Sortie du terminal">
+          <p><b>Bienvenue !</b> Ce terminal présente mon parcours. Tapez <kbd>help</kbd> ou cliquez une commande ci-dessous.</p>
+        </div>
+        <form class="pf-term-line" data-term-form autocomplete="off">
+          <label for="termInput"><b>jamar@portfolio</b>:<em>~</em>$</label>
+          <input id="termInput" name="cmd" type="text" spellcheck="false" autocapitalize="off" aria-label="Commande du terminal" placeholder="help">
+        </form>
+        <div class="pf-term-chips" aria-label="Commandes suggérées">
+          <button type="button" data-cmd="whoami">whoami</button>
+          <button type="button" data-cmd="stages">stages</button>
+          <button type="button" data-cmd="projets">projets</button>
+          <button type="button" data-cmd="competences">competences</button>
+          <button type="button" data-cmd="e5">e5</button>
+          <button type="button" data-cmd="hobbies">hobbies</button>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -458,19 +500,22 @@ foreach ($synthRealisations as $period => $rows) {
           <path class="fpath-comet" pathLength="1" d="M109 225 C 218 225, 217 75, 326 75 S 434 225, 543 225 S 652 75, 761 75"/>
         </svg>
         <div class="fpath-node fpath-bac" role="listitem" style="--d:0">
-          <span class="fpath-year">2018 – 2020</span>
+          <div class="tl-head"><span class="tl-ico" style="--c:var(--dim)" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.9 4.9 7 7M17 17l2.1 2.1M2 12h3M19 12h3M4.9 19.1 7 17M17 7l2.1-2.1"/></svg></span><span class="fpath-year">2018 – 2020</span></div>
           <strong>Baccalauréat STI2D</strong>
           <span class="fpath-org">Lycée Robert Weinum</span>
+          <span class="tl-chips"><span>Sciences de l’ingénieur</span><span>Technologie</span></span>
         </div>
         <div class="fpath-node fpath-but" role="listitem" style="--d:1">
-          <span class="fpath-year">2020 – 2021</span>
+          <div class="tl-head"><span class="tl-ico" style="--c:var(--mint)" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.6 7.6"/><circle cx="11" cy="11" r="2"/></svg></span><span class="fpath-year">2020 – 2021</span></div>
           <strong>BUT MMI</strong>
           <span class="fpath-org">IUT de Nantes · Nantes Université</span>
+          <span class="tl-chips"><span>Web</span><span>Multimédia</span><span>Design</span></span>
         </div>
         <div class="fpath-node fpath-icof" role="listitem" style="--d:2">
-          <span class="fpath-year">2024 – 2026</span>
+          <div class="tl-head"><span class="tl-ico" style="--c:var(--green)" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 18l6-6-6-6M8 6l-6 6 6 6"/></svg></span><span class="fpath-year">2024 – 2026</span></div>
           <strong>BTS SIO · option SLAM</strong>
-          <span class="fpath-org">ICOF</span>
+          <span class="fpath-org">ICOF · 1<sup>re</sup> année</span>
+          <span class="tl-chips"><span>Laravel 12</span><span>React Native</span><span>Kadviser 3D</span></span>
           <span class="pill-validated"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>Épreuves validées</span>
         </div>
         <div class="fpath-node fpath-afip" role="listitem" style="--d:3">
@@ -481,6 +526,7 @@ foreach ($synthRealisations as $period => $rows) {
           <span class="fpath-year">2026 – 2027</span>
           <strong>BTS SIO · option SLAM</strong>
           <span class="fpath-org">AFIP · 2<sup>e</sup> année</span>
+          <span class="tl-chips"><span>Épreuve E5</span><span>Alternance visée</span></span>
         </div>
         <div class="fpath-goal" role="listitem" style="--d:4">
           <span class="fpath-goal-dot" aria-hidden="true"></span>
@@ -506,6 +552,24 @@ foreach ($synthRealisations as $period => $rows) {
       </blockquote>
       <figcaption>Jamar Carty</figcaption>
     </figure>
+
+    <ul class="offcode" aria-label="En dehors du code">
+      <li class="offcode-card" style="--c:var(--coral);--cs:var(--coral-soft)">
+        <span class="offcode-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.4 14.4 9.6 9.6"/><path d="M18.66 21.07a2 2 0 0 1-2.83 0l-1.77-1.77a2 2 0 0 1 0-2.83l3.54-3.54a2 2 0 0 1 2.83 0l1.77 1.77a2 2 0 0 1 0 2.83z"/><path d="m21.5 21.5-1.4-1.4"/><path d="M3.9 3.9 2.5 2.5"/><path d="M6.4 12.77a2 2 0 0 1-2.83 0L1.8 11a2 2 0 0 1 0-2.83l3.54-3.54a2 2 0 0 1 2.83 0L9.94 6.4a2 2 0 0 1 0 2.83z"/></svg></span>
+        <strong>Boxe anglaise</strong>
+        <p>Encaisser, analyser, repartir. Comme face à un bug en production.</p>
+      </li>
+      <li class="offcode-card" style="--c:var(--amber);--cs:var(--amber-soft)">
+        <span class="offcode-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></span>
+        <strong>Guitare électrique</strong>
+        <p>Répéter jusqu’à ce que ça sonne juste. Même patience pour un code propre.</p>
+      </li>
+      <li class="offcode-card" style="--c:var(--green);--cs:var(--green-soft)">
+        <span class="offcode-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.6-3.8-9S9.5 5.6 12 3z"/></svg></span>
+        <strong>Anglais bilingue</strong>
+        <p>Documentation technique, forums et certificats lus en version originale.</p>
+      </li>
+    </ul>
   </div>
 </section>
 
@@ -544,24 +608,24 @@ foreach ($synthRealisations as $period => $rows) {
 
       <ol class="xpath-cards" aria-label="Mes expériences, de la plus ancienne à la plus récente">
         <li class="xpath-card" style="--d:0">
-          <span class="xpath-year">2023</span>
+          <div class="tl-head"><span class="tl-ico" style="--c:var(--dim)" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M7 6.5h.01M10 6.5h.01"/></svg></span><span class="xpath-year">2023</span><span class="tl-badge">Freelance</span></div>
           <h3 class="xpath-title">Développement de sites web · Indépendant</h3>
           <ul class="experience-points"><li>Site e-commerce WordPress pour un photographe</li></ul>
         </li>
         <li class="xpath-card" style="--d:1">
-          <span class="xpath-year">2024</span>
+          <div class="tl-head"><span class="tl-ico" style="--c:var(--amber)" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/><path d="M2 3h3l2.7 12.4a1 1 0 0 0 1 .8h9.6a1 1 0 0 0 1-.8L21 7H6"/></svg></span><span class="xpath-year">2024</span><span class="tl-badge">Stage</span></div>
           <h3 class="xpath-title">Stage · Programmation web</h3>
           <span class="xpath-org">AAB Fabrication · Saint-Martin</span>
           <ul class="experience-points"><li>Site web dynamique pour la vente en ligne</li><li>HTML, CSS et JavaScript</li></ul>
         </li>
         <li class="xpath-card" style="--d:2">
-          <span class="xpath-year">12 mai – 20 juin 2025</span>
+          <div class="tl-head"><span class="tl-ico" style="--c:var(--amber)" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h10"/><circle cx="19" cy="18" r="2"/></svg></span><span class="xpath-year">12 mai – 20 juin 2025</span><span class="tl-badge">6 semaines</span></div>
           <h3 class="xpath-title">Stage · Développement web et API REST</h3>
           <ul class="experience-points"><li>Gestion des conventions avec Laravel 12</li><li>API REST pour une application React Native</li><li>Git/GitHub et revues de code</li></ul>
           <button type="button" class="exp-shot" data-open-article="laravel-stage" aria-label="Ouvrir la mission : gestion des conventions Laravel"><img src="images/articles/laravel-stage/cover.webp" alt="" loading="lazy"><span>Voir la mission</span></button>
         </li>
         <li class="xpath-card xpath-card-now" style="--d:3">
-          <span class="xpath-year">10 novembre – 19 décembre 2025</span>
+          <div class="tl-head"><span class="tl-ico" style="--c:var(--indigo)" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><path d="M3.3 7 12 12l8.7-5M12 22V12"/></svg></span><span class="xpath-year">10 nov. – 19 déc. 2025</span><span class="tl-badge">6 semaines</span></div>
           <h3 class="xpath-title">Stage · Développement d’applications et web</h3>
           <span class="xpath-org">COF</span>
           <ul class="experience-points"><li>Application 3D d’un chargeur (Kadviser)</li><li>Nouvelles fonctionnalités du site Kadviser</li><li>Tests et corrections</li></ul>
@@ -583,39 +647,39 @@ foreach ($synthRealisations as $period => $rows) {
     </div>
 
     <div class="projects-grid">
-      <div class="project-card">
+      <div class="project-card" data-shots="mediateq-csharp:01,03,05,07">
         <img class="project-cover" src="images/articles/mediateq-csharp/cover.webp" alt="" loading="lazy">
         <div class="project-title">Application Mediateq</div>
         <div class="project-desc">Application Windows Forms pour gérer une médiathèque.</div>
-        <div class="project-tags"><span>C#</span><span>Windows Forms</span></div>
+        <?= synthLabel('mediateq-csharp') ?>
         <a class="project-link" href="#articles" data-open-article="mediateq-csharp">Lire le projet →</a>
       </div>
-      <div class="project-card">
+      <div class="project-card" data-shots="laravel-stage:01,03,05,07">
         <img class="project-cover" src="images/articles/laravel-stage/cover.webp" alt="" loading="lazy">
         <div class="project-title">Gestion des conventions de stage</div>
         <div class="project-desc">Espaces et droits pour étudiants, enseignants et secrétariat.</div>
-        <div class="project-tags"><span>Laravel 12</span><span>PHP</span><span>Gestion des accès</span></div>
+        <?= synthLabel('laravel-stage') ?>
         <a class="project-link" href="#articles" data-open-article="laravel-stage">Lire la mission →</a>
       </div>
-      <div class="project-card">
+      <div class="project-card" data-shots="react-native-stage:01,02">
         <img class="project-cover" src="images/articles/react-native-stage/cover.webp" alt="" loading="lazy">
         <div class="project-title">Application mobile connectée à une API</div>
         <div class="project-desc">Application mobile reliée à une API REST.</div>
-        <div class="project-tags"><span>React Native</span><span>API</span></div>
+        <?= synthLabel('react-native-stage') ?>
         <a class="project-link" href="#articles" data-open-article="react-native-stage">Lire la mission →</a>
       </div>
-      <div class="project-card">
+      <div class="project-card" data-shots="glpi-inventory:01,03,05">
         <img class="project-cover" src="images/articles/glpi-inventory/cover.webp" alt="" loading="lazy">
         <div class="project-title">Gestion de parc informatique</div>
         <div class="project-desc">Inventaire du parc informatique avec GLPI.</div>
-        <div class="project-tags"><span>GLPI</span><span>Support IT</span></div>
+        <?= synthLabel('glpi-inventory') ?>
         <a class="project-link" href="#articles" data-open-article="glpi-inventory">Lire le TP →</a>
       </div>
-      <div class="project-card">
+      <div class="project-card" data-shots="kadviser-model3d:01,02,03,04">
         <img class="project-cover" src="images/articles/kadviser-model3d/cover.webp" alt="" loading="lazy">
         <div class="project-title">K-Advisor et modélisation 3D</div>
         <div class="project-desc">Application et modélisation 3D en stage.</div>
-        <div class="project-tags"><span>K-Advisor</span><span>Modélisation 3D</span></div>
+        <?= synthLabel('kadviser-model3d') ?>
         <a class="project-link" href="#articles" data-open-article="kadviser-model3d">Lire la mission →</a>
       </div>
     </div>
@@ -710,7 +774,7 @@ foreach ($articlesJson as $item) {
           <tr>
             <th scope="row">Réalisations par compétence</th>
 <?php foreach ($synthCompetences as $i => $competence): ?>
-            <td data-col="<?= $i + 1 ?>"><span class="synth-total"><?= count($e5Coverage[$i + 1]) ?></span></td>
+            <td data-col="<?= $i + 1 ?>" style="--share:<?= round(count($e5Coverage[$i + 1]) / max(1, $e5Total), 3) ?>"><span class="synth-total"><?= count($e5Coverage[$i + 1]) ?></span><span class="synth-bar" aria-hidden="true"></span></td>
 <?php endforeach; ?>
           </tr>
         </tfoot>
@@ -736,18 +800,8 @@ foreach ($articlesJson as $item) {
         <label class="article-search" for="articleSearch">
           <span class="sr-only">Rechercher un article</span>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
-          <input type="search" id="articleSearch" placeholder="Titre, technologie, sujet…" autocomplete="off">
+          <input type="search" id="articleSearch" placeholder="Titre, techno, compétence (C4)…" autocomplete="off">
         </label>
-<?php
-// article filters come from the tableau de synthèse: period = row group, competences = ticked columns
-$synthPeriods = [['formation', 'Formation'], ['stage1', 'Stage 1re année'], ['stage2', 'Stage 2e année']];
-$synthArticleMap = [];
-foreach (array_values($synthRealisations) as $p => $rows) {
-  foreach ($rows as [$title, $article, $covered]) {
-    $synthArticleMap[$article] = ['period' => $synthPeriods[$p][0], 'periodLabel' => $synthPeriods[$p][1], 'competences' => $covered];
-  }
-}
-?>
         <div class="article-chips" id="articlePeriod" role="group" aria-label="Filtrer par période du tableau de synthèse">
           <button type="button" data-filter="all" aria-pressed="true">Toutes</button>
 <?php foreach ($synthPeriods as [$slug, $label]): ?>
@@ -1279,6 +1333,10 @@ foreach (array_values($synthRealisations) as $p => $rows) {
 <script src="section-motion.js?v=<?= md5_file(__DIR__ . '/section-motion.js') ?>"></script>
 <script src="synthese.js"></script>
 <script src="article-reader.js"></script>
+<script src="terminal.js"></script>
+<script src="projects-live.js"></script>
+<script src="fun.js"></script>
+<script src="timeline-fun.js"></script>
 <script type="module" src="hero-3d.js"></script>
 
 </body>
